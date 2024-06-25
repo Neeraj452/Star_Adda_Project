@@ -193,9 +193,10 @@ const Transactionhistory = () => {
     const headers = {
       Authorization: `Bearer ${access_token}`,
     };
+
     await axios
       .get(
-        `{${EndPoint}/temp/deposite/${id}?page=${pageNumber}&_limit=${limit}`,
+        `${EndPoint}/temp/deposite/${id}?page=${pageNumber}&_limit=${limit}`,
         { headers }
       )
       .then((res) => {

@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const port = 4011;
 let count = 0;
@@ -23,13 +24,12 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-  // console.log(socket.id + " connected ")
   SocketServer(socket);
   app.set("socketio", io);
 });
 
 const mongoose = require("mongoose");
-// mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 // mongoose.connect("mongodb+srv://ghfhghg:UoSgMk29WSL@cluster0.dm0doby.mongodb.net/infiearn?authMechanism=DEFAULT&authSource=admin&readPreference=primary", {
 
 // }, (err) => {
@@ -42,8 +42,7 @@ const mongoose = require("mongoose");
 
 // const mongoUri =
 //   "mongodb+srv://ghfhghg:UoSgMk29WSL@cluster0.dm0doby.mongodb.net/infiearn?authMechanism=DEFAULT&authSource=admin&readPreference=primary";
-const mongoUri =
-  "mongodb+srv://Maurya_Neeraj:Maurya_Neeraj@cluster0.pzx0pcf.mongodb.net/addaa";
+const mongoUri = process.env.MONGODB_URL;
 // Connect to MongoDB
 mongoose.connect(mongoUri, (err) => {
   if (!err) {
@@ -77,6 +76,7 @@ app.use("/", require("./Routes/temp/temp"));
 app.use("/", require("./Routes/Reports"));
 app.use("/", require("./Routes/settings"));
 app.use("/", require("./Routes/Gateway"));
+app.use("/", require("./Routes/UTRTransaction"));
 app.use("/api", require("./Routes/staticpage"));
 app.use("/api", require("./Routes/notificationRoute"));
 app.use("/api", require("./Routes/script"));

@@ -7,10 +7,10 @@ import axios from "axios";
 import css from "../css/Pan.module.css";
 import Swal from "sweetalert2";
 import "../css/Loader.css";
+const EndPoint = process.env.REACT_APP_API_URL;
 
 const Kyc2 = ({ user }) => {
   const history = useHistory();
-  const EndPoint = process.env.REACT_APP_API_URL;
 
   const [frontLoaded, setfrontLoaded] = useState(null);
   const [backLoaded, setbackLoaded] = useState(null);

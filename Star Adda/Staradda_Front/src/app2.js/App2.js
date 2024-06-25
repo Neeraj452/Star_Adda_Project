@@ -11,6 +11,7 @@ import Landing from "./uiComponents/Landing";
 import userLogin from "./uiComponents/Login";
 import Mywallet from "./uiComponents/Mywallet";
 import Addcase from "./uiComponents/Addcase";
+import AddCaseByUPI from "./uiComponents/AddCaseByUPI";
 import Pay from "./uiComponents/Pay";
 import Withdrawopt from "./uiComponents/Withdrawopt";
 import Profile1 from "./uiComponents/Profile1";
@@ -172,11 +173,9 @@ const App2 = () => {
     socket.on("websettingGet", (data) => {
       localStorage.setItem("sitSetting", JSON.stringify(data));
       setSettingData(data);
-      console.log(data, "websettingGet");
     });
 
     socket.on("recive-msg", (msgs) => {
-      console.log(msgs?.sender == user?._id);
       if (msgs?.sender == user?._id) {
         return;
       }
@@ -290,49 +289,8 @@ const App2 = () => {
 
   setQuickButtons(buttons);
 
-  const handleNewUserMessage = (newMessage) => {
-    console.log(`New message incoming! ${newMessage}`);
-    // file
-    //     addResponseMessage('[this is file](https://github.com/nice.tar)');
-
-    // image
-    //     addResponseMessage('![this is picture](https://github.com/nice.png)');
-    // renderCustomComponent(() => <img src={imageSrc} height="300" width="300" />);
-    // addLinkSnippet({
-    //         title: 'My awesome link',
-    //         link: 'https://github.com/Wolox/react-chat-widget',
-    //         target: '_blank'
-    //       })
-
-    // Now send the message throught the backend API
-  };
-
-  const addImage = () => {
-    return "<img src='" + imageSrc + "'>";
-    // Now send the message throught the backend API
-  };
-
   const handlefileButtonClicked = (e) => {
     document.getElementById("myFileInput").click();
-  };
-  const generate_url = (picture) => {
-    const formData = new FormData();
-    formData.append("media", picture);
-    setSelectedFile(
-      "https://wolper.com.au/wp-content/uploads/2017/10/image-placeholder.jpg"
-    );
-    // fetch('https://api.edudron.in/api/generate-url', {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-
-    //   .then((response) => response.json())
-    //   .then((json) => setSelectedFile(json.data[0]));
-  };
-
-  const handleSubmit = (event) => {
-    // handle submit logic
-    // alert("Form submitted");
   };
 
   const [inputValue, setInputValue] = useState("");
@@ -364,15 +322,6 @@ const App2 = () => {
   };
 
   return (
-    // <>
-    //   {JSON.parse(localStorage.getItem("siteSetting")) == "undefined" ? (
-    //     ""
-    //   ) : JSON.parse(localStorage.getItem("siteSetting"))?.siteMaintenance !==
-    //     true ? (
-    //     <div>
-    //       <Maintenence />
-    //     </div>
-    //   ) : (
     <>
       <div className="App" style={{ zIndex: "999", position: "absolute" }}>
         <Widget
@@ -477,10 +426,12 @@ const App2 = () => {
           <Route exact path="/" component={Landing} />
           <Route path="/profile" component={Profile1} />
           <Route path="/viewgame1/:id" component={ViewGame1} />
-          <Route
+          {/* <Route
             path="/addcase"
             render={() => <Addcase walletUpdate={getUser} />}
-          />
+          /> */}
+
+          <Route path="/addcase" component={AddCaseByUPI} />
 
           <Route
             path="/Withdrawopt"
@@ -494,6 +445,7 @@ const App2 = () => {
 
           {/* <Route path="/Games" component={Games} /> */}
           <Route exact path="/landing/:id" component={Landing} />
+          {console.log({ user })}
           <Route path="/kyc2" render={() => <Kyc2 user={user} />} />
           <Route path="/Rules" component={Gamerules} />
           <Route path="/RefundPolicy" component={RefundPolicy} />

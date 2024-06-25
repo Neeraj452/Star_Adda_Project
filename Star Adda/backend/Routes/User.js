@@ -448,7 +448,6 @@ router.post("/login", async (req, res) => {
     const newSecret = twofactor.generateToken(SecretCode.secret);
 
     let user = await User.findOne({ Phone: Phone });
-    console.log({ user });
 
     if (user != null) {
       if (user.user_type == "Block") {
@@ -458,14 +457,9 @@ router.post("/login", async (req, res) => {
         });
       }
 
-      const otp = await GatewaySettings.findOne();
-
-      //  if(otp.otp == "1"){
-      if (user.Phone == 8924007372) {
+      if (user.Phone) {
         user.otp = newSecret.token;
         user.save();
-
-        console.log("send otp to Test");
 
         return res.json({
           status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
@@ -475,27 +469,8 @@ router.post("/login", async (req, res) => {
         });
       }
 
-      user.otp = newSecret.token;
-      user.save();
-
-      https.get(
-        `https://www.fast2sms.com/dev/bulkV2?authorization=6RID7UeQJKPGL1tkFOhXNTl2n0iHucMAfSxrmZgjWwyqaszEo9xVJsSb2YL4DEvayl1nz6OmqN0RdTcp&variables_values=${newSecret.token}&route=otp&numbers=${Phone}`,
-        (resp) => {
-          //  console.error(resp)
-        }
-      );
-      return res.json({
-        status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
-        msg: "Authentication Required",
-        secret: SecretCode.secret,
-      });
       //  }
     } else if (user == null) {
-      //   return res.json({
-      //                     msg: "Currently we are not allowing new registration.",
-      //                     status: 101, // Custom Status for Inbuild Use Says That 2fa Authentication is required
-      //                 });
-
       let referralBy = referral;
       const Exist = await User.find({ referral_code: referral });
       if (Exist.length != 1) {
@@ -515,22 +490,22 @@ router.post("/login", async (req, res) => {
       await newUser.save();
       // const token = await user.genAuthToken();
 
-      https.get(
-        `https://www.fast2sms.com/dev/bulkV2?authorization=6RID7UeQJKPGL1tkFOhXNTl2n0iHucMAfSxrmZgjWwyqaszEo9xVJsSb2YL4DEvayl1nz6OmqN0RdTcp&variables_values=${newSecret.token}&route=otp&numbers=${Phone}`,
-        (resp) => {
-          console.error(resp);
-        }
-      );
+      // https.get(
+      //   `https://www.fast2sms.com/dev/bulkV2?authorization=6RID7UeQJKPGL1tkFOhXNTl2n0iHucMAfSxrmZgjWwyqaszEo9xVJsSb2YL4DEvayl1nz6OmqN0RdTcp&variables_values=${newSecret.token}&route=otp&numbers=${Phone}`,
+      //   (resp) => {
+      //     console.error(resp);
+      //   }
+      // );
 
       return res.json({
         status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
         msg: "Authentication Required",
         secret: SecretCode.secret,
+        myToken: newSecret.token,
       });
     }
   } catch (e) {
     res.status(400).send(e);
-    console.log(e);
   }
 });
 
@@ -1727,12 +1702,33 @@ router.get("/me", Auth, async (req, res) => {
     res.status(400).send(e);
   }
 });
+const apikey = encodeURIComponent(
+  "NDU3NzQ1NGM0NDU3NzU0ZTZjNjc0ZDM1NjczOTVhNjc="
+);
+const number = "6306829967";
+const sender = "JSJD";
+const message = encodeURIComponent("This is OTP Text Message");
+
+const url = `https://api.textlocal.in/send/?apikey=${apikey}&numbers=${number}&sender=${sender}&message=${message}`;
+
+const sendSMS = async () => {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+    });
+
+    const data = await response.json();
+
+    return { message: "SMS sent successfully", response: data };
+  } catch (error) {
+    return { message: "Failed to send SMS", error: error.message };
+  }
+};
 
 router.post("/login/admin", async (req, res) => {
   const phone = req.body.Phone;
   const SecretCode = twofactor.generateSecret({ Phone: phone });
   const newSecret = twofactor.generateToken(SecretCode.secret);
-  console.log(newSecret.token);
 
   try {
     let user = await User.findOne({ Phone: phone, user_type: "Admin" });
@@ -1741,26 +1737,8 @@ router.post("/login/admin", async (req, res) => {
       user = await User.findOne({ Phone: phone, user_type: "Agent" });
     }
 
-    if (phone == "8924007374") {
-      console.log(phone, "fgfghhf");
-      var otpmobile = "8924007372";
-    } else if (phone == "637793932") {
-      var otpmobile = "6377939322";
-    } else if (phone == "741305039") {
-      var otpmobile = "7413050397";
-    } else if (phone == "772804843") {
-      var otpmobile = "7728048439";
-    } else if (phone == "9116") {
-      var otpmobile = "9116111413";
-    } else if (phone == "635010572") {
-      var otpmobile = "6350105727";
-    } else {
-      var otpmobile = "7728048439";
-    }
-
     user.otp = newSecret.token;
     user.save();
-    console.log(otpmobile, "ghyh");
 
     // https.get(
     //   `https://www.fast2sms.com/dev/bulkV2?authorization=6RID7UeQJKPGL1tkFOhXNTl2n0iHucMAfSxrmZgjWwyqaszEo9xVJsSb2YL4DEvayl1nz6OmqN0RdTcp&variables_values=${newSecret.token}&route=otp&numbers=${otpmobile}`,
@@ -1769,25 +1747,40 @@ router.post("/login/admin", async (req, res) => {
     //   }
     // );
 
-    const url = `https://www.fast2sms.com/dev/bulkV2?authorization=6RID7UeQJKPGL1tkFOhXNTl2n0iHucMAfSxrmZgjWwyqaszEo9xVJsSb2YL4DEvayl1nz6OmqN0RdTcp&variables_values=${newSecret.token}&route=otp&numbers=${otpmobile}`;
+    // var settings = {
+    //   async: true,
+    //   crossDomain: true,
+    //   url: `https://www.fast2sms.com/dev/bulkV2?authorization=AOx6HGDKc7dpyqReBEVFk1rl3YIQXSnzgUJthjvP4u2Cb9oT854J6G5mEBgou3t2sRCrvf0ISzpwD1nU&route=q&message=&flash=1&numbers=8924007372`,
+    //   method: "GET",
+    // };
 
-    https
-      .get(url, (resp) => {
-        let data = "";
+    // $.ajax(settings).done(function (response) {
+    //   console.log(response);
+    // });
 
-        // A chunk of data has been received.
-        resp.on("data", (chunk) => {
-          data += chunk;
-        });
+    // var unirest = require("unirest");
 
-        // The whole response has been received.
-        resp.on("end", () => {
-          console.log("Response: ", data);
-        });
-      })
-      .on("error", (err) => {
-        console.log("Error: " + err.message);
-      });
+    // var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+
+    // req.query({
+    //   authorization:
+    //     "AOx6HGDKc7dpyqReBEVFk1rl3YIQXSnzgUJthjvP4u2Cb9oT854J6G5mEBgou3t2sRCrvf0ISzpwD1nU",
+    //   sender_id: "DLT_SENDER_ID",
+    //   message: "YOUR_MESSAGE_ID",
+    //   variables_values: "12345|asdaswdx",
+    //   route: "dlt",
+    //   numbers: "8924007372",
+    // });
+
+    // req.headers({
+    //   "cache-control": "no-cache",
+    // });
+
+    // req.end(function (res) {
+    //   if (res.error) throw new Error(res.error);
+
+    //   console.log(res.body);
+    // });
 
     return res.json({
       status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required

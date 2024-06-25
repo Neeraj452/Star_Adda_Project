@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useRef, useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import css from "../css/Addcase.module.css";
 import Compressor from "compressorjs";
 import css1 from "../css/Pan.module.css";

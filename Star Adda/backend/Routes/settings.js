@@ -613,7 +613,7 @@ router.post(
       updatesetting.save();
 
       const settings = await SiteSettings.findOne({
-        _id: "6468bd7f223e9c8c7cbed349",
+        _id: "667698ef721624e214e0136b",
       });
       const io = req.app.get("socketio");
       io.emit("websettingGet", settings);

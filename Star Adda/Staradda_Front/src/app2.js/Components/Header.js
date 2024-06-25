@@ -21,30 +21,25 @@ const Header = ({ user, loggedIn }) => {
   const EndPoint = process.env.REACT_APP_API_URL;
 
   let access_token = localStorage.getItem("token");
-  access_token = localStorage.getItem("token");
 
   const logout = () => {
     const headers = {
       Authorization: `Bearer ${access_token}`,
     };
     axios
-      .post(
-        `${EndPoint}/logout`,
-        {
-          headers: headers,
-        },
-        { headers }
-      )
+      .post(`${EndPoint}/logout`, {
+        headers: headers,
+      })
       .then((res) => {
-        // setUser(res.data)
         localStorage.removeItem("token");
         window.location.reload();
-        history.push("/");
+        history.push("/login");
       })
       .catch((e) => {
         if (e.response.status == 401) {
           localStorage.removeItem("token");
           localStorage.removeItem("token");
+          history.push("/login");
         }
       });
   };
@@ -201,15 +196,19 @@ const Header = ({ user, loggedIn }) => {
               </picture>
               <div style={{ marginLeft: ".5rem" }}>Support</div>
             </Link>
-            {/*   <Link className="w3-bar-item w3-button" to="!/" onClick={(e) => logout(e)}>
-          <picture className="icon">
-            <img alt="img" src={process.env.PUBLIC_URL + '/Images/logout.png'} />
-          </picture>
-          <div style={{ marginLeft: '.5rem' }}>
-            Logout
-          </div>
-
-        </Link> */}
+            <Link
+              className="w3-bar-item w3-button"
+              to="/"
+              onClick={(e) => logout(e)}
+            >
+              <picture className="icon">
+                <img
+                  alt="img"
+                  src={process.env.PUBLIC_URL + "/Images/logout.png"}
+                />
+              </picture>
+              <div style={{ marginLeft: ".5rem" }}>Logout</div>
+            </Link>
           </div>
 
           <div className="w3-teal">
@@ -281,6 +280,23 @@ const Header = ({ user, loggedIn }) => {
                         <div className={`${css.moneyBox_text}`}>
                           {user && user.referral_wallet}
                         </div>
+                      </div>
+                    </Link>
+                    <Link
+                      className={`${css.box} ml-2 orange_btn`}
+                      style={{ width: "80px" }}
+                      onClick={() => localStorage.clear()}
+                    >
+                      <picture className={`${css.moneyIcon_container}`}>
+                        <img
+                          src="/images/LandingPage_img/collections.png"
+                          className="snip-img"
+                          style={{ marginRight: "5px" }}
+                          alt=""
+                        />
+                      </picture>
+                      <div className="mt-1 ml-1 ">
+                        <div className={`${css.moneyBox_header}`}>Logout</div>
                       </div>
                     </Link>
                   </div>

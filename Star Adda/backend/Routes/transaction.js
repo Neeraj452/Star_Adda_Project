@@ -24,14 +24,12 @@ const randomstring = require("randomstring");
 
 router.post("/pinelabweb/response", async (req, res) => {
   console.log("pinelab webhook", req.body);
-  res
-    .status(200)
-    .json({
-      status: "ok",
-      message: "response",
-      responsecode: "200",
-      data: null,
-    });
+  res.status(200).json({
+    status: "ok",
+    message: "response",
+    responsecode: "200",
+    data: null,
+  });
 });
 
 router.post(
@@ -532,14 +530,12 @@ router.post("/user/deposite", Auth, async (req, res) => {
 
 router.post("/upideposit/status", upload.none(), async (req, res) => {
   console.log("upigateway notify", req.body);
-  res
-    .status(200)
-    .json({
-      status: "ok",
-      message: "response",
-      responsecode: "200",
-      data: null,
-    });
+  res.status(200).json({
+    status: "ok",
+    message: "response",
+    responsecode: "200",
+    data: null,
+  });
   //amount , client_txn_id , createdAt , customer_email , customer_mobile , customer_name , customer_vpa , id , p_info , redirect_url , remark , status , txnAt , udf1 , udf2 , udf3 , upi_txn_id
   // const orderID = req.body.data.order.order_id;
   // const txn = await Transaction.findById(orderID);
@@ -1036,22 +1032,18 @@ router.post("/withdraw/request", Auth, async (req, res) => {
           //Withdrawal amount should be greater or equal to 95 Rupees.
         }
       } else {
-        res
-          .status(200)
-          .send({
-            msg: "You can't withdrawal for 1 hour since the last withdrawal.",
-            success: false,
-            subCode: 999,
-          });
-      }
-    } else {
-      res
-        .status(200)
-        .send({
-          msg: "You are enrolled in game.",
+        res.status(200).send({
+          msg: "You can't withdrawal for 1 hour since the last withdrawal.",
           success: false,
           subCode: 999,
         });
+      }
+    } else {
+      res.status(200).send({
+        msg: "You are enrolled in game.",
+        success: false,
+        subCode: 999,
+      });
     }
   } catch (error) {
     console.log("payrq", error);
@@ -1187,12 +1179,10 @@ router.post("/withdraw/decentro/adminmanual", Auth, async (req, res) => {
         if (txn.status === "SUCCESS" || txn.status === "FAILED") {
           console.log("Payout Request already processed3");
           InProcessSubmit = false;
-          res
-            .status(200)
-            .send({
-              message: "Payout Request already processed3",
-              subCode: 999,
-            });
+          res.status(200).send({
+            message: "Payout Request already processed3",
+            subCode: 999,
+          });
         } else {
           //console.log(withdraw);
           const transfer = {
@@ -1262,12 +1252,10 @@ router.post("/withdraw/decentro/adminmanual", Auth, async (req, res) => {
                   withdraw.status = "SUCCESS";
                   withdraw.save();
 
-                  res
-                    .status(200)
-                    .send({
-                      message: "withdrawal request successfully approved",
-                      subCode: 200,
-                    });
+                  res.status(200).send({
+                    message: "withdrawal request successfully approved",
+                    subCode: 200,
+                  });
                 } else if (response.data.status === "pending") {
                   txn.referenceId = response.data.decentroTxnId;
                   txn.status = response.data.status;
@@ -1284,12 +1272,10 @@ router.post("/withdraw/decentro/adminmanual", Auth, async (req, res) => {
                   withdraw.status = "SUCCESS";
                   withdraw.save();
 
-                  res
-                    .status(200)
-                    .send({
-                      message: "Your withdrawal request in proccessing",
-                      subCode: 200,
-                    });
+                  res.status(200).send({
+                    message: "Your withdrawal request in proccessing",
+                    subCode: 200,
+                  });
                 }
                 InProcessSubmit = false;
               })
@@ -1395,12 +1381,10 @@ router.post("/withdraw/razorpay/adminmanual", Auth, async (req, res) => {
         //console.log(withdraw);
         if (txn.status === "SUCCESS" || txn.status === "FAILED") {
           InProcessSubmit = false;
-          res
-            .status(200)
-            .send({
-              message: "Payout Request already processed1",
-              subCode: 999,
-            });
+          res.status(200).send({
+            message: "Payout Request already processed1",
+            subCode: 999,
+          });
         } else {
           //rzp_test_i0SlYyQSHbxcv1
           //P7J4aOT676Px2CJq0eXLAs9K
@@ -1471,12 +1455,10 @@ router.post("/withdraw/razorpay/adminmanual", Auth, async (req, res) => {
 
                   InProcessSubmit = false;
 
-                  res
-                    .status(200)
-                    .send({
-                      message: "Your withdrawal request successfully completed",
-                      subCode: 200,
-                    });
+                  res.status(200).send({
+                    message: "Your withdrawal request successfully completed",
+                    subCode: 200,
+                  });
                 } else if (
                   response.data.status === "pending" ||
                   response.data.status === "queued" ||
@@ -1499,12 +1481,10 @@ router.post("/withdraw/razorpay/adminmanual", Auth, async (req, res) => {
 
                   InProcessSubmit = false;
 
-                  res
-                    .status(200)
-                    .send({
-                      message: "Your withdrawal request in proccessing",
-                      subCode: 200,
-                    });
+                  res.status(200).send({
+                    message: "Your withdrawal request in proccessing",
+                    subCode: 200,
+                  });
                 } else if (
                   response.data.status === "rejected" ||
                   response.data.status === "cancelled"
@@ -1534,12 +1514,10 @@ router.post("/withdraw/razorpay/adminmanual", Auth, async (req, res) => {
 
                   InProcessSubmit = false;
 
-                  res
-                    .status(200)
-                    .send({
-                      message: "Your withdrawal request failed",
-                      subCode: 200,
-                    });
+                  res.status(200).send({
+                    message: "Your withdrawal request failed",
+                    subCode: 200,
+                  });
                 }
               })
               .catch(function (error) {
@@ -1568,13 +1546,11 @@ router.post("/withdraw/razorpay/adminmanual", Auth, async (req, res) => {
 
                 InProcessSubmit = false;
 
-                res
-                  .status(200)
-                  .send({
-                    message:
-                      "Withdraw request failed due to technical issue, try after some time.",
-                    subCode: 200,
-                  });
+                res.status(200).send({
+                  message:
+                    "Withdraw request failed due to technical issue, try after some time.",
+                  subCode: 200,
+                });
               });
           })();
           user.save();
@@ -1705,25 +1681,20 @@ router.post("/withdraw/bank", Auth, async (req, res) => {
               user.save();
               txn.save();
             } else {
-              res
-                .status(200)
-                .send({
-                  message:
-                    "Amount must be less than and equal to Wallet amount",
-                  subCode: 999,
-                });
+              res.status(200).send({
+                message: "Amount must be less than and equal to Wallet amount",
+                subCode: 999,
+              });
             }
           } else {
             res.status(200).send({ message: "Invalid Request", subCode: 999 });
           }
         } else {
-          res
-            .status(200)
-            .send({
-              message:
-                "You can't Withdrawal for 2 hour since the last withdrawal.",
-              subCode: 999,
-            });
+          res.status(200).send({
+            message:
+              "You can't Withdrawal for 2 hour since the last withdrawal.",
+            subCode: 999,
+          });
         }
       } else {
         res
@@ -1731,12 +1702,10 @@ router.post("/withdraw/bank", Auth, async (req, res) => {
           .send({ message: "You are enrolled in game.", subCode: 999 });
       }
     } else {
-      res
-        .status(200)
-        .send({
-          message: "Withdrawal is failed please contact to admin.",
-          subCode: 999,
-        });
+      res.status(200).send({
+        message: "Withdrawal is failed please contact to admin.",
+        subCode: 999,
+      });
     }
   } catch (e) {
     res.send(e);
@@ -1877,13 +1846,11 @@ router.post("/withdraw/payoutrazorpaybank", Auth, async (req, res) => {
                         withdraw.status = "SUCCESS";
                         withdraw.save();
 
-                        res
-                          .status(200)
-                          .send({
-                            message:
-                              "Your withdrawal request successfully completed",
-                            subCode: 200,
-                          });
+                        res.status(200).send({
+                          message:
+                            "Your withdrawal request successfully completed",
+                          subCode: 200,
+                        });
                       } else if (
                         response.data.status === "pending" ||
                         response.data.status === "queued" ||
@@ -1894,12 +1861,10 @@ router.post("/withdraw/payoutrazorpaybank", Auth, async (req, res) => {
                         txn.save();
                         user.save();
 
-                        res
-                          .status(200)
-                          .send({
-                            message: "Your withdrawal request in proccessing",
-                            subCode: 200,
-                          });
+                        res.status(200).send({
+                          message: "Your withdrawal request in proccessing",
+                          subCode: 200,
+                        });
                       } else if (
                         response.data.status === "rejected" ||
                         response.data.status === "cancelled"
@@ -1917,13 +1882,11 @@ router.post("/withdraw/payoutrazorpaybank", Auth, async (req, res) => {
                         user.save();
                         txn.save();
 
-                        res
-                          .status(200)
-                          .send({
-                            message:
-                              "issuer bank or payment service provider declined the transaction",
-                            subCode: 200,
-                          });
+                        res.status(200).send({
+                          message:
+                            "issuer bank or payment service provider declined the transaction",
+                          subCode: 200,
+                        });
                       }
                     })
                     .catch(function (error) {
@@ -1940,49 +1903,39 @@ router.post("/withdraw/payoutrazorpaybank", Auth, async (req, res) => {
                       user.save();
                       txn.save();
 
-                      res
-                        .status(200)
-                        .send({
-                          message:
-                            "Withdraw request failed due to technical issue, try after some time.",
-                          subCode: 200,
-                        });
+                      res.status(200).send({
+                        message:
+                          "Withdraw request failed due to technical issue, try after some time.",
+                        subCode: 200,
+                      });
                     });
                 })();
               } else {
-                res
-                  .status(200)
-                  .send({
-                    message:
-                      "Amount must be less than and equal to Wallet amount",
-                    subCode: 999,
-                  });
-              }
-            } else {
-              res
-                .status(200)
-                .send({
-                  message: "Your previous request already in process",
+                res.status(200).send({
+                  message:
+                    "Amount must be less than and equal to Wallet amount",
                   subCode: 999,
                 });
-            }
-          } else {
-            res
-              .status(200)
-              .send({
-                message:
-                  "UPI Withdrawal limit is Rs.10000, You can use withdraw through bank",
+              }
+            } else {
+              res.status(200).send({
+                message: "Your previous request already in process",
                 subCode: 999,
               });
-          }
-        } else {
-          res
-            .status(200)
-            .send({
+            }
+          } else {
+            res.status(200).send({
               message:
-                "You can't Withdrawal for 1 hour since the last withdrawal.",
+                "UPI Withdrawal limit is Rs.10000, You can use withdraw through bank",
               subCode: 999,
             });
+          }
+        } else {
+          res.status(200).send({
+            message:
+              "You can't Withdrawal for 1 hour since the last withdrawal.",
+            subCode: 999,
+          });
         }
       } else {
         res
@@ -1990,30 +1943,24 @@ router.post("/withdraw/payoutrazorpaybank", Auth, async (req, res) => {
           .send({ message: "You are enrolled in game.", subCode: 999 });
       }
     } else {
-      res
-        .status(200)
-        .send({
-          message: "Withdrawal is failed please contact to admin.",
-          subCode: 999,
-        });
+      res.status(200).send({
+        message: "Withdrawal is failed please contact to admin.",
+        subCode: 999,
+      });
     }
   } catch (e) {
     console.log("xyz5", e);
-    res
-      .status(200)
-      .send({
-        message: "Withdrawal is failed, Due to technical issue.",
-        subCode: 999,
-      });
-  }
-});
-router.post("/withdraw/payoutcashfreebank", Auth, async (req, res) => {
-  res
-    .status(200)
-    .send({
+    res.status(200).send({
       message: "Withdrawal is failed, Due to technical issue.",
       subCode: 999,
     });
+  }
+});
+router.post("/withdraw/payoutcashfreebank", Auth, async (req, res) => {
+  res.status(200).send({
+    message: "Withdrawal is failed, Due to technical issue.",
+    subCode: 999,
+  });
   const { amount, type, payment_gatway } = req.body;
   const userID = req.user.id;
 
@@ -2375,13 +2322,11 @@ router.post("/withdraw/payoutdecentrobank", Auth, async (req, res) => {
                       withdraw.status = "SUCCESS";
                       withdraw.save();
 
-                      res
-                        .status(200)
-                        .send({
-                          message:
-                            "Your withdrawal request successfully completed",
-                          subCode: 200,
-                        });
+                      res.status(200).send({
+                        message:
+                          "Your withdrawal request successfully completed",
+                        subCode: 200,
+                      });
                     } else if (response.data.status === "pending") {
                       txn.referenceId = response.data.decentroTxnId;
                       txn.status = response.data.status;
@@ -2393,12 +2338,10 @@ router.post("/withdraw/payoutdecentrobank", Auth, async (req, res) => {
                       withdraw.status = "SUCCESS";
                       withdraw.save();
 
-                      res
-                        .status(200)
-                        .send({
-                          message: "Your withdrawal request in proccessing",
-                          subCode: 200,
-                        });
+                      res.status(200).send({
+                        message: "Your withdrawal request in proccessing",
+                        subCode: 200,
+                      });
                     }
                   })
                   .catch(function (error) {
@@ -2412,13 +2355,10 @@ router.post("/withdraw/payoutdecentrobank", Auth, async (req, res) => {
               user.save();
               txn.save();
             } else {
-              res
-                .status(200)
-                .send({
-                  message:
-                    "Amount must be less than and equal to Wallet amount",
-                  subCode: 999,
-                });
+              res.status(200).send({
+                message: "Amount must be less than and equal to Wallet amount",
+                subCode: 999,
+              });
             }
           } else {
             res
@@ -2426,13 +2366,11 @@ router.post("/withdraw/payoutdecentrobank", Auth, async (req, res) => {
               .send({ message: "Technical error from bank", subCode: 999 });
           }
         } else {
-          res
-            .status(200)
-            .send({
-              message:
-                "You can't Withdrawal for 1.5 hour since the last withdrawal.",
-              subCode: 999,
-            });
+          res.status(200).send({
+            message:
+              "You can't Withdrawal for 1.5 hour since the last withdrawal.",
+            subCode: 999,
+          });
         }
       } else {
         res
@@ -2440,22 +2378,18 @@ router.post("/withdraw/payoutdecentrobank", Auth, async (req, res) => {
           .send({ message: "You are enrolled in game.", subCode: 999 });
       }
     } else {
-      res
-        .status(200)
-        .send({
-          message: "Withdrawal is failed please contact to admin.",
-          subCode: 999,
-        });
+      res.status(200).send({
+        message: "Withdrawal is failed please contact to admin.",
+        subCode: 999,
+      });
     }
   } catch (e) {
     console.log("xyz6", e);
-    res
-      .status(200)
-      .send({
-        message:
-          "Withdrawal is failed, Due to technical issue. Try after sometime.",
-        subCode: 999,
-      });
+    res.status(200).send({
+      message:
+        "Withdrawal is failed, Due to technical issue. Try after sometime.",
+      subCode: 999,
+    });
   }
 });
 
@@ -2801,24 +2735,20 @@ router.post("/mypay/payin", Auth, async (req, res) => {
                 res.status(200).send(response.data);
               } else {
                 console.error(response.data, "resp0");
-                res
-                  .status(400)
-                  .send({
-                    status: false,
-                    msg: response.data.data.status,
-                    data: response.data.data,
-                  });
+                res.status(400).send({
+                  status: false,
+                  msg: response.data.data.status,
+                  data: response.data.data,
+                });
               }
             })
             .catch(function (error) {
               console.error(error.response, "response1", phoneNo);
-              res
-                .status(400)
-                .send({
-                  status: false,
-                  msg: "email or name is not valid",
-                  data: error,
-                });
+              res.status(400).send({
+                status: false,
+                msg: "email or name is not valid",
+                data: error,
+              });
               // res.status(400).send({status:false, msg: error?.response.data?.status, data: error.response});
             });
         })
@@ -2885,13 +2815,11 @@ router.post("/mypay-payout/g56", Auth, async (req, res) => {
       );
       if (!txn) {
         console.error("Not a valid transection or locked" + txnID);
-        return res
-          .status(400)
-          .json({
-            status: false,
-            msg: "Not a valid transection or locked",
-            data: txnID,
-          });
+        return res.status(400).json({
+          status: false,
+          msg: "Not a valid transection or locked",
+          data: txnID,
+        });
       }
 
       setTimeout(
@@ -2927,7 +2855,7 @@ router.post("/mypay-payout/g56", Auth, async (req, res) => {
         var refrenceId = "MYPAY" + getUniqueID();
         console.error(txn.Withdraw_type, "mypay");
         if (txn.Withdraw_type == "upi") {
-          if (user.upi_id == null) {
+          if (user.upi_id) {
             return res
               .status(200)
               .send({ status: false, message: "invalid upi", data: [] });
@@ -3279,6 +3207,108 @@ router.post("/mypay-payout/g56", Auth, async (req, res) => {
   } catch (e) {
     console.error(e, "abc");
     res.send(e);
+  }
+});
+
+router.post("/mypay-payout-by-upiId", Auth, async (req, res) => {
+  try {
+    const { amount, type, userID, txnID, reqID } = req.body;
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+    const mismatchValue =
+      user.Wallet_balance -
+      (user.wonAmount -
+        user.loseAmount +
+        user.totalDeposit +
+        user.referral_earning +
+        user.totalBonus -
+        (user.totalWithdrawl +
+          user.referral_wallet +
+          user.withdraw_holdbalance +
+          user.hold_balance +
+          user.totalPenalty));
+    if (mismatchValue != 0) {
+      res.status(200).send({ message: "Mismatch Exist", subCode: 999 });
+    } else if (user.hold_balance < 0) {
+      return res.status(200).send({ message: "Balance on hold", subCode: 999 });
+    } else {
+      // else if(user.withdraw_holdbalance>0 && type=='upi')
+      // {
+
+      const txn = await Transaction.findOneAndUpdate(
+        { _id: txnID, lock: false },
+        { $set: { lock: true } },
+        { returnOriginal: false }
+      );
+      if (!txn) {
+        console.error("Not a valid transection or locked" + txnID);
+        return res.status(400).json({
+          status: false,
+          msg: "Not a valid transection or locked",
+          data: txnID,
+        });
+      }
+
+      setTimeout(
+        async (txnId) => {
+          const running = await Transaction.findOneAndUpdate(
+            { _id: txnID, lock: true },
+            { $set: { lock: false } },
+            { returnOriginal: false }
+          );
+        },
+        10000,
+        txnID
+      );
+      const withdraw = await Temp.findById(reqID);
+      if (txn.status === "SUCCESS" || txn.status === "FAILED") {
+        InProcessSubmit = false;
+        res.status(200).send({
+          message: "Payout Request already processed",
+          subCode: 999,
+        });
+      } else {
+        if (txn.Withdraw_type == "upi") {
+          if (!user.upi_id) {
+            return res.status(200).send({
+              status: false,
+              message: "invalid upi",
+              data: [],
+            });
+          } else {
+            txn.order_id = null;
+            txn.referenceId = null;
+            txn.action_by = req.user.id;
+            txn.payment_gatway = "UPI";
+            txn.txn_msg =
+              "issuer bank or payment service provider declined the transaction";
+            txn.status = "SUCCESS";
+            user.totalWithdrawl += txn.amount;
+            user.withdraw_holdbalance -= txn.amount;
+            user.lastWitdrawl = Date.now();
+            await user.save();
+            await txn.save();
+            withdraw.closing_balance =
+              withdraw.closing_balance - withdraw.amount;
+            withdraw.status = "SUCCESS";
+            withdraw.save();
+
+            return res.status(200).json({
+              status: "success",
+              message: "Payment Success",
+            });
+          }
+        }
+      }
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Internal Server Error",
+      data: error.message,
+    });
   }
 });
 
@@ -3647,14 +3677,12 @@ router.post("/webhook-payouts-cashfree", async (req, res) => {
       await txn.save();
     }
 
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else if (req.body.type == "PAYMENT_FAILED_WEBHOOK") {
     const orderID1 = req.body.data.order.order_id;
     const txn1 = await Transaction.findById(orderID1);
@@ -3667,14 +3695,12 @@ router.post("/webhook-payouts-cashfree", async (req, res) => {
 
       await txn1.save();
     }
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else if (req.body.type == "PAYMENT_USER_DROPPED_WEBHOOK") {
     const orderID1 = req.body.data.order.order_id;
     const txn1 = await Transaction.findById(orderID1);
@@ -3690,23 +3716,19 @@ router.post("/webhook-payouts-cashfree", async (req, res) => {
       await user1.save();
       await txn1.save();
     }
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else {
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   }
 });
 router.post("/webhook-payouts-cashfree-payment", async (req, res) => {
@@ -3739,14 +3761,12 @@ router.post("/webhook-payouts-cashfree-payment", async (req, res) => {
     }
     console.log("webhook 125");
 
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else if (req.body.type == "TRANSFER_FAILED") {
     console.log("webhook 126");
     const orderID1 = req.body.data.order.order_id;
@@ -3766,14 +3786,12 @@ router.post("/webhook-payouts-cashfree-payment", async (req, res) => {
       await user1.save();
       await txn1.save();
     }
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else if (req.body.type == "TRANSFER_REJECTED") {
     console.log("webhook 126");
     const orderID1 = req.body.data.order.order_id;
@@ -3793,24 +3811,20 @@ router.post("/webhook-payouts-cashfree-payment", async (req, res) => {
       await user1.save();
       await txn1.save();
     }
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else {
     console.log("webhook 128");
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   }
 });
 
@@ -3859,14 +3873,12 @@ router.post("/webhook-payouts-decentro", async (req, res) => {
         await txn.save();
       }
 
-      res
-        .status(200)
-        .json({
-          status: "ok",
-          message: "Successful Callback",
-          responsecode: "200",
-          data: null,
-        });
+      res.status(200).json({
+        status: "ok",
+        message: "Successful Callback",
+        responsecode: "200",
+        data: null,
+      });
     } else if (req.body.transactionStatus == "failure") {
       const orderID1 = req.body.referenceId;
       const txn1 = await Transaction.findById(orderID1);
@@ -3898,33 +3910,27 @@ router.post("/webhook-payouts-decentro", async (req, res) => {
         await txn1.save();
       }
 
-      res
-        .status(200)
-        .json({
-          status: "ok",
-          message: "Successful Callback",
-          responsecode: "200",
-          data: null,
-        });
-    } else {
-      res
-        .status(400)
-        .json({
-          status: "ok",
-          message: "Failed Callback",
-          responsecode: "400",
-          data: null,
-        });
-    }
-  } else {
-    res
-      .status(401)
-      .json({
+      res.status(200).json({
         status: "ok",
-        message: "Unauthorized Callback",
+        message: "Successful Callback",
+        responsecode: "200",
+        data: null,
+      });
+    } else {
+      res.status(400).json({
+        status: "ok",
+        message: "Failed Callback",
         responsecode: "400",
         data: null,
       });
+    }
+  } else {
+    res.status(401).json({
+      status: "ok",
+      message: "Unauthorized Callback",
+      responsecode: "400",
+      data: null,
+    });
   }
 });
 
@@ -3956,14 +3962,12 @@ router.post("/userwithdrawupdate/:id", Auth, async (req, res) => {
       }
     }
 
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else if (req.body.status == "FAILED") {
     const orderID1 = req.params.id;
     const txn1 = await Transaction.findById(orderID1);
@@ -3991,23 +3995,19 @@ router.post("/userwithdrawupdate/:id", Auth, async (req, res) => {
         await withdraw.save();
       }
     }
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else {
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   }
 });
 
@@ -4029,14 +4029,12 @@ router.post("/userdipositupdate/:id", Auth, async (req, res) => {
       await txn.save();
     }
 
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else if (req.body.status == "FAILED") {
     const orderID1 = req.params.id;
     const txn1 = await Transaction.findById(orderID1);
@@ -4049,23 +4047,19 @@ router.post("/userdipositupdate/:id", Auth, async (req, res) => {
     await user1.save();
     await txn1.save();
     // }
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   } else {
-    res
-      .status(200)
-      .json({
-        status: "ok",
-        message: "response",
-        responsecode: "200",
-        data: null,
-      });
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   }
 });
 
@@ -4152,14 +4146,12 @@ router.post("/webhook-payouts-razorpay", async (req, res) => {
         );
       }
 
-      res
-        .status(200)
-        .json({
-          status: "ok",
-          message: "response",
-          responsecode: "200",
-          data: null,
-        });
+      res.status(200).json({
+        status: "ok",
+        message: "response",
+        responsecode: "200",
+        data: null,
+      });
     } else if (payout_status == "reversed") {
       const orderID1 = txn_id;
       const txn1 = await Transaction.findById(orderID1);
@@ -4212,33 +4204,27 @@ router.post("/webhook-payouts-razorpay", async (req, res) => {
       }
       // Notification
 
-      res
-        .status(200)
-        .json({
-          status: "ok",
-          message: "response",
-          responsecode: "200",
-          data: null,
-        });
-    } else {
-      res
-        .status(200)
-        .json({
-          status: "ok",
-          message: "response",
-          responsecode: "200",
-          data: null,
-        });
-    }
-  } else {
-    res
-      .status(200)
-      .json({
+      res.status(200).json({
         status: "ok",
         message: "response",
         responsecode: "200",
         data: null,
       });
+    } else {
+      res.status(200).json({
+        status: "ok",
+        message: "response",
+        responsecode: "200",
+        data: null,
+      });
+    }
+  } else {
+    res.status(200).json({
+      status: "ok",
+      message: "response",
+      responsecode: "200",
+      data: null,
+    });
   }
 });
 
@@ -4321,13 +4307,11 @@ router.get("/phonpay-request-status", async (req, res) => {
 
   if (!txn) {
     //   console.error('Not a valid transection or locked'+req.query.txnId)
-    return res
-      .status(400)
-      .json({
-        status: false,
-        msg: "Not a valid transection or locked",
-        data: req.query.txnId,
-      });
+    return res.status(400).json({
+      status: false,
+      msg: "Not a valid transection or locked",
+      data: req.query.txnId,
+    });
   }
 
   setTimeout(
@@ -4504,13 +4488,11 @@ router.post("/phonpay-request-callback", async (req, res) => {
       { returnOriginal: false }
     );
     if (!txn) {
-      return res
-        .status(400)
-        .json({
-          status: false,
-          msg: "Not a valid transection or locked",
-          data: txnId,
-        });
+      return res.status(400).json({
+        status: false,
+        msg: "Not a valid transection or locked",
+        data: txnId,
+      });
     }
 
     setTimeout(

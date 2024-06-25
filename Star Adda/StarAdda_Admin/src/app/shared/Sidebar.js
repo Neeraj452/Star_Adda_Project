@@ -1,73 +1,73 @@
-import React, { Component, useEffect, useState } from 'react'
-import { Link, withRouter } from 'react-router-dom'
-import { Collapse, Dropdown } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
-import axios from 'axios'
+import React, { Component, useEffect, useState } from "react";
+import { Link, withRouter } from "react-router-dom";
+import { Collapse, Dropdown } from "react-bootstrap";
+import { Trans } from "react-i18next";
+import axios from "axios";
 
 class Sidebar extends Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
 
   toggleMenuState(menuState) {
     if (this.state[menuState]) {
-      this.setState({ [menuState]: false })
+      this.setState({ [menuState]: false });
     } else if (Object.keys(this.state).length === 0) {
-      this.setState({ [menuState]: true })
+      this.setState({ [menuState]: true });
     } else {
       Object.keys(this.state).forEach((i) => {
-        this.setState({ [i]: false })
-      })
-      this.setState({ [menuState]: true })
+        this.setState({ [i]: false });
+      });
+      this.setState({ [menuState]: true });
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      this.onRouteChanged()
+      this.onRouteChanged();
     }
   }
 
   onRouteChanged() {
-    document.querySelector('#sidebar').classList.remove('active')
+    document.querySelector("#sidebar").classList.remove("active");
     Object.keys(this.state).forEach((i) => {
-      this.setState({ [i]: false })
-    })
+      this.setState({ [i]: false });
+    });
 
     const dropdownPaths = [
-      { path: '/apps', state: 'appsMenuOpen' },
-      { path: '/admin', state: 'adminMenu' },
-      { path: '/game', state: 'gameMenu' },
-      { path: '/user', state: 'userMenu' },
-      { path: '/agent', state: 'agentMenu' },
-      { path: '/challenge', state: 'challengeMenu' },
-      { path: '/transaction', state: 'transactionMenu' },
-      { path: '/basic-ui', state: 'basicUiMenuOpen' },
-      { path: '/form-elements', state: 'formElementsMenuOpen' },
-      { path: '/tables', state: 'tablesMenuOpen' },
-      { path: '/icons', state: 'iconsMenuOpen' },
-      { path: '/charts', state: 'chartsMenuOpen' },
-      { path: '/user-pages', state: 'userPagesMenuOpen' },
-      { path: '/error-pages', state: 'errorPagesMenuOpen' },
-      { path: '/Reports', state: 'reportsMenu' }, //Added By Team
-    ]
+      { path: "/apps", state: "appsMenuOpen" },
+      { path: "/admin", state: "adminMenu" },
+      { path: "/game", state: "gameMenu" },
+      { path: "/user", state: "userMenu" },
+      { path: "/agent", state: "agentMenu" },
+      { path: "/challenge", state: "challengeMenu" },
+      { path: "/transaction", state: "transactionMenu" },
+      { path: "/basic-ui", state: "basicUiMenuOpen" },
+      { path: "/form-elements", state: "formElementsMenuOpen" },
+      { path: "/tables", state: "tablesMenuOpen" },
+      { path: "/icons", state: "iconsMenuOpen" },
+      { path: "/charts", state: "chartsMenuOpen" },
+      { path: "/user-pages", state: "userPagesMenuOpen" },
+      { path: "/error-pages", state: "errorPagesMenuOpen" },
+      { path: "/Reports", state: "reportsMenu" }, //Added By Team
+    ];
 
     dropdownPaths.forEach((obj) => {
       if (this.isPathActive(obj.path)) {
-        this.setState({ [obj.state]: true })
+        this.setState({ [obj.state]: true });
       }
-    })
+    });
   }
 
   render() {
-    var appURL = process.env.PUBLIC_URL
+    var appURL = process.env.PUBLIC_URL;
     var logo =
-      appURL + 'https://img.icons8.com/dotty/512/admin-settings-male.png'
+      appURL + "https://img.icons8.com/dotty/512/admin-settings-male.png";
     // foreach props
     for (let key in this.props) {
       if (this.props[key] === undefined) {
-        setTimeout(() => {}, 1000)
+        setTimeout(() => {}, 1000);
       }
     }
     return (
@@ -106,9 +106,9 @@ class Sidebar extends Component {
           {this.props.dashboard && (
             <li
               className={
-                this.isPathActive('/dashboard')
-                  ? 'nav-item menu-items active'
-                  : 'nav-item menu-items'
+                this.isPathActive("/dashboard")
+                  ? "nav-item menu-items active"
+                  : "nav-item menu-items"
               }
             >
               <Link className="nav-link" to="/dashboard">
@@ -124,9 +124,9 @@ class Sidebar extends Component {
           {this.props.earnings && (
             <li
               className={
-                this.isPathActive('/earinigs')
-                  ? 'nav-item menu-items active'
-                  : 'nav-item menu-items'
+                this.isPathActive("/earinigs")
+                  ? "nav-item menu-items active"
+                  : "nav-item menu-items"
               }
             >
               <Link className="nav-link" to="/earinigs">
@@ -144,16 +144,16 @@ class Sidebar extends Component {
             this.props.sitesettings) && (
             <li
               className={
-                this.isPathActive('/admin')
-                  ? 'nav-item menu-items active'
-                  : 'nav-item menu-items'
+                this.isPathActive("/admin")
+                  ? "nav-item menu-items active"
+                  : "nav-item menu-items"
               }
             >
               <div
                 className={
-                  this.state.adminMenu ? 'nav-link menu-expanded' : 'nav-link'
+                  this.state.adminMenu ? "nav-link menu-expanded" : "nav-link"
                 }
-                onClick={() => this.toggleMenuState('adminMenu')}
+                onClick={() => this.toggleMenuState("adminMenu")}
                 data-toggle="collapse"
               >
                 <span className="menu-icon">
@@ -169,12 +169,12 @@ class Sidebar extends Component {
                   <ul className="nav flex-column sub-menu">
                     {this.props.allAdmins && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/admin/alladmins')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/admin/alladmins")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/admin/alladmins"
                         >
@@ -184,12 +184,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.newAdmin && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/admin/addadmin')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/admin/addadmin")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/admin/addadmin"
                         >
@@ -224,16 +224,16 @@ class Sidebar extends Component {
             this.props.rejectKyc) && (
             <li
               className={
-                this.isPathActive('/user')
-                  ? 'nav-item menu-items active'
-                  : 'nav-item menu-items'
+                this.isPathActive("/user")
+                  ? "nav-item menu-items active"
+                  : "nav-item menu-items"
               }
             >
               <div
                 className={
-                  this.state.userMenu ? 'nav-link menu-expanded' : 'nav-link'
+                  this.state.userMenu ? "nav-link menu-expanded" : "nav-link"
                 }
-                onClick={() => this.toggleMenuState('userMenu')}
+                onClick={() => this.toggleMenuState("userMenu")}
                 data-toggle="collapse"
               >
                 <span className="menu-icon">
@@ -249,12 +249,12 @@ class Sidebar extends Component {
                   <ul className="nav flex-column sub-menu">
                     {this.props.allUsers && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/user/allusers')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/user/allusers")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/user/allusers"
                         >
@@ -279,12 +279,12 @@ class Sidebar extends Component {
                     )} */}
                     {this.props.pendingKyc && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/user/UserKyc')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/user/UserKyc")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/user/UserKyc"
                         >
@@ -294,12 +294,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.completedKyc && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/user/kyc')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/user/kyc")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/user/kyc"
                         >
@@ -309,12 +309,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.rejectKyc && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/user/reject')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/user/reject")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/user/reject"
                         >
@@ -335,18 +335,18 @@ class Sidebar extends Component {
             this.props.newChallenge) && (
             <li
               className={
-                this.isPathActive('/challenge')
-                  ? 'nav-item menu-items active'
-                  : 'nav-item menu-items'
+                this.isPathActive("/challenge")
+                  ? "nav-item menu-items active"
+                  : "nav-item menu-items"
               }
             >
               <div
                 className={
                   this.state.challengeMenu
-                    ? 'nav-link menu-expanded'
-                    : 'nav-link'
+                    ? "nav-link menu-expanded"
+                    : "nav-link"
                 }
-                onClick={() => this.toggleMenuState('challengeMenu')}
+                onClick={() => this.toggleMenuState("challengeMenu")}
                 data-toggle="collapse"
               >
                 <span className="menu-icon">
@@ -362,12 +362,12 @@ class Sidebar extends Component {
                   <ul className="nav flex-column sub-menu">
                     {this.props.allChallenges && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/challenge/allchallenges')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/challenge/allchallenges")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/challenge/allchallenges"
                         >
@@ -377,12 +377,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.completedChallenges && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/challenge/completed_challange')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/challenge/completed_challange")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/challenge/completed_challange"
                         >
@@ -392,12 +392,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.conflictChallenges && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/challenge/conflict_challange')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/challenge/conflict_challange")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/challenge/conflict_challange"
                         >
@@ -407,12 +407,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.cancelledChallenges && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/challenge/cancelled_challange')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/challenge/cancelled_challange")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/challenge/cancelled_challange"
                         >
@@ -422,12 +422,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.runningChallenges && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/challenge/running_challange')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/challenge/running_challange")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/challenge/running_challange"
                         >
@@ -437,12 +437,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.newChallenge && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/challenge/new_challange')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/challenge/new_challange")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/challenge/new_challange"
                         >
@@ -463,18 +463,18 @@ class Sidebar extends Component {
             this.props.allDepositRequests) && (
             <li
               className={
-                this.isPathActive('/transaction')
-                  ? 'nav-item menu-items active'
-                  : 'nav-item menu-items'
+                this.isPathActive("/transaction")
+                  ? "nav-item menu-items active"
+                  : "nav-item menu-items"
               }
             >
               <div
                 className={
                   this.state.transactionMenu
-                    ? 'nav-link menu-expanded'
-                    : 'nav-link'
+                    ? "nav-link menu-expanded"
+                    : "nav-link"
                 }
-                onClick={() => this.toggleMenuState('transactionMenu')}
+                onClick={() => this.toggleMenuState("transactionMenu")}
                 data-toggle="collapse"
               >
                 <span className="menu-icon">
@@ -490,12 +490,12 @@ class Sidebar extends Component {
                   <ul className="nav flex-column sub-menu">
                     {this.props.penaltyBonus && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/transaction/penaltybonus')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/transaction/penaltybonus")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/transaction/penaltybonus"
                         >
@@ -505,14 +505,14 @@ class Sidebar extends Component {
                     )}
                     {this.props.depositHistory && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
                             this.isPathActive(
-                              '/transaction/transaction_history',
+                              "/transaction/transaction_history"
                             )
-                              ? 'nav-link active'
-                              : 'nav-link'
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/transaction/transaction_history"
                         >
@@ -521,30 +521,28 @@ class Sidebar extends Component {
                       </li>
                     )}
                     {/* {this.props.depositManual && ( */}
-                      <li className="nav-item">
-                        {' '}
-                        <Link
-                          className={
-                            this.isPathActive(
-                              '/transaction/deposit_manual',
-                            )
-                              ? 'nav-link active'
-                              : 'nav-link'
-                          }
-                          to="/transaction/deposit_manual"
-                        >
-                          <Trans>Deposit Manual</Trans>
-                        </Link>
-                      </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/transaction/deposit_manual")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/transaction/deposit_manual"
+                      >
+                        <Trans>Deposit Manual</Trans>
+                      </Link>
+                    </li>
                     {/* )} */}
                     {this.props.bonusHistory && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/transaction/bonus_history')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/transaction/bonus_history")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/transaction/bonus_history"
                         >
@@ -554,12 +552,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.withdrawlHistory && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/transaction/withdraw')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/transaction/withdraw")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/transaction/withdraw"
                         >
@@ -569,12 +567,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.allWithdrawlRequests && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/transaction/allwithdrawl')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/transaction/allwithdrawl")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/transaction/allwithdrawl"
                         >
@@ -582,7 +580,7 @@ class Sidebar extends Component {
                         </Link>
                       </li>
                     )}
-                    {this.props.allDepositRequests && (
+                    {/* {this.props.allDepositRequests && (
                       <li className="nav-item">
                         {' '}
                         <Link
@@ -596,7 +594,7 @@ class Sidebar extends Component {
                           <Trans>View All Deposit Request</Trans>
                         </Link>
                       </li>
-                    )}
+                    )} */}
                   </ul>
                 </div>
               </Collapse>
@@ -617,16 +615,16 @@ class Sidebar extends Component {
             this.props.withdrawlReport) && (
             <li
               className={
-                this.isPathActive('/reports')
-                  ? 'nav-item menu-items active'
-                  : 'nav-item menu-items'
+                this.isPathActive("/reports")
+                  ? "nav-item menu-items active"
+                  : "nav-item menu-items"
               }
             >
               <div
                 className={
-                  this.state.reportsMenu ? 'nav-link menu-expanded' : 'nav-link'
+                  this.state.reportsMenu ? "nav-link menu-expanded" : "nav-link"
                 }
-                onClick={() => this.toggleMenuState('reportsMenu')}
+                onClick={() => this.toggleMenuState("reportsMenu")}
                 data-toggle="collapse"
               >
                 <span className="menu-icon">
@@ -642,12 +640,12 @@ class Sidebar extends Component {
                   <ul className="nav flex-column sub-menu">
                     {this.props.bonusReport && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/Reports/bonus_report')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/Reports/bonus_report")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/Reports/bonusReport"
                         >
@@ -672,12 +670,12 @@ class Sidebar extends Component {
                     )} */}
                     {this.props.penaltyReport && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/Reports/penalty_report')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/Reports/penalty_report")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/Reports/penaltyReport"
                         >
@@ -687,12 +685,12 @@ class Sidebar extends Component {
                     )}
                     {this.props.withdrawalReport && (
                       <li className="nav-item">
-                        {' '}
+                        {" "}
                         <Link
                           className={
-                            this.isPathActive('/Reports/withdrawal_report')
-                              ? 'nav-link active'
-                              : 'nav-link'
+                            this.isPathActive("/Reports/withdrawal_report")
+                              ? "nav-link active"
+                              : "nav-link"
                           }
                           to="/Reports/withdrawalReport"
                         >
@@ -836,30 +834,30 @@ class Sidebar extends Component {
           </li> */}
         </ul>
       </nav>
-    )
+    );
   }
 
   isPathActive(path) {
-    return this.props.location.pathname.startsWith(path)
+    return this.props.location.pathname.startsWith(path);
   }
 
   componentDidMount() {
-    this.onRouteChanged()
+    this.onRouteChanged();
     // add class 'hover-open' to sidebar navitem while hover in sidebar-icon-only menu
-    const body = document.querySelector('body')
-    document.querySelectorAll('.sidebar .nav-item').forEach((el) => {
-      el.addEventListener('mouseover', function () {
-        if (body.classList.contains('sidebar-icon-only')) {
-          el.classList.add('hover-open')
+    const body = document.querySelector("body");
+    document.querySelectorAll(".sidebar .nav-item").forEach((el) => {
+      el.addEventListener("mouseover", function () {
+        if (body.classList.contains("sidebar-icon-only")) {
+          el.classList.add("hover-open");
         }
-      })
-      el.addEventListener('mouseout', function () {
-        if (body.classList.contains('sidebar-icon-only')) {
-          el.classList.remove('hover-open')
+      });
+      el.addEventListener("mouseout", function () {
+        if (body.classList.contains("sidebar-icon-only")) {
+          el.classList.remove("hover-open");
         }
-      })
-    })
+      });
+    });
   }
 }
 
-export default withRouter(Sidebar)
+export default withRouter(Sidebar);

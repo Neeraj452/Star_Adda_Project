@@ -32,7 +32,8 @@ import BonusReport from "./components/Reports/BonusReport";
 import WithdrawalReport from "./components/Reports/WithdrawalReport";
 import PenaltyReport from "./components/Reports/PenaltyReport";
 import { Sitesettings } from "./components/adminManagement/Sitesettings";
-import DepositManual from "./components/transaction/DepositManual";
+// import DepositManual from "./components/transaction/DepositManual";
+import DepositManualByUTR from "./components/transaction/DepositManualBYUTR";
 
 // Admin Management start
 const Alladmin = lazy(() => import("./components/adminManagement/Alladmin"));
@@ -205,7 +206,7 @@ const AppRoutes = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          localStorage.clear();
         });
     }
   }, [access_token]);
@@ -217,7 +218,7 @@ const AppRoutes = () => {
           {/* <Route exact path="/login" component={userLogin} /> */}
           <Route exact path="/adminlogin" component={Login} />
 
-          <Redirect to="/login" />
+          <Redirect to="/adminlogin" />
         </Switch>
       </Suspense>
     );
@@ -326,10 +327,16 @@ const AppRoutes = () => {
                 component={Penaltybonus}
               />
             )}
-            {depositManual && (
+            {/* {depositManual && (
               <Route
                 path="/transaction/deposit_manual"
                 component={DepositManual}
+              />
+            )} */}
+            {depositManual && (
+              <Route
+                path="/transaction/deposit_manual"
+                component={DepositManualByUTR}
               />
             )}
             {depositHistory && (

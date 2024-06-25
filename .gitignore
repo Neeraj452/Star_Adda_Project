@@ -1,4 +1,7 @@
 # Node modules
 backend/node_modules/
 StarAdda_admin/node_modules/
-Staradda_Front/node_modules/
+Staradda_Front/node_modules/ 
+# Logs
+*.log
+npm-debug.log*

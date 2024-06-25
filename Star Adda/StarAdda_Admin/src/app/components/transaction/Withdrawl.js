@@ -1,294 +1,301 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import Swal from 'sweetalert2'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const $ = require('jquery')
-$.Datatable = require('datatables.net')
+const $ = require("jquery");
+$.Datatable = require("datatables.net");
 
 const Withdrawl = () => {
-  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API
-  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API
-  const nodeMode = process.env.NODE_ENV
-  if (nodeMode === 'development') {
-    var baseUrl = beckendLocalApiUrl
+  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API;
+  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API;
+  const nodeMode = process.env.NODE_ENV;
+  if (nodeMode === "development") {
+    var baseUrl = beckendLocalApiUrl;
   } else {
-    baseUrl = beckendLiveApiUrl
+    baseUrl = beckendLiveApiUrl;
   }
 
-  const [user, setUser] = useState()
-  const [mount, setMount] = useState(false)
-  const [disable, setDisable] = useState(false)
+  const [user, setUser] = useState();
+  const [mount, setMount] = useState(false);
+  const [disable, setDisable] = useState(false);
 
   const profle = () => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .get(baseUrl + `temp/withdraw/all/pending`, { headers })
       .then((res) => {
-        setUser(res.data)
-        $('table').dataTable()
+        setUser(res.data);
+        $("table").dataTable();
 
-        console.log(user)
-      })
-  }
+        console.log(user);
+      });
+  };
 
   const checkStatus = async (id) => {
-    setMount(true)
-    const access_token = localStorage.getItem('token')
+    setMount(true);
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .get(baseUrl + `withdrawlstatus/${id}`, { headers })
       .then((res) => {
-        setMount(false)
-        console.log(res.data)
+        setMount(false);
+        console.log(res.data);
         Swal.fire({
           title: res.data.message,
-          icon: 'info',
-          confirmButtonText: 'OK',
-        })
-        profle()
+          icon: "info",
+          confirmButtonText: "OK",
+        });
+        profle();
       })
       .catch((e) => {
-        setMount(false)
-        profle()
-        console.log(e)
-      })
-  }
-
+        setMount(false);
+        profle();
+        console.log(e);
+      });
+  };
 
   const withdrowPass = (id) => {
-    const confirm = window.confirm("Are you sure, you want to update to success this payout?")
+    const confirm = window.confirm(
+      "Are you sure, you want to update to success this payout?"
+    );
     if (confirm) {
-        const access_token = localStorage.getItem("token")
-        const headers = {
-            Authorization: `Bearer ${access_token}`
-        }
+      const access_token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${access_token}`,
+      };
 
-        axios.post(baseUrl + `userwithdrawupdate/${id}`,
-            {
-                status: "SUCCESS"
-            },
-            { headers })
-            .then((res) => {
-                profle();
-                alert('Payout successfully done');
-            }).catch((e) => {
-                //console.log(e);
-            })
+      axios
+        .post(
+          baseUrl + `userwithdrawupdate/${id}`,
+          {
+            status: "SUCCESS",
+          },
+          { headers }
+        )
+        .then((res) => {
+          profle();
+          alert("Payout successfully done");
+        })
+        .catch((e) => {
+          //console.log(e);
+        });
     }
-}
+  };
 
-
-const withdrowFail = (id) => {
-    const confirm = window.confirm("Are you sure, you want to update to failed this payout?")
+  const withdrowFail = (id) => {
+    const confirm = window.confirm(
+      "Are you sure, you want to update to failed this payout?"
+    );
     if (confirm) {
-        const access_token = localStorage.getItem("token")
-        const headers = {
-            Authorization: `Bearer ${access_token}`
-        }
+      const access_token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${access_token}`,
+      };
 
-        axios.post(baseUrl + `userwithdrawupdate/${id}`,
-            {
-                status: "FAILED"
-            },
-            { headers })
-            .then((res) => {
-                profle();
-                alert('Payout successfully reject');
-                //console.log(res);
-            }).catch((e) => {
-                //console.log(e);
-            })
+      axios
+        .post(
+          baseUrl + `userwithdrawupdate/${id}`,
+          {
+            status: "FAILED",
+          },
+          { headers }
+        )
+        .then((res) => {
+          profle();
+          alert("Payout successfully reject");
+          //console.log(res);
+        })
+        .catch((e) => {
+          //console.log(e);
+        });
     }
-}
+  };
 
-const update = async (amount, type, userID, txnID, reqID, manualPayment) => {
-  // setMount(true)
-  setDisable(true)
-  const access_token = localStorage.getItem('token')
-  const headers = {
-    Authorization: `Bearer ${access_token}`
-  }
-  //bank
+  const update = async (amount, type, userID, txnID, reqID, manualPayment) => {
+    // setMount(true)
+    setDisable(true);
+    const access_token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+    };
+    //bank
 
-  const inputOptions = new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        'mypay': 'mypay',
-      })
-    }, 1000)
-  })
+    const inputOptions = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          mypay: "mypay",
+        });
+      }, 1000);
+    });
 
-  const { value: PayMethod } = await Swal.fire({
-    title: 'Select PayMethod',
-    input: 'radio',
+    const { value: PayMethod } = await Swal.fire({
+      title: "Enter UTR Number",
+      input: "text",
       showCancelButton: true,
-    inputOptions: inputOptions,
-    inputValidator: (value) => {
-      if (!value) {
-        return 'You need to choose something!'
-      }
-    }
-  })
-
-  var manualPaymentInputvalue = "";
-  if (PayMethod === 'paymanual') {
-    const { value: manualPaymentInput } = await Swal.fire({
-      title: 'Enter Manual Payment Details',
-      input: 'text',
-      inputPlaceholder: 'Enter payment details here',
-      showCancelButton: true,
+      inputOptions: inputOptions,
       inputValidator: (value) => {
         if (!value) {
-          return 'Payment details cannot be empty!';
+          return "Please Enter UTR Number";
         }
       },
     });
-    if (manualPaymentInput) {
-      // Handle the manual payment input value here
-      var pathUrl = baseUrl+`userwithdrawupdate/`+reqID;
-      manualPaymentInputvalue =manualPaymentInput;
-    }
-  }
- else if(PayMethod=='razorpay'){
-    var pathUrl = baseUrl+`withdraw/razorpay/adminmanual`;
-  }else if (PayMethod=='mypay') {
-    var pathUrl = baseUrl+`mypay-payout/g56`;
-  }else{
-    var pathUrl = baseUrl+`haodapay-bank-payout`;
-  }
-  // if (type == 'upi') {
-  //   var pathUrl = baseUrl + `withdraw/razorpay/adminmanual`
-  // } else {
-  //   var pathUrl = baseUrl + `withdraw/razorpay/adminmanual`
-  // }
 
-  if (PayMethod) {
-    // setLoading(true)
-  setMount(true)
-  setDisable(true)
-  Swal.fire({ html: `You selected: ${PayMethod}` })
-  
-  axios
-    .post(
-      pathUrl,
-      {
-        amount: amount,
-        type: type,
-        userID: userID,
-        txnID: txnID,
-        reqID: reqID,
-        refID: manualPaymentInputvalue
-      },
-      { headers }
-    )
-    .then(res => {
-  // setLoading(false)
-      setMount(false)
-      setDisable(false)
-      if (res.data.subCode === '200') {
-        console.log('cash res', res)
-        Swal.fire({
-          title: res.data.message,
-          icon: 'success',
-          confirmButtonText: 'OK'
-        })
-        setTimeout(() => {
-          profle()
-        }, 1000)
-      } else {
-  // setLoading(false)
-  setMount(false)
-
-        Swal.fire({
-          title: res.data.message,
-          icon: 'danger',
-          confirmButtonText: 'OK'
-        })
-        setTimeout(() => {
-          profle()
-        }, 1000)
+    var manualPaymentInputvalue = "";
+    if (PayMethod === "paymanual") {
+      const { value: manualPaymentInput } = await Swal.fire({
+        title: "Enter Manual Payment Details",
+        input: "text",
+        inputPlaceholder: "Enter payment details here",
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "Payment details cannot be empty!";
+          }
+        },
+      });
+      if (manualPaymentInput) {
+        // Handle the manual payment input value here
+        var pathUrl = baseUrl + `userwithdrawupdate/` + reqID;
+        manualPaymentInputvalue = manualPaymentInput;
       }
-    })
-    .catch(e => {
-      setMount(false)
-      Swal.fire({
-        title: 'Error! try after sometime.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      })
-      console.log(e)
-      setTimeout(() => {
-        profle()
-      }, 1000)
-    })
+    } else if (PayMethod == "razorpay") {
+      var pathUrl = baseUrl + `withdraw/razorpay/adminmanual`;
+    } else if (PayMethod == "mypay") {
+      var pathUrl = baseUrl + `mypay-payout-by-upiId`;
+    } else {
+      var pathUrl = baseUrl + `haodapay-bank-payout`;
+    }
+    // if (type == 'upi') {
+    //   var pathUrl = baseUrl + `withdraw/razorpay/adminmanual`
+    // } else {
+    //   var pathUrl = baseUrl + `withdraw/razorpay/adminmanual`
+    // }
 
-  }
-  
-}
+    if (PayMethod) {
+      // setLoading(true)
+      setMount(true);
+      setDisable(true);
+      Swal.fire({ html: `You selected: ${PayMethod}` });
+
+      axios
+        .post(
+          pathUrl,
+          {
+            amount: amount,
+            type: type,
+            userID: userID,
+            txnID: txnID,
+            reqID: reqID,
+            refID: manualPaymentInputvalue,
+          },
+          { headers }
+        )
+        .then((res) => {
+          // setLoading(false)
+          setMount(false);
+          setDisable(false);
+          if (res.data.subCode === "200") {
+            console.log("cash res", res);
+            Swal.fire({
+              title: res.data.message,
+              icon: "success",
+              confirmButtonText: "OK",
+            });
+            setTimeout(() => {
+              profle();
+            }, 1000);
+          } else {
+            // setLoading(false)
+            setMount(false);
+
+            Swal.fire({
+              title: res.data.message,
+              icon: "danger",
+              confirmButtonText: "OK",
+            });
+            setTimeout(() => {
+              profle();
+            }, 1000);
+          }
+        })
+        .catch((e) => {
+          setMount(false);
+          Swal.fire({
+            title: "Error! try after sometime.",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+          console.log(e);
+          setTimeout(() => {
+            profle();
+          }, 1000);
+        });
+    }
+  };
   const reject = async (id) => {
-    setMount(true)
-    const access_token = localStorage.getItem('token')
+    setMount(true);
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .patch(
         baseUrl + `temp/withdraw/reject/${id}`,
         {
-          status: 'reject',
+          status: "reject",
         },
-        { headers },
+        { headers }
       )
       .then((res) => {
-        setMount(false)
+        setMount(false);
         if (res.data.error) {
           Swal.fire({
             title: res.data.message,
-            icon: 'danger',
-            confirmButtonText: 'OK',
-          })
+            icon: "danger",
+            confirmButtonText: "OK",
+          });
         }
-        profle()
+        profle();
       })
       .catch((e) => {
-        setMount(false)
-        profle()
-        console.log(e)
-      })
-  }
+        setMount(false);
+        profle();
+        console.log(e);
+      });
+  };
 
   useEffect(() => {
-    profle()
-  }, [])
+    profle();
+  }, []);
 
   if (user == undefined) {
-    return null
+    return null;
   }
 
   return mount ? (
     <div
       className=""
       style={{
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        top: '0',
-        left: '0',
-        right: '0',
-        bottom: '0',
-        zIndex: '9999',
-        backgroundColor: 'rgb(255, 255, 255)',
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "0",
+        zIndex: "9999",
+        backgroundColor: "rgb(255, 255, 255)",
       }}
     >
-      <img src={'/Loader1.gif'} style={{ width: '150px', height: '80px' }} />
+      <img src={"/Loader1.gif"} style={{ width: "150px", height: "80px" }} />
     </div>
   ) : (
     <div className="other_page_cards_main">
@@ -331,16 +338,24 @@ const update = async (amount, type, userID, txnID, reqID, manualPayment) => {
                           <td>{item.amount}</td>
                           <td>{item.type}</td>
                           <td>
-                            {!mount && item.status == 'Pending' && (
+                            {!mount && item.status == "Pending" && (
                               <>
-                                {' '}
+                                {" "}
                                 <button
                                   className="btn btn-primary mr-2"
-                                  onClick={() => update(item.amount, item.type, item.user._id, item.txn_id, item._id)}
+                                  onClick={() =>
+                                    update(
+                                      item.amount,
+                                      item.type,
+                                      item.user._id,
+                                      item.txn_id,
+                                      item._id
+                                    )
+                                  }
                                   disabled={disable}
                                 >
                                   Approve
-                                </button>{' '}
+                                </button>{" "}
                                 <button
                                   className="btn btn-danger mr-2"
                                   onClick={() => reject(item._id)}
@@ -376,7 +391,7 @@ const update = async (amount, type, userID, txnID, reqID, manualPayment) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Withdrawl
+export default Withdrawl;

@@ -49,15 +49,15 @@ const Withdrawopt = ({ walletUpdate }) => {
   const [type, setType] = useState(undefined);
   const [mount, setMount] = useState(false);
 
-  useEffect(() => {
-    const addsetting = localStorage.getItem("sitSetting");
-    const addCaseSetting = JSON.parse(addsetting);
-    setWithdrawal(addCaseSetting.isWithdrawal);
-    setUpiWithdrawal(addCaseSetting.isUpiWithdrawal);
-    setBankWithdrawal(addCaseSetting.isBankWithdrawal);
-    setMinLimit(addCaseSetting.withdrawalLimitMin);
-    setMaxLimit(addCaseSetting.withdrawalLimitMax);
-  });
+  // useEffect(() => {
+  //   const addsetting = localStorage.getItem("sitSetting");
+  //   const addCaseSetting = JSON.parse(addsetting);
+  //   setWithdrawal(addCaseSetting.isWithdrawal);
+  //   setUpiWithdrawal(addCaseSetting.isUpiWithdrawal);
+  //   setBankWithdrawal(addCaseSetting.isBankWithdrawal);
+  //   setMinLimit(addCaseSetting.withdrawalLimitMin);
+  //   setMaxLimit(addCaseSetting.withdrawalLimitMax);
+  // });
 
   useEffect(() => {
     let access_token = localStorage.getItem("token");
@@ -174,12 +174,13 @@ const Withdrawopt = ({ walletUpdate }) => {
 
                 withReqComes();
               } else {
-                setMount(false);
-                setSubmitBtn(true);
                 Swal.fire({
                   title: res.data.msg,
                   icon: "error",
                   confirmButtonText: "OK",
+                }).then(() => {
+                  setSubmitBtn(true);
+                  setMount(false);
                 });
               }
             })
@@ -199,9 +200,9 @@ const Withdrawopt = ({ walletUpdate }) => {
             text: "Please make sure your UPI IDs match",
             icon: "error",
             confirmButtonText: "OK",
+          }).then(() => {
+            setSubmitBtn(true);
           });
-
-          setSubmitBtn(true);
         }
       } else {
         Swal.fire({
@@ -209,8 +210,9 @@ const Withdrawopt = ({ walletUpdate }) => {
           text: "Please enter a valid UPI ID",
           icon: "error",
           confirmButtonText: "OK",
+        }).then(() => {
+          setSubmitBtn(true);
         });
-        setSubmitBtn(true);
       }
     } else if (type === "banktransfer") {
       const access_token = localStorage.getItem("token");
@@ -251,12 +253,13 @@ const Withdrawopt = ({ walletUpdate }) => {
               ? doAutoPayout()
               : withReqComes();
           } else {
-            setMount(false);
-            setSubmitBtn(true);
             Swal.fire({
               title: res.data.msg,
               icon: "error",
               confirmButtonText: "OK",
+            }).then(() => {
+              setSubmitBtn(true);
+              setMount(false);
             });
           }
         })
@@ -302,12 +305,13 @@ const Withdrawopt = ({ walletUpdate }) => {
               ? doAutoPayout()
               : withReqComes();
           } else {
-            setMount(false);
-            setSubmitBtn(true);
             Swal.fire({
               title: res.data.msg,
               icon: "error",
               confirmButtonText: "OK",
+            }).then(() => {
+              setSubmitBtn(true);
+              setMount(false);
             });
           }
         })
@@ -328,7 +332,7 @@ const Withdrawopt = ({ walletUpdate }) => {
   };
 
   const [amount, setAmount] = useState();
-
+  console.log({ submitBtn });
   //this function for handleAuto payout service with payment gateway
 
   const doAutoPayout = () => {
@@ -611,9 +615,7 @@ const Withdrawopt = ({ walletUpdate }) => {
       setMount(true);
 
       if (type == "upi") {
-        var payment_gatway = "razorpay";
-      } else {
-        var payment_gatway = "decentro";
+        var payment_gatway = "upi";
       }
 
       const access_token = localStorage.getItem("token");
@@ -621,7 +623,7 @@ const Withdrawopt = ({ walletUpdate }) => {
         Authorization: `Bearer ${access_token}`,
       };
 
-      if (amount < minLimit || amount > maxLimit) {
+      if (!amount) {
         Swal.fire({
           title: "Invalid amount",
           text: "Please enter an amount within the allowed limits.",
@@ -655,6 +657,9 @@ const Withdrawopt = ({ walletUpdate }) => {
                 title: res.data.msg,
                 icon: "error",
                 confirmButtonText: "OK",
+              }).then(() => {
+                setMount(false);
+                setSubmitBtn(true);
               });
             }
 

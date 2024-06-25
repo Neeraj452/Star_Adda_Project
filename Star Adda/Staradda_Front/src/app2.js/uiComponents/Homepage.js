@@ -281,8 +281,8 @@ export default function Homepage({ walletUpdate }) {
 
   useEffect(() => {
     io.on("gamelist", (data) => {
-      // console.log('gamelist')
-      // console.log('creategame, challengeAccepted, updateReject',data)
+      // console.log("gamelist");
+      console.log("creategame, challengeAccepted, updateReject", data);
       let owenedCreated = [],
         remainingGame = [];
       data.forEach(function (ele) {
@@ -732,7 +732,7 @@ export default function Homepage({ walletUpdate }) {
           <div class="home_message_div">
             <p class="">{siteSetting?.site_message}</p>
           </div>
-          {JSON.parse(localStorage.getItem("sitSetting")) == "undefined" ? (
+          {/* {JSON.parse(localStorage.getItem("sitSetting")) == "undefined" ? (
             ""
           ) : JSON.parse(localStorage.getItem("sitSetting"))?.gameSearch ==
             true ? (
@@ -786,7 +786,55 @@ export default function Homepage({ walletUpdate }) {
             </>
           ) : (
             ""
-          )}
+          )} */}
+          <>
+            <span className={`${css.cxy} ${css.battleInputHeader} mt-4`}>
+              Create a Battle!
+            </span>
+
+            <div className="mx-auto d-flex my-2 w-50">
+              <div>
+                <input
+                  className={css.formControl}
+                  type="tel"
+                  placeholder="Amount"
+                  value={Game_Ammount}
+                  onChange={(e) => setGame_Ammount(e.target.value)}
+                />
+              </div>
+              <div className="set ml-1 ">
+                {" "}
+                {!isLoading ? (
+                  <button
+                    className={`bg-green ${css.playButton} cxy m-1 position-static `}
+                    style={{ margin: "20px !important" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setGame_Ammount("");
+
+                      ChallengeCreate();
+                    }}
+                  >
+                    Set
+                  </button>
+                ) : (
+                  <button
+                    className={`bg-green ${css.playButton} cxy m-1 position-static `}
+                    disabled
+                  >
+                    <Spinner
+                      as="span"
+                      animation="grow"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    Loading...
+                  </button>
+                )}
+              </div>
+            </div>
+          </>
           <div className={css.dividerX}></div>
 
           <div className="px-4 py-3">

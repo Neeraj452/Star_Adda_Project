@@ -3,7 +3,6 @@ import css from "../Modulecss/Home.module.css";
 import { Link } from "react-router-dom";
 
 export default function RunningCard({ runnig, user, winnAmount, game_type }) {
-  console.log({ runnig });
   const EndPoint = process.env.REACT_APP_API_URL;
   return (
     <div className={`${css.betCard} battle_card_main mt-1`}>

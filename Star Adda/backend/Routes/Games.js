@@ -2546,7 +2546,6 @@ router.put("/challange/accept/:id", Auth, async (req, res) => {
         req.user.withdraw_holdbalance +
         req.user.hold_balance +
         req.user.totalPenalty));
-
   if (mismatchValue != 0) {
     return res.status(200).send({
       status: false,

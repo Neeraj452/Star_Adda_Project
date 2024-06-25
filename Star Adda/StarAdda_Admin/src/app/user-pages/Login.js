@@ -1,27 +1,27 @@
-import React, { Component, useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import Swal from 'sweetalert2'
-import { Form } from 'react-bootstrap'
-import axios from 'axios'
+import React, { Component, useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Form } from "react-bootstrap";
+import axios from "axios";
 
 const Login = () => {
-  const history = useHistory()
+  const history = useHistory();
 
   // const [Password, setPassword] = useState();
   // const [otp, setOtp] = useState(false)
-  const [Phone, setPhone] = useState()
-  const [twofactor_code, settwofactor_code] = useState()
-  const [otp, setOtp] = useState(false)
-  const [secretCode, setSecretCode] = useState()
+  const [Phone, setPhone] = useState("");
+  const [twofactor_code, settwofactor_code] = useState("");
+  const [otp, setOtp] = useState(false);
+  const [secretCode, setSecretCode] = useState("");
 
   // console.log(FirstName);
-  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API
-  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API
-  const nodeMode = process.env.NODE_ENV
-  if (nodeMode === 'development') {
-    var baseUrl = beckendLocalApiUrl
+  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API;
+  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API;
+  const nodeMode = process.env.NODE_ENV;
+  if (nodeMode === "development") {
+    var baseUrl = beckendLocalApiUrl;
   } else {
-    var baseUrl = beckendLiveApiUrl
+    var baseUrl = beckendLiveApiUrl;
   }
 
   // const handleClick = async (e) => {
@@ -45,14 +45,14 @@ const Login = () => {
   //   }
   // }
   const handleClick = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!Phone) {
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Please enter your phone number',
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter your phone number",
+      });
     } else {
       await axios
         .post(baseUrl + `login/admin`, {
@@ -61,44 +61,44 @@ const Login = () => {
         .then((respone) => {
           if (respone.data.status == 101) {
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
+              icon: "error",
+              title: "Oops...",
               text: respone.data.msg,
-            })
+            });
           } else if (respone.data.status == 200) {
-            setOtp(true)
+            setOtp(true);
             //console.log(respone.data);
-            setSecretCode(respone.data.secret)
+            setSecretCode(respone.data.secret);
             if (respone.data.myToken) {
               Swal.fire({
-                icon: 'success',
-                title: 'OTP',
-                text: 'OTP For Test Login: ' + respone.data.myToken,
-              })
+                icon: "success",
+                title: "OTP",
+                text: "OTP For Test Login: " + respone.data.myToken,
+              });
             }
           }
         })
         .catch((e) => {
           Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong',
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong",
             // width: '20%',
             // height:'20%',
-          })
-        })
+          });
+        });
     }
-  }
+  };
 
   const varifyOtp = async (e) => {
-    e.preventDefault()
-    console.log('verify otp sumbut req')
+    e.preventDefault();
+    console.log("verify otp sumbut req");
     if (!Phone) {
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Please enter your phone number',
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter your phone number",
+      });
     } else {
       await axios
         .post(baseUrl + `login/admin/finish`, {
@@ -109,53 +109,66 @@ const Login = () => {
         .then((respone) => {
           if (respone.data.status == 101) {
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
+              icon: "error",
+              title: "Oops...",
               text: respone.data.msg,
-            })
+            });
           } else if (respone.data.status == 200) {
-            const token = respone.data.token
-            localStorage.setItem('token', token)
-            history.push('/dashboard')
-            window.location.reload(true)
+            const token = respone.data.token;
+            localStorage.setItem("token", token);
+            history.push("/dashboard");
+            window.location.reload(true);
           } else {
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-            })
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
           }
         })
         .catch((e) => {
           Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          })
-        })
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        });
     }
-  }
+  };
 
   const setError = () => {
     Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Invalid Number',
+      icon: "error",
+      title: "Oops...",
+      text: "Invalid Number",
       confirmation: true,
-    })
-  }
+    });
+  };
 
-  const [WebSitesettings, setWebsiteSettings] = useState('')
+  const [WebSitesettings, setWebsiteSettings] = useState("");
 
-  const fetchData = () => {
-    return fetch(baseUrl + 'settings/data')
-      .then((response) => response.json())
-      .then((data) => setWebsiteSettings(data))
-  }
-  //console.log(WebSitesettings);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(baseUrl + "settings/data");
+
+      if (!response.ok) {
+        // Handle HTTP errors
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setWebsiteSettings(data);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
+
+  // Make sure WebSitesettings is properly defined
+  // console.log(WebSitesettings);
+
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
     <div className="login_main_section">
@@ -174,7 +187,7 @@ const Login = () => {
                     type="text"
                     placeholder="Username"
                     size="lg"
-                    maxLength={'10'}
+                    maxLength={"10"}
                     className="h-auto"
                     onChange={(e) => setPhone(e.target.value)}
                   />
@@ -183,21 +196,21 @@ const Login = () => {
                   <div
                     className="bg-white  cxy flex-column"
                     style={{
-                      height: '60px',
-                      borderRadius: '5px',
-                      marginTop: '10px',
+                      height: "60px",
+                      borderRadius: "5px",
+                      marginTop: "10px",
                     }}
                   >
                     <div
                       className="input-group mb-2"
-                      style={{ transition: 'top 0.5s ease 0s', top: '5px' }}
+                      style={{ transition: "top 0.5s ease 0s", top: "5px" }}
                     >
                       <div className="input-group-prepend">
                         <div
                           className="input-group-text"
                           style={{
-                            backgroundColor: '#e9ecef',
-                            border: '1px solid #d8d6de',
+                            backgroundColor: "#e9ecef",
+                            border: "1px solid #d8d6de",
                           }}
                         >
                           OTP
@@ -210,9 +223,9 @@ const Login = () => {
                         placeholder="Enter OTP"
                         onChange={(e) => settwofactor_code(e.target.value)}
                         style={{
-                          transition: 'all 3s ease-out 0s',
-                          borderRadius: '4px',
-                          border: '1px solid #d8d6de',
+                          transition: "all 3s ease-out 0s",
+                          borderRadius: "4px",
+                          border: "1px solid #d8d6de",
                         }}
                       />
                       {/* <div className="invalid-feedback">Enter a valid mobile number</div> */}
@@ -241,7 +254,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
