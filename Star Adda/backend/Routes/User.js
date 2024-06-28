@@ -20,10 +20,14 @@ const GatewaySettings = require("../Model/Gateway");
 const AadharCard = require("../Model/Kyc/Aadharcard");
 const activity = require("../Model/activity");
 const profanity = require("profanity-hindi");
-const { stringify } = require("querystring");
 // let phoneNumber=undefined;
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
+const accountSid = process.env.accountSid
+const authToken = process.env.authToken
+const from = process.env.from
+const client = require('twilio')(accountSid, authToken);
+
 
 const code_gen = async () => {
   let code = Math.floor(Math.random() * 1000000);
@@ -437,6 +441,19 @@ router.get("/agent/all", Auth, RoleBase("Admin", "Agent"), async (req, res) => {
 //     }
 // })
 
+const sendSmsByTwillio=async(from,to,otp)=>{
+  c
+  try {
+    return await client.messages.create({
+      body: `Your OTP code is ${otp}`, // replace with the actual OTP
+      from: from, // replace with your Twilio phone number
+      to: to
+    });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to send OTP' });
+  }
+}
+
 router.post("/login", async (req, res) => {
   try {
     const { Password, Phone, referral, twofactor_code } = req.body;
@@ -459,17 +476,20 @@ router.post("/login", async (req, res) => {
 
       if (user.Phone) {
         user.otp = newSecret.token;
-        user.save();
-
+        await client.messages.create({
+          body: `Your OTP code is ${newSecret.token}`, 
+          from: from, 
+          to: `+91${user.Phone}`
+        });
+        await user.save();
         return res.json({
           status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
           msg: "Authentication Required",
           secret: SecretCode.secret,
-          myToken: newSecret.token,
+          // myToken: newSecret.token,
         });
       }
 
-      //  }
     } else if (user == null) {
       let referralBy = referral;
       const Exist = await User.find({ referral_code: referral });
@@ -487,25 +507,23 @@ router.post("/login", async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       newUser.Password = await bcrypt.hash(newUser.Password, salt);
       newUser.otp = newSecret.token;
+      await client.messages.create({
+          body: `Your OTP code is ${newSecret.token}`, 
+          from: from, 
+          to: `+91${user.Phone}`
+        });
       await newUser.save();
-      // const token = await user.genAuthToken();
-
-      // https.get(
-      //   `https://www.fast2sms.com/dev/bulkV2?authorization=6RID7UeQJKPGL1tkFOhXNTl2n0iHucMAfSxrmZgjWwyqaszEo9xVJsSb2YL4DEvayl1nz6OmqN0RdTcp&variables_values=${newSecret.token}&route=otp&numbers=${Phone}`,
-      //   (resp) => {
-      //     console.error(resp);
-      //   }
-      // );
+     
 
       return res.json({
         status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
         msg: "Authentication Required",
         secret: SecretCode.secret,
-        myToken: newSecret.token,
+        // myToken: newSecret.token,
       });
     }
   } catch (e) {
-    res.status(400).send(e);
+    res.status(500).send(e);
   }
 });
 
@@ -1726,7 +1744,7 @@ const sendSMS = async () => {
 };
 
 router.post("/login/admin", async (req, res) => {
-  const phone = req.body.Phone;
+  const phone =parseInt(req.body.Phone);
   const SecretCode = twofactor.generateSecret({ Phone: phone });
   const newSecret = twofactor.generateToken(SecretCode.secret);
 
@@ -1736,61 +1754,36 @@ router.post("/login/admin", async (req, res) => {
     if (!user) {
       user = await User.findOne({ Phone: phone, user_type: "Agent" });
     }
-
     user.otp = newSecret.token;
-    user.save();
+    
+    const message=  await client.messages.create({
+        body: `Your OTP code is ${newSecret.token}`, 
+        from: from, 
+        to: `+91${8924007372}`
+      });
+      user.save();
 
-    // https.get(
-    //   `https://www.fast2sms.com/dev/bulkV2?authorization=6RID7UeQJKPGL1tkFOhXNTl2n0iHucMAfSxrmZgjWwyqaszEo9xVJsSb2YL4DEvayl1nz6OmqN0RdTcp&variables_values=${newSecret.token}&route=otp&numbers=${otpmobile}`,
-    //   (resp) => {
-    //     console.log("send", resp);
-    //   }
-    // );
+    if(message){
+      return res.json({
+        status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
+        secret: SecretCode.secret,
+        myToken: newSecret.token,
+      });
+    }else{
+      return res.json({
+        status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
+        msg: "Please Valid Phone Number",
+        secret: SecretCode.secret,
+        myToken: newSecret.token,
+      });
+    }
+   
 
-    // var settings = {
-    //   async: true,
-    //   crossDomain: true,
-    //   url: `https://www.fast2sms.com/dev/bulkV2?authorization=AOx6HGDKc7dpyqReBEVFk1rl3YIQXSnzgUJthjvP4u2Cb9oT854J6G5mEBgou3t2sRCrvf0ISzpwD1nU&route=q&message=&flash=1&numbers=8924007372`,
-    //   method: "GET",
-    // };
-
-    // $.ajax(settings).done(function (response) {
-    //   console.log(response);
-    // });
-
-    // var unirest = require("unirest");
-
-    // var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
-
-    // req.query({
-    //   authorization:
-    //     "AOx6HGDKc7dpyqReBEVFk1rl3YIQXSnzgUJthjvP4u2Cb9oT854J6G5mEBgou3t2sRCrvf0ISzpwD1nU",
-    //   sender_id: "DLT_SENDER_ID",
-    //   message: "YOUR_MESSAGE_ID",
-    //   variables_values: "12345|asdaswdx",
-    //   route: "dlt",
-    //   numbers: "8924007372",
-    // });
-
-    // req.headers({
-    //   "cache-control": "no-cache",
-    // });
-
-    // req.end(function (res) {
-    //   if (res.error) throw new Error(res.error);
-
-    //   console.log(res.body);
-    // });
-
-    return res.json({
-      status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
-      msg: "Authentication Required",
-      secret: SecretCode.secret,
-      myToken: newSecret.token,
-    });
+    
+    
   } catch (err) {
     console.error(err);
-    res.status(401).send("Invalid Details");
+    res.status(401).send(err);
   }
 });
 
