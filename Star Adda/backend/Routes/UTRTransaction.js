@@ -5,6 +5,22 @@ const upload = require("../Middleware/multer");
 const User = require("../Model/User");
 const Transaction = require("../Model/transaction");
 
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "public/paymentImage");
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+//     cb(null, uniqueSuffix + path.extname(file.originalname));
+//   },
+// });
+
+// const upload = multer({
+//   storage: storage,
+//   limits: {
+//     fileSize: 100000000000,
+//   },
+// });
 router.post(
   "/manual/deposit/utr",
   Auth,
@@ -31,7 +47,7 @@ router.post(
       ) {
         return res.status(400).json({ message: "Missing required fields" });
       }
-      const paymentPic = await uploadOnCloudinary(req.file.path);
+      const paymentPic = req.file ? req.file.path.replace(/\\/g, "/") : null;
       // Create a new transaction
       const txn = new Transaction({
         upi,
@@ -41,7 +57,7 @@ router.post(
         status,
         Req_type,
         order_token,
-        paymentImage: paymentPic?.url ? paymentPic?.url : null,
+        paymentImage: paymentPic,
       });
 
       // Save the transaction to the database

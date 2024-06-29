@@ -877,7 +877,8 @@ router.get("/txn/withdraw/all", Auth, async (req, res) => {
         Req_type: "withdraw",
         User_id: myObjectIdString,
       })
-        .populate("User_id")
+        // .populate("User_id")
+        .populate("action_by")
         .sort({ createdAt: -1 });
     } else if (searchbystatus != 0 && searchq == 0 && searchtype == 0) {
       total = await Transaction.countDocuments({
@@ -889,6 +890,7 @@ router.get("/txn/withdraw/all", Auth, async (req, res) => {
         status: searchbystatus,
       })
         .populate("User_id")
+        .populate("action_by")
         .sort({ createdAt: -1 })
         .limit(PAGE_SIZE)
         .skip(PAGE_SIZE * page);
@@ -896,6 +898,7 @@ router.get("/txn/withdraw/all", Auth, async (req, res) => {
       total = await Transaction.countDocuments({ Req_type: "withdraw" });
       data = await Transaction.find({ Req_type: "withdraw" })
         .populate("User_id")
+        .populate("action_by")
         .sort({ createdAt: -1 })
         .limit(PAGE_SIZE)
         .skip(PAGE_SIZE * page);
@@ -959,7 +962,7 @@ router.post("/withdraw/request", Auth, async (req, res) => {
     });
     if (pendingGame.length == 0) {
       if (
-        (parseInt(user.lastWitdrawl) + 18000000 < currentTime &&
+        (parseInt(user.lastWitdrawl) < currentTime &&
           lasttrans.status == "SUCCESS") ||
         user.lastWitdrawl == null ||
         !lasttrans ||
@@ -1046,7 +1049,6 @@ router.post("/withdraw/request", Auth, async (req, res) => {
       });
     }
   } catch (error) {
-    console.log("payrq", error);
     res.status(400).send(error);
   }
 });
@@ -3212,7 +3214,7 @@ router.post("/mypay-payout/g56", Auth, async (req, res) => {
 
 router.post("/mypay-payout-by-upiId", Auth, async (req, res) => {
   try {
-    const { amount, type, userID, txnID, reqID } = req.body;
+    const { userID, txnID, reqID } = req.body;
     const user = await User.findById(userID);
     if (!user) {
       return res.status(404).send({ message: "User not found" });
@@ -3285,6 +3287,7 @@ router.post("/mypay-payout-by-upiId", Auth, async (req, res) => {
             txn.txn_msg =
               "issuer bank or payment service provider declined the transaction";
             txn.status = "SUCCESS";
+            txn.action_by = req?.user?.name;
             user.totalWithdrawl += txn.amount;
             user.withdraw_holdbalance -= txn.amount;
             user.lastWitdrawl = Date.now();

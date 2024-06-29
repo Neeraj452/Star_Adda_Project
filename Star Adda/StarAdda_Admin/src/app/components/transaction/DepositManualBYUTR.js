@@ -161,6 +161,16 @@ const DepositManualByUTR = () => {
     });
   };
 
+  const handleShowImage = (path) => {
+    Swal.fire({
+      imageUrl: path,
+      imageWidth: 400,
+      confirmButtonColor: "#3085d6",
+    }).then(() => {
+      console.log("Image shown");
+    });
+  };
+
   return (
     <>
       <div className="row mt-5">
@@ -238,7 +248,6 @@ const DepositManualByUTR = () => {
                           <tr>
                             <td>{key + 1}</td>
                             <td>{data?._id}</td>
-
                             <td>
                               <span className="pl-2">
                                 {data.userData?.Phone
@@ -257,26 +266,28 @@ const DepositManualByUTR = () => {
                                 </Link>
                               )}
                             </td>
-
                             <td>
                               <span style={{ color: "blue" }}>
                                 {data.order_token}
                               </span>
                             </td>
                             <td>
-                              <a href={data?.paymentImage} target="_blank">
-                                <img
-                                  src={data?.paymentImage}
-                                  className=""
-                                  height={600}
-                                />
-                              </a>
+                              <img
+                                src={`${baseUrl}${data?.paymentImage}`}
+                                className=""
+                                height={600}
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  handleShowImage(
+                                    `${baseUrl}${data?.paymentImage}`
+                                  )
+                                }
+                              />
                             </td>
                             <td>{data.amount}</td>
                             <td className="font-weight-bold text-success">
                               {data.status}
                             </td>
-
                             <td>
                               {data.status != "PAID" && data.status != "FAILED"
                                 ? "-----"

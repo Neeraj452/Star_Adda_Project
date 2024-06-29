@@ -1,28 +1,28 @@
-import React, { Component } from 'react'
-import { useLocation, withRouter } from 'react-router-dom'
-import './App.scss'
-import AppRoutes from './AppRoutes'
-import Navbar from './shared/Navbar'
-import Sidebar from './shared/Sidebar'
-import Footer from './shared/Footer'
-import admindata from '../app/components/userManagement/admindata'
+import React, { Component } from "react";
+import { useLocation, withRouter } from "react-router-dom";
+import "./App.scss";
+import AppRoutes from "./AppRoutes";
+import Navbar from "./shared/Navbar";
+import Sidebar from "./shared/Sidebar";
+import Footer from "./shared/Footer";
+import admindata from "../app/components/userManagement/admindata";
 
-import axios from 'axios'
+import axios from "axios";
 // import { withTranslation } from "react-i18next";
-const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API
-const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API
-const nodeMode = process.env.NODE_ENV
-if (nodeMode === 'development') {
-  var baseUrl = beckendLocalApiUrl
+const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API;
+const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API;
+const nodeMode = process.env.NODE_ENV;
+if (nodeMode === "development") {
+  var baseUrl = beckendLocalApiUrl;
 } else {
-  baseUrl = beckendLiveApiUrl
+  baseUrl = beckendLiveApiUrl;
 }
 
 class App extends Component {
-  state = {}
+  state = {};
   componentDidMount() {
-    this.onRouteChanged()
-    const token = localStorage.getItem('token')
+    this.onRouteChanged();
+    const token = localStorage.getItem("token");
     axios
       .get(baseUrl + `me`, {
         headers: {
@@ -30,9 +30,9 @@ class App extends Component {
         },
       })
       .then((res) => {
-        if (res.data.user_type === 'Admin') {
+        if (res.data.user_type === "Admin") {
           var permission = {
-            usertype: 'Admin',
+            usertype: "Admin",
             userAname: res.data.Name,
             dashboard: true,
             earnings: true,
@@ -61,11 +61,11 @@ class App extends Component {
             penaltyReport: true, //Added by Team
             withdrawalReport: true, //Added by Team
             depositReport: true, //Added by Team
-          }
-          this.setState(permission)
-        } else if (res.data.user_type === 'Agent') {
+          };
+          this.setState(permission);
+        } else if (res.data.user_type === "Agent") {
           var permission = {
-            usertype: 'Agent',
+            usertype: "Agent",
             userAname: res.data.Name,
             dashboard: res.data.Permissions[0].Status,
             earnings: res.data.Permissions[1].Status,
@@ -93,24 +93,24 @@ class App extends Component {
             withdrawalReport: res.data.Permissions[23].Status, //Added by Team
             depositReport: res.data.Permissions[24].Status, //Added by Team
             penaltyReport: res.data.Permissions[25].Status, //Added by Team
-          }
-          
-          this.setState(permission)
+          };
+
+          this.setState(permission);
         }
-      
-        admindata.user = permission
-      admindata.user['profile'] = res.data
+
+        admindata.user = permission;
+        admindata.user["profile"] = res.data;
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
   render() {
     let navbarComponent = !this.state.isFullPageLayout ? (
       <Navbar usertype={this.state.usertype} userAname={this.state.userAname} />
     ) : (
-      ''
-    )
+      ""
+    );
     // let sidebarComponent = !this.state.isFullPageLayout ? <Sidebar /> : '';
     let sidebarComponent = !this.state.isFullPageLayout ? (
       <Sidebar
@@ -144,9 +144,9 @@ class App extends Component {
         depositReport={this.state.depositReport} //Added by Team
       />
     ) : (
-      ''
-    )
-    let footerComponent = !this.state.isFullPageLayout ? <Footer /> : ''
+      ""
+    );
+    let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
       <div className="container-scroller">
         {sidebarComponent}
@@ -155,7 +155,7 @@ class App extends Component {
           <div className="main-panel">
             <div
               className="content-wrapper"
-              style={{ backgroundColor: 'whitesmoke' }}
+              style={{ backgroundColor: "whitesmoke" }}
             >
               <AppRoutes />
             </div>
@@ -163,85 +163,85 @@ class App extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      this.onRouteChanged()
+      this.onRouteChanged();
     }
   }
 
   onRouteChanged() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     const fullPageLayoutRoutes = [
-      '/user-pages/login-1',
-      '/user-pages/login-2',
-      '/user-pages/register-1',
-      '/user-pages/register-2',
-      '/user-pages/lockscreen',
-      '/error-pages/error-404',
-      '/error-pages/error-500',
-      '/general-pages/landing-page',
-      '/landing',
-      '/login',
-      '/register',
-      '/adminlogin',
-      '/home',
-      '/profile',
-      '/help',
-      '/Deposit',
-      '/',
-      '/Homepage/pOPULAR',
-      '/KYC/update-pan',
-      '/KYC/update-aadhar',
-      '/Games',
-      '/Referral-history',
+      "/user-pages/login-1",
+      "/user-pages/login-2",
+      "/user-pages/register-1",
+      "/user-pages/register-2",
+      "/user-pages/lockscreen",
+      "/error-pages/error-404",
+      "/error-pages/error-500",
+      "/general-pages/landing-page",
+      "/landing",
+      "/login",
+      "/register",
+      "/adminlogin",
+      "/home",
+      "/profile",
+      "/help",
+      "/Deposit",
+      "/",
+      "/Homepage/pOPULAR",
+      "/KYC/update-pan",
+      "/KYC/update-aadhar",
+      "/Games",
+      "/Referral-history",
       `/landing/:id`,
-      '/wallet',
-      '/support',
-      '/Withdrawopt',
-      '/Addcase',
-      '/Addfunds',
-      '/Notification',
-      '/refer',
-      '/transaction',
-      '//transaction-history',
-      '/web',
-      '/return',
-      '/redeem/refer',
-      '/transaction-history',
-    ]
+      "/wallet",
+      "/support",
+      "/Withdrawopt",
+      "/Addcase",
+      "/Addfunds",
+      "/Notification",
+      "/refer",
+      "/transaction",
+      "//transaction-history",
+      "/web",
+      "/return",
+      "/redeem/refer",
+      "/transaction-history",
+    ];
     for (let i = 0; i < fullPageLayoutRoutes.length; i++) {
       if (this.props.location.pathname === fullPageLayoutRoutes[i]) {
         this.setState({
           isFullPageLayout: true,
-        })
+        });
         document
-          .querySelector('.page-body-wrapper')
-          .classList.add('full-page-wrapper')
-        break
+          .querySelector(".page-body-wrapper")
+          .classList.add("full-page-wrapper");
+        break;
       } else {
         this.setState({
           isFullPageLayout: false,
-        })
+        });
         document
-          .querySelector('.page-body-wrapper')
-          .classList.remove('full-page-wrapper')
+          .querySelector(".page-body-wrapper")
+          .classList.remove("full-page-wrapper");
       }
     }
     if (
-      this.props.location.pathname.split('/')[1] == 'landing' ||
-      this.props.location.pathname.split('/')[1] == 'viewgame1'
+      this.props?.location?.pathname?.split("/")[1] == "landing" ||
+      this.props?.location?.pathname?.split("/")[1] == "viewgame1"
     ) {
       this.setState({
         isFullPageLayout: true,
-      })
+      });
       document
-        .querySelector('.page-body-wrapper')
-        .classList.add('full-page-wrapper')
+        .querySelector(".page-body-wrapper")
+        .classList.add("full-page-wrapper");
     }
   }
 }
 
-export default withRouter(App)
+export default withRouter(App);

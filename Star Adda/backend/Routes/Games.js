@@ -87,17 +87,7 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix + path.extname(file.originalname));
   },
 });
-const fileFilter = (req, file, cd) => {
-  if (
-    (file.mimetype === "image/jpg",
-    file.mimetype === "image/jpeg",
-    file.mimetype === "image/png")
-  ) {
-    cd(null, true);
-  } else {
-    cd(null, false);
-  }
-};
+
 
 const upload = multer({
   storage: storage,

@@ -246,12 +246,13 @@ router.patch("/temp/withdraw/reject/:id", Auth, async (req, res) => {
   try {
     const withdraw = await Temp.findById(req.params.id);
     const user = await User.findById(withdraw.user);
+    console.log("erkeerrre");
     if (user.withdraw_holdbalance > 0) {
       const txn = await Transaction.findById(withdraw.txn_id);
-      if (txn.status === "FAILED" || txn.status === "SUCCESS") {
-        if (txn.status === "FAILED") {
+      if (txn.status === "REJECT" || txn.status === "SUCCESS") {
+        if (txn.status === "REJECT") {
           withdraw.closing_balance = withdraw.closing_balance + withdraw.amount;
-          withdraw.status = "FAILED";
+          withdraw.status = "REJECT";
         } else {
           withdraw.closing_balance = withdraw.closing_balance - withdraw.amount;
           withdraw.status = "SUCCESS";
@@ -268,8 +269,9 @@ router.patch("/temp/withdraw/reject/:id", Auth, async (req, res) => {
         withdraw.save();
         user.save();
 
-        txn.status = "FAILED";
+        txn.status = "REJECT";
         txn.txn_msg = "Withdraw rejected";
+        txn.action_by = req.user.id;
         txn.closing_balance = txn.closing_balance + txn.amount;
         txn.save();
       }
@@ -278,12 +280,12 @@ router.patch("/temp/withdraw/reject/:id", Auth, async (req, res) => {
     } else {
       const txn = await Transaction.findById(withdraw.txn_id);
       if (txn.status != "SUCCESS" && withdraw.status == "Pending") {
-        txn.status = "FAILED";
+        txn.status = "REJECT";
         txn.txn_msg = "Technical Issue";
         txn.save();
 
         withdraw.closing_balance = withdraw.closing_balance + withdraw.amount;
-        withdraw.status = "FAILED";
+        withdraw.status = "REJECT";
         withdraw.save();
       }
       res.send({

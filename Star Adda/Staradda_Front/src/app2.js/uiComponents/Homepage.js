@@ -602,19 +602,15 @@ export default function Homepage({ walletUpdate }) {
       game_type === "Ludo Classics" ||
       game_type === "Ludo 1 Goti" ||
       game_type === "Ludo Ulta" ||
-      // game_type === "Ludo Popular" ||
       game_type === "Ludo Host"
     ) {
       if (submitProcess) {
         setProcess(false);
         setChallangeReqRun(true);
-
         const access_token = localStorage.getItem("token");
-
         const headers = {
           authorization: `Bearer ${access_token}`,
         };
-
         axios
           .patch(
             `${EndPoint}/challange/requested/running/${game_type}/` + Id,
@@ -633,7 +629,7 @@ export default function Homepage({ walletUpdate }) {
             } else {
               localStorage.setItem("timeOver", "timeStart");
               history.push(`/viewgame1/${Id}`, {
-                prevPath: window.location?.pathname,
+                prevPath: window?.location?.pathname,
               });
             }
           })
@@ -691,7 +687,7 @@ export default function Homepage({ walletUpdate }) {
             } else {
               localStorage.setItem("timeOver", "timeStart");
               history.push(`/viewgame1/${Id}`, {
-                prevPath: window.location?.pathname,
+                prevPath: window?.location?.pathname,
               });
             }
           })
@@ -729,9 +725,10 @@ export default function Homepage({ walletUpdate }) {
       <Header user={userAllData} />
       <div className="leftContainer" style={{ minHeight: "100vh" }}>
         <div className="pt-5 mt-5 Orher_page_main_section">
-          <div class="home_message_div">
+          {/* <div class="home_message_div">
             <p class="">{siteSetting?.site_message}</p>
-          </div>
+          </div> */}
+
           {/* {JSON.parse(localStorage.getItem("sitSetting")) == "undefined" ? (
             ""
           ) : JSON.parse(localStorage.getItem("sitSetting"))?.gameSearch ==

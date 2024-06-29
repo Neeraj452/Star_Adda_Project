@@ -178,7 +178,7 @@ export default function Landing() {
                           JSON.parse(localStorage.getItem('sitSetting')) ==
                           'undefined'
                             ? ''
-                            : 'https://backend.staradda.in/' +
+                            : 'https://backend.RKZONES.in/' +
                               JSON.parse(localStorage.getItem('sitSetting'))
                                 ?.ludokingClassic
                         }
@@ -210,7 +210,7 @@ export default function Landing() {
                           JSON.parse(localStorage.getItem('sitSetting')) ==
                           'undefined'
                             ? ''
-                            : 'https://backend.staradda.in/' +
+                            : 'https://backend.RKZONES.in/' +
                               JSON.parse(localStorage.getItem('sitSetting'))
                                 ?.ludokingPopular
                         }
@@ -376,8 +376,8 @@ export default function Landing() {
               <div className="footer-text-bold">About Us</div>
 
               <div className="footer-text">
-                StarAdda is a real-money gaming product owned and operated by
-                AKJ Private Limited ("AKJ" or "We" or "Us" or "Our").
+                RKZONES is a real-money gaming product owned and operated by AKJ
+                Private Limited ("AKJ" or "We" or "Us" or "Our").
               </div>
 
               <div className="footer-text-bold mt-3">
@@ -391,28 +391,27 @@ export default function Landing() {
               </div>
 
               <div className="footer-text mt-2">
-                StarAdda is a skill-based real-money gaming platform accessible
+                RKZONES is a skill-based real-money gaming platform accessible
                 only for our users in India. It is accessible on{" "}
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://www.staradda.in"
+                  href="https://www.RKZONES.in"
                 >
-                  https://www.staradda.in
+                  https://www.RKZONES.in
                 </a>
-                . On StarAdda, users can compete for real cash in Tournaments
-                and Battles. They can encash their winnings via popular options
-                such as Paytm Wallet, Amazon Pay, Bank Transfer, Mobile
-                Recharges etc.
+                . On RKZONES, users can compete for real cash in Tournaments and
+                Battles. They can encash their winnings via popular options such
+                as Paytm Wallet, Amazon Pay, Bank Transfer, Mobile Recharges
+                etc.
               </div>
 
               <div className="footer-text-bold mt-2">Our Games</div>
 
               <div className="footer-text">
-                StarAdda has a wide-variety of high-quality, premium HTML5
-                games. Our games are especially compressed and optimised to work
-                on low-end devices, uncommon browsers, and patchy internet
-                speeds.
+                RKZONES has a wide-variety of high-quality, premium HTML5 games.
+                Our games are especially compressed and optimised to work on
+                low-end devices, uncommon browsers, and patchy internet speeds.
               </div>
 
               <div className="footer-text mt-2">
@@ -425,7 +424,7 @@ export default function Landing() {
                 If you have any suggestions around new games that we should add
                 or if you are a game developer yourself and want to work with
                 us, don't hesitate to drop in a line at{" "}
-                <a href="mailto:info@staradda.in">info@staradda.in</a>!
+                <a href="mailto:info@RKZONES.in">info@RKZONES.in</a>!
               </div>
             </div>
           </section>

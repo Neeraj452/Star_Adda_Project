@@ -9,7 +9,7 @@ const Rightcontainer = () => {
             <img src="/images/khelohublogo.png" />
           </picture>
           <div className="rcBanner-text " style={{ fontWeight: "bolder" }}>
-            StarAdda&nbsp;
+            RKZONES&nbsp;
             <span
               className="rcBanner-text-bold"
               style={{ fontWeight: "normal" }}
@@ -27,7 +27,7 @@ const Rightcontainer = () => {
                 textDecoration: "none",
               }}
             >
-              staradda.in
+              RKZONES.in
             </a>
             &nbsp;on&nbsp;
             <img src={process.env.PUBLIC_URL + "/images/chrome.png"} alt="" />

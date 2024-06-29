@@ -15,15 +15,13 @@ export default function ViewGame1(props) {
   const history = useHistory();
 
   const location = useLocation();
-  const path = location.pathname.split("/")[2];
-
+  const path = location?.pathname?.split("/")[2];
   const [Game, setGame] = useState("0");
   const [status, setStatus] = useState(null);
   const [fecthStatus, setFecthStatus] = useState();
   const [scrnshot, setScrnshot] = useState(null);
-  const [scrnshot1, setScrnshot1] = useState(""); // ADDED BY TEAM
+  const [scrnshot1, setScrnshot1] = useState("");
   const [initialRoom, setInitialRoom] = useState("");
-  //  console.log(scrnshot,"27")
   const [reason, setReason] = useState(null);
 
   const [roomcode, setRoomcode] = useState();

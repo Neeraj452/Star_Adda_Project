@@ -30,7 +30,7 @@ const Support = ({ handleShow }) => {
                       //     : JSON.parse(localStorage.getItem('sitSetting'))
                       //         ?.supportInstagram
                       // }
-                      href="https://www.instagram.com/staraddaofficial/"
+                      href="https://www.instagram.com/RKZONESofficial/"
                     >
                       <img width="50px" src="/insta.png" alt="" />
                       <span className="footer-text-bold">Instagram</span>
@@ -75,7 +75,7 @@ const Support = ({ handleShow }) => {
               {/* telegram */}
               <div className="col-6 col-lg-4 col-md-3 col-sm-12 mb-3">
                 <div className="support_samll_card_btn_type">
-                {JSON.parse(localStorage.getItem("sitSetting")) ==
+                  {JSON.parse(localStorage.getItem("sitSetting")) ==
                   "undefined" ? (
                     ""
                   ) : JSON.parse(localStorage.getItem("sitSetting"))
@@ -141,10 +141,8 @@ const Support = ({ handleShow }) => {
                     "undefined"
                       ? ""
                       : JSON.parse(localStorage.getItem("sitSetting"))
-                          ?.CompanyAddress
-                        }
+                          ?.CompanyAddress}
                   </span>
-                 
                 </p>
               </div>
             </div>

@@ -251,6 +251,7 @@ const App2 = () => {
         setUser(res.data);
       })
       .catch((e) => {
+        localStorage.clear();
         if (e.response.status == 401) {
           localStorage.removeItem("token");
           // history.pushState("/login")

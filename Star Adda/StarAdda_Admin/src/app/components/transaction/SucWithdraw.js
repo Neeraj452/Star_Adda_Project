@@ -1,238 +1,238 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Card } from 'react-bootstrap'
-import ReactPaginate from 'react-paginate'
-import { Link } from 'react-router-dom'
-import Swal from 'sweetalert2'
-const $ = require('jquery')
-$.Datatable = require('datatables.net')
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+const $ = require("jquery");
+$.Datatable = require("datatables.net");
 
 const SucWithdraw = () => {
-  const [user, setUser] = useState()
-  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API
-  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API
-  const nodeMode = process.env.NODE_ENV
-  if (nodeMode === 'development') {
-    var baseUrl = beckendLocalApiUrl
+  const [user, setUser] = useState();
+  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API;
+  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API;
+  const nodeMode = process.env.NODE_ENV;
+  if (nodeMode === "development") {
+    var baseUrl = beckendLocalApiUrl;
   } else {
-    baseUrl = beckendLiveApiUrl
+    baseUrl = beckendLiveApiUrl;
   }
 
-  let [limit, setLimit] = useState(10)
+  let [limit, setLimit] = useState(10);
 
   const setpageLimit = (event) => {
-    let key = event.target.value
-    setLimit(key)
-  }
-  const [pageNumber, setPageNumber] = useState(0)
-  const [numberOfPages, setNumberOfPages] = useState(0)
+    let key = event.target.value;
+    setLimit(key);
+  };
+  const [pageNumber, setPageNumber] = useState(0);
+  const [numberOfPages, setNumberOfPages] = useState(0);
   //user for searching..
-  const [searchList, setSearchList] = useState(0)
-  const [searchType, setSearchType] = useState(0)
-  const [findByStatus, setFindByStatus] = useState(0)
+  const [searchList, setSearchList] = useState(0);
+  const [searchType, setSearchType] = useState(0);
+  const [findByStatus, setFindByStatus] = useState(0);
 
   //react paginate..
   const handlePageClick = async (data) => {
-    let currentPage = data.selected + 1
-    setPageNumber(currentPage)
+    let currentPage = data.selected + 1;
+    setPageNumber(currentPage);
     // scroll to the top
     //window.scrollTo(0, 0)
-  }
+  };
 
   //   searching handler
   const searchHandler = (event) => {
-    let key = event.target.value
-    setSearchList(key)
-  }
+    let key = event.target.value;
+    setSearchList(key);
+  };
   //   search by status handler
   const searchByStatus = (event) => {
-    let key = event.target.value
-    setFindByStatus(key)
-  }
+    let key = event.target.value;
+    setFindByStatus(key);
+  };
 
   const profle = () => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .get(
         baseUrl +
           `txn/withdraw/all?page=${pageNumber}&_limit=${limit}&_q=${searchList}&_stype=${searchType}&_status=${findByStatus}`,
-        { headers },
+        { headers }
       )
       .then((res) => {
-        setUser(res.data.data)
-        setNumberOfPages(res.data.totalPages)
+        setUser(res.data.data);
+        setNumberOfPages(res.data.totalPages);
         //$('table').dataTable();
         //console.log(res.data.data)
-      })
-  }
+      });
+  };
 
-  const [withdrawSuccess, setWithdrawSuccess] = useState()
-  const [withdrawFail, setWithdrawFail] = useState()
+  const [withdrawSuccess, setWithdrawSuccess] = useState();
+  const [withdrawFail, setWithdrawFail] = useState();
 
   const withdrowPass = (id) => {
     const confirm = window.confirm(
-      'Are you sure, you want to update to success this payout?',
-    )
+      "Are you sure, you want to update to success this payout?"
+    );
     if (confirm) {
-      const access_token = localStorage.getItem('token')
+      const access_token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${access_token}`,
-      }
+      };
 
       axios
         .post(
           baseUrl + `userwithdrawupdate/${id}`,
           {
-            status: 'SUCCESS',
+            status: "SUCCESS",
           },
-          { headers },
+          { headers }
         )
         .then((res) => {
-          profle()
-          alert('Payout successfully done')
+          profle();
+          alert("Payout successfully done");
         })
         .catch((e) => {
           //console.log(e);
-        })
+        });
     }
-  }
+  };
 
   const withdrowFail = (id) => {
     const confirm = window.confirm(
-      'Are you sure, you want to update to failed this payout?',
-    )
+      "Are you sure, you want to update to failed this payout?"
+    );
     if (confirm) {
-      const access_token = localStorage.getItem('token')
+      const access_token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${access_token}`,
-      }
+      };
 
       axios
         .post(
           baseUrl + `userwithdrawupdate/${id}`,
           {
-            status: 'FAILED',
+            status: "FAILED",
           },
-          { headers },
+          { headers }
         )
         .then((res) => {
-          profle()
-          alert('Payout successfully reject')
+          profle();
+          alert("Payout successfully reject");
           //console.log(res);
         })
         .catch((e) => {
           //console.log(e);
-        })
+        });
     }
-  }
+  };
 
   const universalCheckPayout = (payment_gatway, txn_id, referenceId) => {
     //alert(payment_gatway);
     if (!referenceId) {
-      alert('Payout txn id not found')
+      alert("Payout txn id not found");
     }
-    if (payment_gatway == 'razorpay') {
-      checkrazorpaypayout(txn_id, referenceId)
-    } else if (payment_gatway == 'decentro') {
-      checkpayout(txn_id, referenceId)
-    } else if (payment_gatway == 'pinelab') {
+    if (payment_gatway == "razorpay") {
+      checkrazorpaypayout(txn_id, referenceId);
+    } else if (payment_gatway == "decentro") {
+      checkpayout(txn_id, referenceId);
+    } else if (payment_gatway == "pinelab") {
       //checkPinelabpayout(txn_id, referenceId)
     } else {
-      alert('Nothing found')
+      alert("Nothing found");
     }
-  }
+  };
 
   const checkpayout = (txn_id, referenceId) => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .post(
         baseUrl + `decentropayout/response`,
         { txn_id, referenceId },
-        { headers },
+        { headers }
       )
       .then((res) => {
-        const icon = res.data.status == 'SUCCESS' ? 'success' : 'danger'
+        const icon = res.data.status == "SUCCESS" ? "success" : "danger";
         const title =
-          res.data.status == 'SUCCESS'
-            ? 'Withdraw successfully'
-            : 'Transaction Proccessing or Failed'
+          res.data.status == "SUCCESS"
+            ? "Withdraw successfully"
+            : "Transaction Proccessing or Failed";
 
-        profle()
+        profle();
         Swal.fire({
           title: title,
           icon: icon,
-          confirmButtonText: 'OK',
-        })
+          confirmButtonText: "OK",
+        });
       })
       .catch((e) => {
         if (e.response.status == 401) {
-          localStorage.removeItem('token')
-          localStorage.removeItem('token')
-          window.location.reload()
+          localStorage.removeItem("token");
+          localStorage.removeItem("token");
+          window.location.reload();
         }
-      })
-  }
+      });
+  };
 
   const checkrazorpaypayout = (txn_id, referenceId) => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .post(
         baseUrl + `razorpaypayoutscheck/response`,
         { txn_id, referenceId },
-        { headers },
+        { headers }
       )
       .then((res) => {
-        const icon = res.data.status == 'SUCCESS' ? 'success' : 'danger'
+        const icon = res.data.status == "SUCCESS" ? "success" : "danger";
         const title =
-          res.data.status == 'SUCCESS'
-            ? 'Withdraw successfully'
-            : 'Transaction Proccessing or Failed'
+          res.data.status == "SUCCESS"
+            ? "Withdraw successfully"
+            : "Transaction Proccessing or Failed";
 
-        profle()
+        profle();
         Swal.fire({
           title: title,
           icon: icon,
-          confirmButtonText: 'OK',
-        })
+          confirmButtonText: "OK",
+        });
       })
       .catch((e) => {
         if (e.response.status == 401) {
-          localStorage.removeItem('token')
-          localStorage.removeItem('token')
-          window.location.reload()
+          localStorage.removeItem("token");
+          localStorage.removeItem("token");
+          window.location.reload();
         }
-      })
-  }
+      });
+  };
 
   const dateFormat = (e) => {
-    const date = new Date(e)
-    const newDate = date.toLocaleString('default', {
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
+    const date = new Date(e);
+    const newDate = date.toLocaleString("default", {
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
       hour12: true,
-      minute: 'numeric',
-    })
-    return newDate
-  }
+      minute: "numeric",
+    });
+    return newDate;
+  };
 
-  let currentTime = Date.now()
+  let currentTime = Date.now();
 
   useEffect(() => {
-    profle()
-  }, [pageNumber, limit, searchList, searchType, findByStatus])
+    profle();
+  }, [pageNumber, limit, searchList, searchType, findByStatus]);
 
   if (user == undefined) {
-    return null
+    return null;
   }
   return (
     <>
@@ -303,14 +303,14 @@ const SucWithdraw = () => {
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th> ID</th>
+                        <th>Action By</th>
                         <th> Phone</th>
                         <th> User</th>
                         <th> type</th>
                         <th> Paytm Number</th>
                         <th> Amount </th>
                         <th> Status </th>
-                        <th> Action </th>
+                        {/* <th> Action </th> */}
                         <th> Time </th>
                       </tr>
                     </thead>
@@ -318,15 +318,17 @@ const SucWithdraw = () => {
                     <tbody>
                       {user &&
                         user.map((data, key) => {
-                          let currentTime = Date.now()
-                          let gameCreatedAt = new Date(data.createdAt).getTime()
+                          let currentTime = Date.now();
+                          let gameCreatedAt = new Date(
+                            data.createdAt
+                          ).getTime();
                           return (
                             <tr>
                               <td>{key + 1}</td>
-                              <td>{data._id}</td>
+                              <td>{data.action_by?.Name}</td>
                               <td>
                                 <span className="pl-2">
-                                  {data.User_id ? data.User_id.Phone : ''}
+                                  {data.User_id ? data.User_id.Phone : ""}
                                 </span>
                               </td>
                               <td>
@@ -351,13 +353,13 @@ const SucWithdraw = () => {
                               </td>
                               <td>{data.amount}</td>
                               <td className="font-weight-bold text-success">
-                                {data.status === 'none'
-                                  ? 'Proccessing'
+                                {data.status === "none"
+                                  ? "Proccessing"
                                   : data.status}
                               </td>
-                              <td>
-                                {data.status != 'SUCCESS' &&
-                                data.status != 'FAILED' &&
+                              {/* <td>
+                                {data.status != "SUCCESS" &&
+                                data.status != "FAILED" &&
                                 parseInt(gameCreatedAt) + 7200000 <
                                   currentTime ? (
                                   <button
@@ -366,14 +368,14 @@ const SucWithdraw = () => {
                                       universalCheckPayout(
                                         data.payment_gatway,
                                         data._id,
-                                        data.referenceId,
+                                        data.referenceId
                                       )
                                     }
                                   >
                                     Check {data.payment_gatway}
                                   </button>
                                 ) : (
-                                  'Checked All or Wait'
+                                  "Checked All or Wait"
                                 )}
 
                                 {
@@ -383,12 +385,12 @@ const SucWithdraw = () => {
                                 {
                                   //   (data.status != "SUCCESS" && data.status != "FAILED" && data.status!="reject")? <button className="ml-1 btn btn-sm btn-warning" onClick={() => withdrowPass(data._id)}>Success</button>:''
                                 }
-                              </td>
+                              </td> */}
                               <td>
-                                {dateFormat(data.createdAt).split(',')[0]}
+                                {dateFormat(data.createdAt).split(",")[0]}
                               </td>
                             </tr>
-                          )
+                          );
                         })}
                     </tbody>
                   </table>
@@ -396,23 +398,23 @@ const SucWithdraw = () => {
 
                 <div className="mt-4">
                   <ReactPaginate
-                    previousLabel={'Previous'}
-                    nextLabel={'Next'}
-                    breakLabel={'...'}
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
                     pageCount={numberOfPages}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={3}
                     onPageChange={handlePageClick}
-                    containerClassName={'pagination justify-content-center'}
-                    pageClassName={'page-item'}
-                    pageLinkClassName={'page-link'}
-                    previousClassName={'page-item'}
-                    previousLinkClassName={'page-link'}
-                    nextClassName={'page-item'}
-                    nextLinkClassName={'page-link'}
-                    breakClassName={'page-item'}
-                    breakLinkClassName={'page-link'}
-                    activeClassName={'active'}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active"}
                   />
                 </div>
               </div>
@@ -421,7 +423,7 @@ const SucWithdraw = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default SucWithdraw
+export default SucWithdraw;

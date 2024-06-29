@@ -7,7 +7,6 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import io from "../Components/socket";
 import socket from "../Components/socket";
 
 const EndPoint = process.env.REACT_APP_API_URL;
@@ -97,11 +96,11 @@ const AddCaseByUPI = () => {
   };
   const validateUTR = (utr) => {
     // UTR number should be exactly 22 characters long
-    if (utr.length !== 22) {
+    if (utr.length !== 12) {
       return false;
     }
-    // UTR number should contain only alphanumeric characters
-    const utrRegex = /^[A-Za-z0-9]{22}$/;
+    // Define the regex pattern for URT number: 3 uppercase letters followed by 7 digits
+    const utrRegex = /^\d{12}$/;
     return utrRegex.test(utr);
   };
 

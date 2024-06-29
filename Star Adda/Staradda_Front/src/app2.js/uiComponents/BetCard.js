@@ -1,11 +1,9 @@
 import React, { memo, useEffect, useState, useRef } from "react";
 import css from "../Modulecss/Home.module.css";
-import { Link } from "react-router-dom";
 import acceptSound from "./accept.mp3";
 import findGif from "../css/loading_old.gif";
 import playSound from "./play.mp3";
 import { useHistory } from "react-router-dom";
-import socket from "../Components/socket";
 
 const BetCard = React.memo(
   ({
@@ -27,22 +25,9 @@ const BetCard = React.memo(
     const EndPoint = process.env.REACT_APP_API_URL;
 
     const req_chall_fun = (allgameId) => {
-      // if(challangeReqRun==true){
-      //   setChallangeReqRun(false);
-      //   setTimeout(() => {
-      //     setChallangeReqRun(true)
-      //   }, 2000);
-      // }
-      // setDisable(true)
-
       getPost(allgameId);
-
-      // setTimeout(() => {
-      //   setDisable(false)
-      // }, 3000);
     };
     const isMounted = useRef(true);
-    // const [socket, setSocket] = useState();
     const disablebtn = (id) => {
       setDisable(true);
       setTimeout(() => {
@@ -85,31 +70,27 @@ const BetCard = React.memo(
           {user == allgame?.Created_by?._id &&
             allgame?.Status == "requested" && (
               <div className="d-flex ml-auto align-items-center">
-                <Link style={{ bottom: "0" }}>
-                  <button
-                    className={`bg-success position-relative mx-1 btn-sm text-white btn-inverse-success`}
-                    disabled={disable}
-                    style={{ display: disable ? "none" : "block" }}
-                    onClick={(e) => {
-                      disablebtn(allgame._id);
-                      req_chall_fun(allgame._id);
-                      // getPost(allgame._id);
-                      // sendMessage()
-                      // history.push(`/viewgame1/${allgame._id}`, {  prevPath: window.location.pathname })
-                    }}
-                  >
-                    START
-                  </button>
-                  <button
-                    className={
-                      disable
-                        ? "btn btn-primary d-block"
-                        : "btn btn-primary d-none"
-                    }
-                  >
-                    Wait
-                  </button>
-                </Link>
+                <button
+                  className={`bg-success position-relative mx-1 btn-sm text-white btn-inverse-success`}
+                  disabled={disable}
+                  style={{ display: disable ? "none" : "block" }}
+                  onClick={(e) => {
+                    disablebtn(allgame._id);
+                    req_chall_fun(allgame._id);
+                  }}
+                >
+                  START
+                </button>
+                <button
+                  className={
+                    disable
+                      ? "btn btn-primary d-block"
+                      : "btn btn-primary d-none"
+                  }
+                >
+                  Wait
+                </button>
+
                 <button
                   className={
                     disable
@@ -198,21 +179,19 @@ const BetCard = React.memo(
             <div className="d-flex ml-auto align-items-center">
               <audio src={playSound} autoPlay></audio>
 
-              <Link>
-                <button
-                  disabled={disable}
-                  className={`${css.bgSecondary} ${css.playButton} ${css.cxy} bg-success btn-sm'`}
-                  onClick={(e) => {
-                    disablebtn();
-                    updateChallenge(allgame._id);
-                    history.push(`/viewgame1/${allgame._id}`, {
-                      prevPath: window.location.pathname,
-                    });
-                  }}
-                >
-                  start
-                </button>
-              </Link>
+              <button
+                disabled={disable}
+                className={`${css.bgSecondary} ${css.playButton} ${css.cxy} bg-success btn-sm'`}
+                onClick={(e) => {
+                  disablebtn();
+                  updateChallenge(allgame._id);
+                  history.push(`/viewgame1/${allgame._id}`, {
+                    prevPath: window?.location?.pathname,
+                  });
+                }}
+              >
+                start
+              </button>
             </div>
           )}
           {user == allgame?.Created_by._id &&

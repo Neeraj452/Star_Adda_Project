@@ -1,8 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Collapse, Dropdown } from "react-bootstrap";
 import { Trans } from "react-i18next";
-import axios from "axios";
 
 class Sidebar extends Component {
   constructor(props) {

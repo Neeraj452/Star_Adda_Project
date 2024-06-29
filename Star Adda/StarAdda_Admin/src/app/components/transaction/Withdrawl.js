@@ -117,9 +117,9 @@ const Withdrawl = () => {
         });
     }
   };
-
+  var pathUrl = baseUrl + `mypay-payout-by-upiId`;
+  const PayMethod = "UPI";
   const update = async (amount, type, userID, txnID, reqID, manualPayment) => {
-    // setMount(true)
     setDisable(true);
     const access_token = localStorage.getItem("token");
     const headers = {
@@ -127,148 +127,172 @@ const Withdrawl = () => {
     };
     //bank
 
-    const inputOptions = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          mypay: "mypay",
-        });
-      }, 1000);
-    });
-
-    const { value: PayMethod } = await Swal.fire({
-      title: "Enter UTR Number",
-      input: "text",
+    await Swal.fire({
+      title: "Are you sure want to Approve",
+      icon: "warning",
       showCancelButton: true,
-      inputOptions: inputOptions,
-      inputValidator: (value) => {
-        if (!value) {
-          return "Please Enter UTR Number";
-        }
-      },
-    });
-
-    var manualPaymentInputvalue = "";
-    if (PayMethod === "paymanual") {
-      const { value: manualPaymentInput } = await Swal.fire({
-        title: "Enter Manual Payment Details",
-        input: "text",
-        inputPlaceholder: "Enter payment details here",
-        showCancelButton: true,
-        inputValidator: (value) => {
-          if (!value) {
-            return "Payment details cannot be empty!";
-          }
-        },
-      });
-      if (manualPaymentInput) {
-        // Handle the manual payment input value here
-        var pathUrl = baseUrl + `userwithdrawupdate/` + reqID;
-        manualPaymentInputvalue = manualPaymentInput;
+      confirmButtonColor: "#3085d6",
+    }).then((res) => {
+      if (res.dismiss) {
+        setDisable(false);
       }
-    } else if (PayMethod == "razorpay") {
-      var pathUrl = baseUrl + `withdraw/razorpay/adminmanual`;
-    } else if (PayMethod == "mypay") {
-      var pathUrl = baseUrl + `mypay-payout-by-upiId`;
-    } else {
-      var pathUrl = baseUrl + `haodapay-bank-payout`;
-    }
-    // if (type == 'upi') {
-    //   var pathUrl = baseUrl + `withdraw/razorpay/adminmanual`
-    // } else {
-    //   var pathUrl = baseUrl + `withdraw/razorpay/adminmanual`
-    // }
+      if (res?.isConfirmed) {
+        // setLoading(true)
+        setMount(true);
+        setDisable(true);
 
-    if (PayMethod) {
-      // setLoading(true)
-      setMount(true);
-      setDisable(true);
-      Swal.fire({ html: `You selected: ${PayMethod}` });
-
-      axios
-        .post(
-          pathUrl,
-          {
-            amount: amount,
-            type: type,
-            userID: userID,
-            txnID: txnID,
-            reqID: reqID,
-            refID: manualPaymentInputvalue,
-          },
-          { headers }
-        )
-        .then((res) => {
-          // setLoading(false)
-          setMount(false);
-          setDisable(false);
-          if (res.data.subCode === "200") {
-            console.log("cash res", res);
-            Swal.fire({
-              title: res.data.message,
-              icon: "success",
-              confirmButtonText: "OK",
-            });
-            setTimeout(() => {
-              profle();
-            }, 1000);
-          } else {
+        axios
+          .post(
+            pathUrl,
+            {
+              amount: amount,
+              type: type,
+              userID: userID,
+              txnID: txnID,
+              reqID: reqID,
+            },
+            { headers }
+          )
+          .then((res) => {
             // setLoading(false)
             setMount(false);
-
+            setDisable(false);
+            if (res.data.subCode === "200") {
+              Swal.fire({
+                title: res.data.message,
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+              setTimeout(() => {
+                profle();
+              }, 1000);
+            } else {
+              // setLoading(false)
+              setMount(false);
+              Swal.fire({
+                title: res.data.message,
+                icon: "danger",
+                confirmButtonText: "OK",
+              });
+              setTimeout(() => {
+                profle();
+              }, 1000);
+            }
+          })
+          .catch((e) => {
+            setMount(false);
             Swal.fire({
-              title: res.data.message,
-              icon: "danger",
+              title: "Error! try after sometime.",
+              icon: "error",
               confirmButtonText: "OK",
             });
+            console.log(e);
             setTimeout(() => {
               profle();
             }, 1000);
-          }
-        })
-        .catch((e) => {
-          setMount(false);
-          Swal.fire({
-            title: "Error! try after sometime.",
-            icon: "error",
-            confirmButtonText: "OK",
           });
-          console.log(e);
-          setTimeout(() => {
-            profle();
-          }, 1000);
-        });
-    }
+      }
+    });
+    // if (PayMethod) {
+    //   // setLoading(true)
+    //   setMount(true);
+    //   setDisable(true);
+    //   Swal.fire({ html: `You selected: ${PayMethod}` });
+
+    //   axios
+    //     .post(
+    //       pathUrl,
+    //       {
+    //         amount: amount,
+    //         type: type,
+    //         userID: userID,
+    //         txnID: txnID,
+    //         reqID: reqID,
+    //         refID: manualPaymentInputvalue,
+    //       },
+    //       { headers }
+    //     )
+    //     .then((res) => {
+    //       // setLoading(false)
+    //       setMount(false);
+    //       setDisable(false);
+    //       if (res.data.subCode === "200") {
+    //         console.log("cash res", res);
+    //         Swal.fire({
+    //           title: res.data.message,
+    //           icon: "success",
+    //           confirmButtonText: "OK",
+    //         });
+    //         setTimeout(() => {
+    //           profle();
+    //         }, 1000);
+    //       } else {
+    //         // setLoading(false)
+    //         setMount(false);
+
+    //         Swal.fire({
+    //           title: res.data.message,
+    //           icon: "danger",
+    //           confirmButtonText: "OK",
+    //         });
+    //         setTimeout(() => {
+    //           profle();
+    //         }, 1000);
+    //       }
+    //     })
+    //     .catch((e) => {
+    //       setMount(false);
+    //       Swal.fire({
+    //         title: "Error! try after sometime.",
+    //         icon: "error",
+    //         confirmButtonText: "OK",
+    //       });
+    //       console.log(e);
+    //       setTimeout(() => {
+    //         profle();
+    //       }, 1000);
+    //     });
+    // }
   };
   const reject = async (id) => {
-    setMount(true);
-    const access_token = localStorage.getItem("token");
-    const headers = {
-      Authorization: `Bearer ${access_token}`,
-    };
-    axios
-      .patch(
-        baseUrl + `temp/withdraw/reject/${id}`,
-        {
-          status: "reject",
-        },
-        { headers }
-      )
-      .then((res) => {
-        setMount(false);
-        if (res.data.error) {
-          Swal.fire({
-            title: res.data.message,
-            icon: "danger",
-            confirmButtonText: "OK",
+    await Swal.fire({
+      title: "Are you sure want to Reject",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        setMount(true);
+        const access_token = localStorage.getItem("token");
+        const headers = {
+          Authorization: `Bearer ${access_token}`,
+        };
+        axios
+          .patch(
+            baseUrl + `temp/withdraw/reject/${id}`,
+            {
+              status: "reject",
+            },
+            { headers }
+          )
+          .then((res) => {
+            setMount(false);
+            if (res.data.error) {
+              Swal.fire({
+                title: res.data.message,
+                icon: "danger",
+                confirmButtonText: "OK",
+              });
+            }
+            profle();
+          })
+          .catch((e) => {
+            setMount(false);
+            profle();
+            console.log(e);
           });
-        }
-        profle();
-      })
-      .catch((e) => {
-        setMount(false);
-        profle();
-        console.log(e);
-      });
+      }
+    });
   };
 
   useEffect(() => {
@@ -360,7 +384,7 @@ const Withdrawl = () => {
                                   className="btn btn-danger mr-2"
                                   onClick={() => reject(item._id)}
                                 >
-                                  reject
+                                  Reject
                                 </button>
                               </>
                             )}

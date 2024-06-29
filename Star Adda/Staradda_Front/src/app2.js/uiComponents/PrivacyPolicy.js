@@ -43,7 +43,7 @@ const PrivacyPolicy = () => {
               <p className="p1">Introduction</p>
               <p className="p2">
                 This document explains how AKJ private limited(refered to as the
-                staradda) collects, processes, stores and/or shares any personal
+                RKZONES) collects, processes, stores and/or shares any personal
                 data and/or information from users (jointly referred to as
                 “Information”). By accessing and/or using the Services you
                 consent the collection, transfer, manipulation, storage,
@@ -59,7 +59,7 @@ const PrivacyPolicy = () => {
               </p>
               <p className="p1">The Information collected:</p>
               <p className="p2">
-                AKJ private limited(refered to as the staradda) and/or third
+                AKJ private limited(refered to as the RKZONES) and/or third
                 parties, including but not limited to business partners,
                 advertising networks, analytics or search information providers,
                 may collect and process the following data about you:
@@ -67,7 +67,7 @@ const PrivacyPolicy = () => {
                 accessing and/or using the Services, or when you create an
                 account within the Services; details of your use of the Services
                 and the resources that you access; the correspondence between
-                you and AKJ private limited(refered to as the staradda) and any
+                you and AKJ private limited(refered to as the RKZONES) and any
                 interactions, or with other users on the Service, the channels
                 and/or any social media related; from third parties who hold
                 data about you and who agree to share this data with us; and
@@ -75,18 +75,18 @@ const PrivacyPolicy = () => {
                 and/or other mechanisms, as explained further below.
               </p>
               <p className="p3">
-                I. Cookies:&nbsp;AKJ private limited(refered to as the staradda)
+                I. Cookies:&nbsp;AKJ private limited(refered to as the RKZONES)
                 uses cookies and other similar technologies in the Services.
                 These technologies operate either by placing a small file which
                 stores some information on your computer or mobile device;
                 and/or by accessing information on your device. AKJ private
-                limited(refered to as the staradda) uses cookies and similar
+                limited(refered to as the RKZONES) uses cookies and similar
                 technologies to recognize you and your device, for example by
                 identifying your IP address; to allow the Services to interact
                 with a third party social network or platform where you have
                 chosen to allow such interaction; to allow payment processes
                 when you submit payment instructions; to enable AKJ private
-                limited(refered to as the staradda) and third parties to provide
+                limited(refered to as the RKZONES) and third parties to provide
                 you with more customized services; and to collect data such as
                 your device’s model, operating system and screen size, other
                 applications installed on your device, and information about how
@@ -104,7 +104,7 @@ const PrivacyPolicy = () => {
                 advertising, to deliver tailor ads related to your interests
                 (Interest-Based Advertising or IBA). These identifiers are
                 non-permanent, non-personal, device identifiers. AKj privatJ
-                limited(refered to as the staradda) and/or third parties may use
+                limited(refered to as the RKZONES) and/or third parties may use
                 your device’s advertising identifier and other information
                 associated with it, to deliver ads that relate to your interests
                 and to improve and measure the effectiveness of ad campaigns.
@@ -113,17 +113,17 @@ const PrivacyPolicy = () => {
                 III. Location Information:&nbsp;You may choose to publish your
                 location in your AKJ private limited profile. You may also tell
                 your location when you enable your device to send such location
-                information. AKJ private limited(refered to as the staradda)
+                information. AKJ private limited(refered to as the RKZONES)
                 and/or third parties may use and store information about your
                 location to provide special features, to deliver ads that relate
                 your interests and/or to improve and customize the Services.
               </p>
               <p className="p3">
-                IV. Links:&nbsp;AKJ private limited (refered to as the
-                staradda)may keep track of how you interact with links across
-                the Services, including email notifications, third-party
-                services, and client applications, by redirecting clicks or
-                through other means.
+                IV. Links:&nbsp;AKJ private limited (refered to as the RK
+                ZONES)may keep track of how you interact with links across the
+                Services, including email notifications, third-party services,
+                and client applications, by redirecting clicks or through other
+                means.
               </p>
               <p className="p3">
                 V. Log Data:&nbsp;Servers automatically record information
@@ -137,7 +137,7 @@ const PrivacyPolicy = () => {
               </p>
               <p className="p3">
                 VI. Payment information:&nbsp;If you make a purchase in the
-                Services, AKJ private limited (refered to as the staradda) may
+                Services, AKJ private limited (refered to as the RKZONES) may
                 collect the billing and financial information necessary to
                 process the charges; and/or do so on behalf of the relevant
                 payment service providers. Purchases of third party services are
@@ -145,7 +145,7 @@ const PrivacyPolicy = () => {
               </p>
               <p className="p3">
                 VII. Third-party services:&nbsp;AKJ private limited (refered to
-                as the staradda) uses a variety of third-party services to help
+                as the RKZONES) uses a variety of third-party services to help
                 its provision of the Services, such as hosting and other
                 services. These third-party service providers may collect
                 information sent by your browser as part of a web page request,
@@ -156,23 +156,23 @@ const PrivacyPolicy = () => {
               </p>
               <p className="p2">
                 VIII. Customer Support Correspondence:&nbsp;When you ask for
-                assistance from AKJ private limited (refered to as the
-                staradda)customer support, the contact information you provide
-                will be collected, as well as information about your game play
-                or activity on the Service, your user ID number, and the
+                assistance from AKJ private limited (refered to as the RK
+                ZONES)customer support, the contact information you provide will
+                be collected, as well as information about your game play or
+                activity on the Service, your user ID number, and the
                 correspondence and any information contained within. If
                 available through the Services, you may provide AKj privatJ
-                limited (refered to as the staradda)with profile information to
+                limited (refered to as the RKZONES)with profile information to
                 make public, such as a short biography, location, website, cell
                 phone, a picture, information to customize your account, etc.
                 Such contact information may be used to send you information
                 about the Services or related information. You may use your
                 account settings to unsubscribe from notifications from AKj J
-                private limited(refered to as the staradda) and/or from other
+                private limited(refered to as the RKZONES) and/or from other
                 users and find users you know. You may also unsubscribe by
                 following the instructions contained within the notification or
                 the instructions on the Service. Also AKj private limiteJ
-                (refered to as the staradda)may use your contact information to
+                (refered to as the RKZONES)may use your contact information to
                 help others find your account, including through third-party
                 services and client applications. Providing any additional
                 information described in this section is entirely optional.
@@ -185,8 +185,8 @@ const PrivacyPolicy = () => {
                 time to time. Some of this information, for example, your name
                 and/or username, may be listed publicly on the Services,
                 including on your profile page and in search results. You agree
-                that AKJ private limited(refered to as the staradda) and/or
-                third parties on its behalf and/or its partners may use the
+                that AKJ private limited(refered to as the RKZONES) and/or third
+                parties on its behalf and/or its partners may use the
                 Information for the purposes of contacting you as part of
                 customer support; to send you updates or information about the
                 Services; managing your account and relationship with the
@@ -200,11 +200,11 @@ const PrivacyPolicy = () => {
               </p>
               <p className="p1">Information sharing and disclosure</p>
               <p className="p2">
-                AKJ private limited(refered to as the staradda) will only share
+                AKJ private limited(refered to as the RKZONES) will only share
                 your data with third parties according to the Privacy Policy, as
                 reasonably necessary in order to provide the Services, for
                 example, by providing Information to suppliers that AKj private
-                J limited (refered to as the staradda)may use to fulfill the
+                J limited (refered to as the RKZONES)may use to fulfill the
                 Services; where it is necessary to carry out your instructions,
                 for example, to process a payment instruction your Information
                 has to be provided to the payment processors; where your data is
@@ -218,8 +218,8 @@ const PrivacyPolicy = () => {
                 with any legal obligation, or in order to enforce or apply the
                 Terms, this Privacy Policy and/or any other agreement with you;
                 or to protect the rights and/or property of AKj privatJ
-                limited(refered to as the staradda) or third-party´s rights
-                and/or property. AKJ private limited(refered to as the staradda)
+                limited(refered to as the RKZONES) or third-party´s rights
+                and/or property. AKJ private limited(refered to as the RKZONES)
                 may share or disclose your non-private information, such as
                 public user profile information, public messages, e-mail, etc.,
                 or share or disclose your information in an anonymous or
@@ -233,13 +233,13 @@ const PrivacyPolicy = () => {
                 You may allow the Services to interact with any third party
                 social network and/or platforms, such as Facebook, twitter,
                 whatsApp and any other networks/platforms which will provide
-                data about you to AKJ private limited(refered to as the
-                staradda). Since any other applications or websites different
-                than the Services are owned by a third party, you must ensure
-                that you read their terms of service and the applicable privacy
+                data about you to AKJ private limited(refered to as the RK
+                ZONES). Since any other applications or websites different than
+                the Services are owned by a third party, you must ensure that
+                you read their terms of service and the applicable privacy
                 policies. You understand that when you allow the Services to
                 interact with any third party social network and/or platform,
-                AKJ private limited(refered to as the staradda) may share data
+                AKJ private limited(refered to as the RKZONES) may share data
                 about you with your contacts and other users of the Services and
                 vice versa. This Data may include your name, profile picture,
                 activity status, and information related to your use of the
@@ -270,7 +270,7 @@ const PrivacyPolicy = () => {
               </p>
               <p className="p1">Term</p>
               <p className="p2">
-                AKJ private limited(refered to as the staradda) may retain the
+                AKJ private limited(refered to as the RKZONES) may retain the
                 Information for as long as is necessary to fulfill the purposes
                 for which it was collected or as needed to provide the Services,
                 even after you have discontinued or deleted any account, or
@@ -281,20 +281,20 @@ const PrivacyPolicy = () => {
               </p>
               <p className="p1">Protection of Information</p>
               <p className="p2">
-                AKJ private limited (refered to as the staradda)maintains
+                AKJ private limited (refered to as the RKZONES)maintains
                 appropriate technical and physical safeguards to protect
                 Information against accidental or unlawful destruction or loss,
                 alteration, unauthorized disclosures or access, and any other
                 unlawful forms of processing of the data in its possession.
-                However, AKJ private limited(refered to as the staradda) does
-                not guarantee that Information will not be accessed, disclosed,
+                However, AKJ private limited(refered to as the RKZONES) does not
+                guarantee that Information will not be accessed, disclosed,
                 altered or destroyed by breach of any of the abovementioned
                 safeguards. Information may be transferred to and/or stored at
-                worldwide destinations. AKJ private limited(refered to as the
-                staradda) takes all steps reasonably necessary to ensure that
+                worldwide destinations. AKJ private limited(refered to as the RK
+                ZONES) takes all steps reasonably necessary to ensure that
                 Information is treated securely and in accordance with this
                 Privacy Policy. In the event that AKJ private limited (refered
-                to as the staradda)is involved in a bankruptcy, merger,
+                to as the RKZONES)is involved in a bankruptcy, merger,
                 acquisition, reorganization or sale of assets, your information
                 may be sold or transferred as part of that transaction. The
                 undertakings in this Privacy Policy shall apply to the
@@ -305,7 +305,7 @@ const PrivacyPolicy = () => {
                 understand that when you click on these links any data which you
                 provide afterwards is subject to that third party's privacy
                 policy and not to AKJ private limited’s. Consequently, AKj J
-                private limited (refered to as the staradda)takes no
+                private limited (refered to as the RKZONES)takes no
                 responsibility for the content, safety or security of any third
                 party website. The Services are not directed to persons under
                 legal age. AKJ private limited does not knowingly collect any
@@ -315,33 +315,33 @@ const PrivacyPolicy = () => {
                 terminate such account. If you become aware that any child has
                 provided personal information without the essential legal
                 guardian consent, please contact:&nbsp;
-                <a href="mailto:info@staradda.com">
-                  <span className="s2">info@staradda.com</span>
+                <a href="mailto:info@RKZONES.com">
+                  <span className="s2">info@RKZONES.com</span>
                 </a>{" "}
                 . Irrespective of which country you reside in or supply
                 information from, you authorize AKJ private limited(refered to
-                as the staradda) to store and/or use the Information according
-                to this Privacy Policy in any country where AKJ private
-                limited(refered to as the staradda) may operate.
+                as the RKZONES) to store and/or use the Information according to
+                this Privacy Policy in any country where AKJ private
+                limited(refered to as the RKZONES) may operate.
               </p>
               <p className="p2">
                 Notwithstanding anything to the contrary in this Policy, AKJ
-                private limited (refered to as the staradda) may preserve or
+                private limited (refered to as the RKZONES) may preserve or
                 disclose your information to the extent reasonably necessary to
                 comply with a law, regulation or legal request; to protect the
                 safety of any person; to address fraud, security or technical
                 issues; or to protect AKJ private limited's (refered to as the
-                staradda)rights or property. However, nothing in this Privacy
+                RKZONES)rights or property. However, nothing in this Privacy
                 Policy is intended to limit any legal defenses or objections
                 that you may have to a third party’s, including a government’s
                 request to disclose your information. AKJ private limited wants
                 to make sure that your Information is accurate and up to date.
                 You may ask to modify, correct or remove information with the
                 tools and account settings of the Service, or otherwise by
-                contacting AKJ private limited (refered to as the
-                staradda)at&nbsp;
-                <a href="mailto:info@staradda.com">
-                  <span className="s2">info@staradda.com</span>
+                contacting AKJ private limited (refered to as the RK
+                ZONES)at&nbsp;
+                <a href="mailto:info@RKZONES.com">
+                  <span className="s2">info@RKZONES.com</span>
                 </a>{" "}
                 .
               </p>
@@ -355,8 +355,8 @@ const PrivacyPolicy = () => {
                 subject to the exclusive jurisdiction of the courts located in
                 the city of Jaipur/Rajasthan – India. You consent the
                 jurisdiction and venue in such courts and waive any objection as
-                to inconvenient forum AKJ private limited(refered to as the
-                staradda) may revise or amend this Privacy Policy from time to
+                to inconvenient forum AKJ private limited(refered to as the RK
+                ZONES) may revise or amend this Privacy Policy from time to
                 time.
               </p>
             </>
