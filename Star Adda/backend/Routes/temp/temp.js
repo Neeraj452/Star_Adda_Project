@@ -246,7 +246,6 @@ router.patch("/temp/withdraw/reject/:id", Auth, async (req, res) => {
   try {
     const withdraw = await Temp.findById(req.params.id);
     const user = await User.findById(withdraw.user);
-    console.log("erkeerrre");
     if (user.withdraw_holdbalance > 0) {
       const txn = await Transaction.findById(withdraw.txn_id);
       if (txn.status === "REJECT" || txn.status === "SUCCESS") {

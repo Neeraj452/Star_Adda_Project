@@ -23,11 +23,10 @@ const profanity = require("profanity-hindi");
 // let phoneNumber=undefined;
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-const accountSid = process.env.accountSid
-const authToken = process.env.authToken
-const from = process.env.from
-const client = require('twilio')(accountSid, authToken);
-
+const accountSid = process.env.accountSid;
+const authToken = process.env.authToken;
+const from = process.env.from;
+const client = require("twilio")(accountSid, authToken);
 
 const code_gen = async () => {
   let code = Math.floor(Math.random() * 1000000);
@@ -441,18 +440,18 @@ router.get("/agent/all", Auth, RoleBase("Admin", "Agent"), async (req, res) => {
 //     }
 // })
 
-const sendSmsByTwillio=async(from,to,otp)=>{
-  c
-  try {
-    return await client.messages.create({
-      body: `Your OTP code is ${otp}`, // replace with the actual OTP
-      from: from, // replace with your Twilio phone number
-      to: to
-    });
-  } catch (error) {
-    res.status(500).send({ error: 'Failed to send OTP' });
-  }
-}
+// const sendSmsByTwillio = async (from, to, otp) => {
+//   c;
+//   try {
+//     return await client.messages.create({
+//       body: `Your OTP code is ${otp}`, // replace with the actual OTP
+//       from: from, // replace with your Twilio phone number
+//       to: to,
+//     });
+//   } catch (error) {
+//     res.status(500).send({ error: "Failed to send OTP" });
+//   }
+// };
 
 router.post("/login", async (req, res) => {
   try {
@@ -476,20 +475,19 @@ router.post("/login", async (req, res) => {
 
       if (user.Phone) {
         user.otp = newSecret.token;
-        await client.messages.create({
-          body: `Your OTP code is ${newSecret.token}`, 
-          from: from, 
-          to: `+91${user.Phone}`
-        });
+        // await client.messages.create({
+        //   body: `Your OTP code is ${newSecret.token}`,
+        //   from: from,
+        //   to: `+91${user.Phone}`,
+        // });
         await user.save();
         return res.json({
           status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
           msg: "Authentication Required",
           secret: SecretCode.secret,
-          // myToken: newSecret.token,
+          myToken: newSecret.token,
         });
       }
-
     } else if (user == null) {
       let referralBy = referral;
       const Exist = await User.find({ referral_code: referral });
@@ -507,19 +505,18 @@ router.post("/login", async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       newUser.Password = await bcrypt.hash(newUser.Password, salt);
       newUser.otp = newSecret.token;
-      await client.messages.create({
-          body: `Your OTP code is ${newSecret.token}`, 
-          from: from, 
-          to: `+91${user.Phone}`
-        });
+      // await client.messages.create({
+      //   body: `Your OTP code is ${newSecret.token}`,
+      //   from: from,
+      //   to: `+91${user.Phone}`,
+      // });
       await newUser.save();
-     
 
       return res.json({
         status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
         msg: "Authentication Required",
         secret: SecretCode.secret,
-        // myToken: newSecret.token,
+        myToken: newSecret.token,
       });
     }
   } catch (e) {
@@ -1744,7 +1741,7 @@ const sendSMS = async () => {
 };
 
 router.post("/login/admin", async (req, res) => {
-  const phone =parseInt(req.body.Phone);
+  const phone = parseInt(req.body.Phone);
   const SecretCode = twofactor.generateSecret({ Phone: phone });
   const newSecret = twofactor.generateToken(SecretCode.secret);
 
@@ -1755,21 +1752,21 @@ router.post("/login/admin", async (req, res) => {
       user = await User.findOne({ Phone: phone, user_type: "Agent" });
     }
     user.otp = newSecret.token;
-    
-    const message=  await client.messages.create({
-        body: `Your OTP code is ${newSecret.token}`, 
-        from: from, 
-        to: `+91${8924007372}`
-      });
-      user.save();
 
-    if(message){
+    // const message = await client.messages.create({
+    //   body: `Your OTP code is ${newSecret.token}`,
+    //   from: from,
+    //   to: `+91${8924007372}`,
+    // });
+    user.save();
+
+    if (message) {
       return res.json({
         status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
         secret: SecretCode.secret,
         myToken: newSecret.token,
       });
-    }else{
+    } else {
       return res.json({
         status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
         msg: "Please Valid Phone Number",
@@ -1777,10 +1774,6 @@ router.post("/login/admin", async (req, res) => {
         myToken: newSecret.token,
       });
     }
-   
-
-    
-    
   } catch (err) {
     console.error(err);
     res.status(401).send(err);

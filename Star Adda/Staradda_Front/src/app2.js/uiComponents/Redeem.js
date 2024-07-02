@@ -121,7 +121,7 @@ const Redeem = ({ walletUpdate }) => {
                 placeholder="Enter Amount"
                 onChange={(e) => setamount(parseInt(e.target.value))}
               ></input>
-              <small className="text-warning">
+              <small className="text-danger">
                 Minimum withdrawal amount ₹95
               </small>
               <p className="MuiFormHelperText-root">

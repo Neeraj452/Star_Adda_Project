@@ -753,7 +753,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                               )
                             : ""}
                           {/* bank account number */}
-                          {Bankwithdrawal === true
+                          {/* {Bankwithdrawal === true
                             ? Boolean(isRazorPayPayoutActive) && (
                                 <div
                                   onClick={() => {
@@ -806,7 +806,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                   </div>
                                 </div>
                               )
-                            : ""}
+                            : ""} */}
                           {/* paytm number */}
 
                           {paytmwithdrawal === true
@@ -1045,7 +1045,6 @@ const Withdrawopt = ({ walletUpdate }) => {
                                         <label
                                           htmlFor="username "
                                           className="mr-5 commaon_label"
-                                          style={{ color: "#d28d01" }}
                                         >
                                           <i className="far fa-user mr-2"></i>
                                           Account holder name (खाता धारक का नाम)
@@ -1070,7 +1069,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                         <label
                                           htmlFor="username "
                                           className="mr-5 commaon_label"
-                                          style={{ color: "#d28d01" }}
+                                          // style={{ color: "#d28d01" }}
                                         >
                                           <i className="far fa-bank mr-2"></i>
                                           Account number (खाता संख्या):
@@ -1091,7 +1090,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                         <label
                                           htmlFor="username "
                                           className="mr-5 commaon_label"
-                                          style={{ color: "#d28d01" }}
+                                          // style={{ color: "#d28d01" }}
                                         >
                                           <i className="far fa-bank mr-2"></i>{" "}
                                           Confirm Account number (कन्फर्म खाता
@@ -1117,7 +1116,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                         <label
                                           htmlFor="username "
                                           className="mr-5 commaon_label"
-                                          style={{ color: "#d28d01" }}
+                                          // style={{ color: "#d28d01" }}
                                         >
                                           <i className="far fa-bank mr-2"></i>
                                           IFSC code (IFSC कोड ) :
@@ -1144,7 +1143,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                         <label
                                           htmlFor="username "
                                           className="mr-5 commaon_label"
-                                          style={{ color: "#d28d01" }}
+                                          // style={{ color: "#d28d01" }}
                                         >
                                           <i className="far fa-user mr-2"></i>
                                           Account holder name (खाता धारक का नाम)
@@ -1169,7 +1168,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                       <label
                                         htmlFor="username "
                                         className="mr-5 commaon_label"
-                                        style={{ color: "#d28d01" }}
+                                        // style={{ color: "#d28d01" }}
                                       >
                                         <i className="far fa-bank mr-2"></i>UPI
                                         ID (UPI आईडी) || EX. (9999999999@xyz)
@@ -1191,7 +1190,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                       <label
                                         htmlFor="username "
                                         className="mr-5 commaon_label"
-                                        style={{ color: "#d28d01" }}
+                                        // style={{ color: "#d28d01" }}
                                       >
                                         <i className="far fa-bank mr-2"></i>{" "}
                                         Confirm UPI ID: (कन्फर्म UPI आईडी) ||
@@ -1225,7 +1224,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                         <label
                                           htmlFor="username "
                                           className="mr-5 commaon_label"
-                                          style={{ color: "#d28d01" }}
+                                          // style={{ color: "#d28d01" }}
                                         >
                                           <i className="far fa-user mr-2"></i>
                                           Account holder name (खाता धारक का नाम)
@@ -1250,7 +1249,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                         <label
                                           htmlFor="username "
                                           className="mr-5 commaon_label"
-                                          style={{ color: "#d28d01" }}
+                                          // style={{ color: "#d28d01" }}
                                         >
                                           <i className="far fa-bank mr-2"></i>
                                           Paytm number (Paytm नंबर):
@@ -1271,7 +1270,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                                         <label
                                           htmlFor="username "
                                           className="mr-5 commaon_label"
-                                          style={{ color: "#d28d01" }}
+                                          // style={{ color: "#d28d01" }}
                                         >
                                           <i className="far fa-bank mr-2"></i>{" "}
                                           Confirm Paytm number (कन्फर्म Paytm
@@ -1304,7 +1303,7 @@ const Withdrawopt = ({ walletUpdate }) => {
                               <label
                                 htmlFor="username "
                                 className="mr-5 commaon_label"
-                                style={{ color: "#d28d01" }}
+                                // style={{ color: "#d28d01" }}
                               >
                                 <img
                                   src={
@@ -1333,7 +1332,11 @@ const Withdrawopt = ({ walletUpdate }) => {
                             </div>
                             <div
                               className="col-12 p-0 mt-2 pt-3 mr-2"
-                              style={{ marginBottom: "100px" }}
+                              style={{
+                                marginBottom: "100px",
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
                             >
                               {isLoading ? (
                                 <div className="pl-2 text-center">
@@ -1351,7 +1354,9 @@ const Withdrawopt = ({ walletUpdate }) => {
                                     height: "40px",
                                     backgroundColor: "rgb(210 141 1)",
                                     color: "white",
-                                    borderRadius: "21px",
+                                    borderRadius: "16px",
+                                    border: "none",
+                                    width: "65%",
                                   }}
                                   disabled={Boolean(submitBtn) ? false : true}
                                   onClick={() => updateBankDetails()}

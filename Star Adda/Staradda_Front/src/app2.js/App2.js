@@ -324,7 +324,10 @@ const App2 = () => {
 
   return (
     <>
-      <div className="App" style={{ zIndex: "999", position: "absolute" }}>
+      <div
+        className="App"
+        // style={{ zIndex: "999", position: "absolute", background: "red" }}
+      >
         <Widget
           handleNewUserMessage={handleSendMessage}
           // handleSubmit={(event) => alert()}

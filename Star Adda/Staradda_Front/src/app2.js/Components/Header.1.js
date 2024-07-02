@@ -1,22 +1,11 @@
-// import { width } from '@mui/system';
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
-
-import "../Components/Component-css/Header.css";
 import css from "./Component-css/Nav.module.css";
-import { BsCash, BsPlus } from "react-icons/bs";
-const w3_close = () => {
-  const width = document.getElementById("mySidebar").offsetWidth;
-  document.getElementById("mySidebar").style.left = `-${width}px`;
-  document.getElementById("sidebarOverlay").style.display = "none";
-};
-const w3_open = () => {
-  document.getElementById("mySidebar").style.left = "0";
-  document.getElementById("sidebarOverlay").style.display = "block";
-};
+import { BsPlus } from "react-icons/bs";
+import { w3_close, w3_open } from "./Header";
 
-const Header = ({ user, loggedIn }) => {
+export const Header = ({ user, loggedIn }) => {
   const history = useHistory();
   const EndPoint = process.env.REACT_APP_API_URL;
 
@@ -196,7 +185,7 @@ const Header = ({ user, loggedIn }) => {
               </picture>
               <div style={{ marginLeft: ".5rem" }}>Support</div>
             </Link>
-            {/* <Link
+            <Link
               className="w3-bar-item w3-button"
               to="/"
               onClick={(e) => logout(e)}
@@ -208,7 +197,7 @@ const Header = ({ user, loggedIn }) => {
                 />
               </picture>
               <div style={{ marginLeft: ".5rem" }}>Logout</div>
-            </Link> */}
+            </Link>
           </div>
 
           <div className="w3-teal">
@@ -332,14 +321,12 @@ const Header = ({ user, loggedIn }) => {
       )}
 
       {/*
-      <div className="alert alert-danger mt-5 pt-5" role="alert">
-        <strong>
-      असुविधा के लिए खेद है,हमारे पेमेंट गेटवे पार्टनर की तकनीकी खामियों की वजह से डिपॉजिट और विड्रवाल मैं  समस्या आ रही है । कृपया सभी प्लेयर्स से अनुरोध है की धैर्य बनाए रखे आपका अमाउंट सेफ है और समस्या के निवारण मैं 48 से 72 घंटे लग सकते
-        </strong>
-      </div>
-      */}
+            <div className="alert alert-danger mt-5 pt-5" role="alert">
+              <strong>
+            असुविधा के लिए खेद है,हमारे पेमेंट गेटवे पार्टनर की तकनीकी खामियों की वजह से डिपॉजिट और विड्रवाल मैं  समस्या आ रही है । कृपया सभी प्लेयर्स से अनुरोध है की धैर्य बनाए रखे आपका अमाउंट सेफ है और समस्या के निवारण मैं 48 से 72 घंटे लग सकते
+              </strong>
+            </div>
+            */}
     </div>
   );
 };
-
-export default Header;
