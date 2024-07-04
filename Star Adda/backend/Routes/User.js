@@ -20,6 +20,7 @@ const GatewaySettings = require("../Model/Gateway");
 const AadharCard = require("../Model/Kyc/Aadharcard");
 const activity = require("../Model/activity");
 const profanity = require("profanity-hindi");
+const UPI = require("../Model/UPI");
 // let phoneNumber=undefined;
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -1751,6 +1752,9 @@ router.post("/login/admin", async (req, res) => {
     if (!user) {
       user = await User.findOne({ Phone: phone, user_type: "Agent" });
     }
+    if (!user) {
+      return res.status(400).send({ message: "User not found" });
+    }
     user.otp = newSecret.token;
 
     // const message = await client.messages.create({
@@ -2147,5 +2151,43 @@ function getIST_iso_string(datetime = new Date()) {
   console.log(dateIST.toISOString(), "ddhddu");
   return dateIST.toISOString();
 }
+router.post("/update-upi", Auth, async (req, res) => {
+  const { upiId, id } = req.body;
+  try {
+    if (id) {
+      const updatedUPI = await UPI.findByIdAndUpdate(
+        id,
+        { User_id: req.user?._id, upiId },
+        { new: true, runValidators: true }
+      );
+      return res.status(200)?.send({
+        status: true,
+        data: updatedUPI,
+      });
+    }
 
+    if (!id) {
+      const newUPI = new UPI({ userId: req.user?._id, upiId });
+      await newUPI.save();
+      return res.status(201).send({
+        status: true,
+        message: "UPI Updated Successfully",
+      });
+    }
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+router.get("/get-upi", Auth, async (req, res) => {
+  try {
+    const upi = await UPI.find().populate("userId", "name email");
+    return res.status(200).send({
+      status: true,
+      data: upi[0],
+    });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 module.exports = router;

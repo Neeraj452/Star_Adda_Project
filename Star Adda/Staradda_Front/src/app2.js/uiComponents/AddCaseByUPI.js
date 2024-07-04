@@ -14,7 +14,7 @@ let access_token = localStorage.getItem("token");
 
 const AddCaseByUPI = () => {
   const initialFormData = {
-    upi: "874847454@paytm",
+    upi: "",
     User_id: null,
     amount: "",
     payment_gatway: "UPI Payment",
@@ -33,10 +33,10 @@ const AddCaseByUPI = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 1000); // Hide the message after 3 seconds
   };
+  const headers = {
+    Authorization: `Bearer ${access_token}`,
+  };
   const getUserData = () => {
-    const headers = {
-      Authorization: `Bearer ${access_token}`,
-    };
     axios
       .get(`${EndPoint}/me`, { headers })
       .then((res) => {
@@ -50,7 +50,23 @@ const AddCaseByUPI = () => {
         }
       });
   };
+  const getUPIID = () => {
+    axios
+      .get(EndPoint + `/get-upi`, { headers })
+      .then((res) => {
+        if (res.data.status) {
+          console.log(res.data?.data?.upiId);
+          setFormData((prev) => {
+            return { ...prev, upi: res.data?.data?.upiId };
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   useEffect(() => {
+    getUPIID();
     getUserData();
   }, []);
 
@@ -80,7 +96,7 @@ const AddCaseByUPI = () => {
         icon: "success",
         confirmButtonText: "OK",
       }).then(() => {
-        setFormData(initialFormData);
+        setFormData({ ...initialFormData, upi: formData?.upi });
         setLoading(false);
       });
     } catch (error) {
@@ -158,7 +174,7 @@ const AddCaseByUPI = () => {
                   type="text"
                   id="upi-id"
                   name="upi-id"
-                  placeholder="38434445@ybl"
+                  placeholder={formData?.upi}
                   disabled
                 />
                 <CopyToClipboard text={formData?.upi} onCopy={handleCopy}>

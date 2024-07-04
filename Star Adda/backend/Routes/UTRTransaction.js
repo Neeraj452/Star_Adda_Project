@@ -78,7 +78,7 @@ module.exports = router;
 router.get("/get/manual/deposit/utr", async (req, res) => {
   const { _stype, _q, _status, name, phone } = req.query;
 
-  let queryConditions = [{ Req_type: "deposit" }];
+  let queryConditions = [{ Req_type: "deposit" }, { status: "pending" }];
 
   if (_stype === "order_token" && _q) {
     queryConditions.push({ [_stype]: _q });
