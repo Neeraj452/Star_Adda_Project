@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../Components/Header";
 import "../css/landing.css";
 import style from "../css/gamehis.module.css";
@@ -23,6 +23,7 @@ const AddCaseByUPI = () => {
     order_token: "",
     paymentImage: null,
   };
+  const imgRef = useRef();
   const [formData, setFormData] = useState(initialFormData);
   const [copied, setCopied] = useState(false);
   const [userAllData, setUserAllData] = useState();
@@ -97,6 +98,7 @@ const AddCaseByUPI = () => {
         confirmButtonText: "OK",
       }).then(() => {
         setFormData({ ...initialFormData, upi: formData?.upi });
+        imgRef.current.value = null;
         setLoading(false);
       });
     } catch (error) {
@@ -222,6 +224,7 @@ const AddCaseByUPI = () => {
               <input
                 type="file"
                 id="Payment"
+                ref={imgRef}
                 onChange={(e) => {
                   e.persist();
                   setFormData((prev) => ({
