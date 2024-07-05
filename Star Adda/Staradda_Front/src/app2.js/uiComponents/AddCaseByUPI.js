@@ -102,10 +102,10 @@ const AddCaseByUPI = () => {
         setLoading(false);
       });
     } catch (error) {
-      console.error("Error:", error);
+      console.log({ error });
       Swal.fire({
         title: "Error!",
-        text: error?.message,
+        text: error?.response?.data?.message,
         icon: "error",
         confirmButtonText: "OK",
       });

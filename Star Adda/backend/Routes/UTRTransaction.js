@@ -64,12 +64,13 @@ router.post(
       await txn.save();
       const io = req.app.get("socketio");
       io.emit("updateAdminManualDeposit", "data");
-      console.log("Data");
       // Return the created transaction
       res.status(200).json({ data: txn, message: "Request Send Successfully" });
     } catch (error) {
-      console.error("Error creating transaction:", error);
-      res.status(500).json({ message: "Internal server error" });
+      if (error?.code == 11000) {
+        return res.status(400).json({ message: "Duplicate UTR Number" });
+      }
+      res.status(500).json({ message: error.message });
     }
   }
 );
@@ -113,6 +114,11 @@ router.get("/get/manual/deposit/utr", async (req, res) => {
             _stype === "Name" && _q ? { "userData.Name": _q } : {},
             _stype === "Phone" && _q ? { "userData.Phone": parseInt(_q) } : {},
           ],
+        },
+      },
+      {
+        $sort: {
+          createdAt: -1, // Sort by createdAt in descending order
         },
       },
       {
