@@ -337,7 +337,7 @@ const Withdrawl = () => {
                       <th> Phone no.</th>
                       <th> Username</th>
                       <th> Amount </th>
-                      <th> Withdraw type </th>
+                      <th> UPI </th>
                       <th> Action </th>
                     </tr>
                   </thead>
@@ -360,7 +360,7 @@ const Withdrawl = () => {
                             )}
                           </td>
                           <td>{item.amount}</td>
-                          <td>{item.type}</td>
+                          <td>{item?.user?.upi_id}</td>
                           <td>
                             {!mount && item.status == "Pending" && (
                               <>

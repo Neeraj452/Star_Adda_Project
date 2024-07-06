@@ -983,7 +983,7 @@ router.post("/withdraw/request", Auth, async (req, res) => {
               var clientIp = req.headers["x-real-ip"];
               var clientForwardedIp = req.headers["x-forwarded-for"];
               var clientRemoteIp = req.headers["remote-host"];
-
+              console.log("first");
               const txn = new Transaction();
               txn.amount = req.body.amount;
               txn.User_id = user._id;
@@ -998,6 +998,7 @@ router.post("/withdraw/request", Auth, async (req, res) => {
               txn.client_forwarded_ip = clientForwardedIp;
               txn.client_remote_ip = clientRemoteIp;
               await txn.save();
+              console.log("first");
 
               const withdraw = new Temp();
               withdraw.Req_type = "withdraw";
@@ -3287,7 +3288,6 @@ router.post("/mypay-payout-by-upiId", Auth, async (req, res) => {
             txn.txn_msg =
               "issuer bank or payment service provider declined the transaction";
             txn.status = "SUCCESS";
-            txn.action_by = req?.user?.name;
             user.totalWithdrawl += txn.amount;
             user.withdraw_holdbalance -= txn.amount;
             user.lastWitdrawl = Date.now();

@@ -77,7 +77,6 @@ const transactionSchema = new mongoose.Schema(
     },
     order_token: {
       type: String,
-      unique: true,
     },
     referenceId: {
       type: String,

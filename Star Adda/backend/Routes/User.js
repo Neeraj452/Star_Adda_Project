@@ -2079,9 +2079,12 @@ router.post("/user/penlaty/:id", Auth, async (req, res) => {
         Remark: "Penalty by Admin",
       });
       await transac.save();
-      res.status(200).send(data);
+      res.status(200).send({
+        message: "Penalty was successfully added",
+        data: data,
+      });
     } else {
-      res.status(200).send({ status: 0 });
+      res.status(200).send({ status: 0, message: "Insufficient Balance" });
     }
   } catch (e) {
     res.status(400).send(e);

@@ -1,77 +1,88 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import ReactPaginate from 'react-paginate'
-const $ = require('jquery')
-$.Datatable = require('datatables.net')
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ReactPaginate from "react-paginate";
+import Swal from "sweetalert2";
+const $ = require("jquery");
+$.Datatable = require("datatables.net");
 export default function Penaltybonus() {
-  const [data, setUser] = useState()
-  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API
-  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API
-  const nodeMode = process.env.NODE_ENV
-  if (nodeMode === 'development') {
-    var baseUrl = beckendLocalApiUrl
+  const [data, setUser] = useState();
+  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API;
+  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API;
+  const nodeMode = process.env.NODE_ENV;
+  if (nodeMode === "development") {
+    var baseUrl = beckendLocalApiUrl;
   } else {
-    baseUrl = beckendLiveApiUrl
+    baseUrl = beckendLiveApiUrl;
   }
 
   //use for pagination..
-  let [limit, setLimit] = useState(10)
+  let [limit, setLimit] = useState(10);
 
   const setpageLimit = (event) => {
-    let key = event.target.value
-    setLimit(key)
-  }
-  const [pageNumber, setPageNumber] = useState(0)
-  const [numberOfPages, setNumberOfPages] = useState(0)
+    let key = event.target.value;
+    setLimit(key);
+  };
+  const [pageNumber, setPageNumber] = useState(0);
+  const [numberOfPages, setNumberOfPages] = useState(0);
   //user for searching..
-  const [searchList, setSearchList] = useState(0)
-  const [searchType, setSearchType] = useState(0)
+  const [searchList, setSearchList] = useState(0);
+  const [searchType, setSearchType] = useState(0);
 
   //react paginate..
   const handlePageClick = async (data) => {
-    let currentPage = data.selected + 1
-    setPageNumber(currentPage)
+    let currentPage = data.selected + 1;
+    setPageNumber(currentPage);
     // scroll to the top
     //window.scrollTo(0, 0)
-  }
+  };
 
   //   searching handler
   const searchHandler = (event) => {
-    let key = event.target.value
-    setSearchList(key)
-  }
+    let key = event.target.value;
+    setSearchList(key);
+  };
 
   const Alluser = () => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .get(
         baseUrl +
           `User/all/panelty?page=${pageNumber}&_limit=${limit}&_q=${searchList}&_stype=${searchType}`,
-        { headers },
+        { headers }
       )
       .then((res) => {
         //setUser(res.data)
-        setUser(res.data.admin)
-        setNumberOfPages(res.data.totalPages)
+        setUser(res.data.admin);
+        setNumberOfPages(res.data.totalPages);
         //$('table').dataTable();
-      })
-  }
+      });
+  };
 
-  const [type, setType] = useState()
-  const [bonus, setBonus] = useState()
-  console.log(type)
+  const [type, setType] = useState();
+  const [bonus, setBonus] = useState();
+  console.log(type);
   const update = (id) => {
-    const access_token = localStorage.getItem('token')
+    if (!bonus) {
+      return Swal.fire({
+        title: "Error",
+        text: "Please Enter Amount",
+        icon: "error",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#3085d6",
+      });
+    }
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
-    if (type === 'bonus') {
+    };
+
+    if (type === "bonus") {
       const confirm = window.confirm(
-        'Are you sure, you want to add bonus to this user?',
-      )
+        "Are you sure, you want to add bonus to this user?"
+      );
       if (confirm) {
         axios
           .post(
@@ -79,14 +90,21 @@ export default function Penaltybonus() {
             {
               bonus: JSON.parse(bonus),
             },
-            { headers },
+            { headers }
           )
           .then((res) => {
-            Alluser()
-          })
+            Swal.fire({
+              title: "Success",
+              text: "Bonus added successfully",
+              icon: "success",
+            }).then(() => {
+              setBonus("");
+            });
+            Alluser();
+          });
       }
-    } else if (type == 'wallet_balance') {
-      const confirm = window.confirm('Are you sure ?')
+    } else if (type == "wallet_balance") {
+      const confirm = window.confirm("Are you sure ?");
       if (confirm) {
         axios
           .post(
@@ -94,14 +112,14 @@ export default function Penaltybonus() {
             {
               bonus: JSON.parse(bonus),
             },
-            { headers },
+            { headers }
           )
           .then((res) => {
-            Alluser()
-          })
+            Alluser();
+          });
       }
-    } else if (type == 'withdraw_amt') {
-      const confirm = window.confirm('Are you sure ?')
+    } else if (type == "withdraw_amt") {
+      const confirm = window.confirm("Are you sure ?");
       if (confirm) {
         axios
           .post(
@@ -109,16 +127,16 @@ export default function Penaltybonus() {
             {
               bonus: JSON.parse(bonus),
             },
-            { headers },
+            { headers }
           )
           .then((res) => {
-            Alluser()
-          })
+            Alluser();
+          });
       }
     } else {
       const confirm2 = window.confirm(
-        'Are you sure, you want to add penalty to this user?',
-      )
+        "Are you sure, you want to add penalty to this user?"
+      );
       if (confirm2) {
         axios
           .post(
@@ -126,18 +144,25 @@ export default function Penaltybonus() {
             {
               bonus: JSON.parse(bonus),
             },
-            { headers },
+            { headers }
           )
           .then((res) => {
-            Alluser()
-          })
+            Swal.fire({
+              title: "Success",
+              text: "Penalty added successfully",
+              icon: "success",
+            }).then(() => {
+              setBonus("");
+            });
+            Alluser();
+          });
       }
     }
-  }
+  };
 
   useEffect(() => {
-    Alluser()
-  }, [pageNumber, limit, searchList, searchType])
+    Alluser();
+  }, [pageNumber, limit, searchList, searchType]);
 
   return (
     <>
@@ -212,8 +237,9 @@ export default function Penaltybonus() {
                                     id="number"
                                     type="number"
                                     className="form-control input-sm"
-                                    style={{ minWidth: '100px' }}
+                                    style={{ minWidth: "100px" }}
                                     placeholder="Amount"
+                                    // value={bonus}
                                     onChange={(e) => setBonus(e.target.value)}
                                   />
                                 </div>
@@ -222,7 +248,7 @@ export default function Penaltybonus() {
                                     <select
                                       className="form-control input-sm"
                                       name="type"
-                                      style={{ minWidth: '100px' }}
+                                      style={{ minWidth: "100px" }}
                                       onChange={(e) => setType(e.target.value)}
                                     >
                                       <option value="penalty">Penalty</option>
@@ -251,23 +277,23 @@ export default function Penaltybonus() {
 
                 <div className="mt-4">
                   <ReactPaginate
-                    previousLabel={'Previous'}
-                    nextLabel={'Next'}
-                    breakLabel={'...'}
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
                     pageCount={numberOfPages}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={3}
                     onPageChange={handlePageClick}
-                    containerClassName={'pagination justify-content-center'}
-                    pageClassName={'page-item'}
-                    pageLinkClassName={'page-link'}
-                    previousClassName={'page-item'}
-                    previousLinkClassName={'page-link'}
-                    nextClassName={'page-item'}
-                    nextLinkClassName={'page-link'}
-                    breakClassName={'page-item'}
-                    breakLinkClassName={'page-link'}
-                    activeClassName={'active'}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active"}
                   />
                 </div>
               </div>
@@ -276,5 +302,5 @@ export default function Penaltybonus() {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -48,6 +48,10 @@ router.post(
         return res.status(400).json({ message: "Missing required fields" });
       }
       const paymentPic = req.file ? req.file.path.replace(/\\/g, "/") : null;
+      const findUTR = await Transaction.findOne({ order_token });
+      if (findUTR) {
+        return res.status(400).json({ message: "Invalid order token" });
+      }
       // Create a new transaction
       const txn = new Transaction({
         upi,

@@ -127,83 +127,77 @@ const Withdrawopt = ({ walletUpdate }) => {
 
     if (type === "upi") {
       let regex = /^[\w.-]+@[\w.-]+$/.test(upi_id);
-
+      if (upi_id !== confirm_upi_id) {
+        return Swal.fire({
+          title: "UPI IDs do not match",
+          text: "Please make sure your UPI IDs match",
+          icon: "error",
+          confirmButtonText: "OK",
+        }).then(() => {
+          setSubmitBtn(true);
+          setMount(false);
+          setIsloading(false);
+        });
+      }
       if (regex) {
-        if (upi_id === confirm_upi_id) {
-          Swal.fire({
-            title: `Is your UPI ID correct? ${upi_id}`,
-            icon: "success",
-            confirmButtonText: "OK",
+        const access_token = localStorage.getItem("token");
+        const headers = {
+          Authorization: `Bearer ${access_token}`,
+        };
+
+        setIsloading(true);
+        const data = await axios
+          .patch(
+            `${EndPoint}/user/edit`,
+            {
+              holder_name,
+              type,
+              account_number,
+              confirm_account_number,
+              ifsc_code,
+              upi_id,
+              bankDetails: true,
+            },
+            { headers }
+          )
+          .then((res) => {
+            setIsloading(false);
+            // console.log('updata bank details', res)
+            if (res.data.subCode === "200") {
+              // console.log(res.data)
+              let calculatedWallet =
+                user.wonAmount -
+                user.loseAmount +
+                user.totalDeposit +
+                user.referral_earning +
+                user.hold_balance +
+                user.totalBonus -
+                (user.totalWithdrawl +
+                  user.referral_wallet +
+                  user.totalPenalty);
+
+              withReqComes();
+            } else {
+              Swal.fire({
+                title: res.data.msg,
+                icon: "error",
+                confirmButtonText: "OK",
+              }).then(() => {
+                setSubmitBtn(true);
+                setMount(false);
+              });
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            setMount(false);
+            if (e.response.status == 401) {
+              localStorage.removeItem("token");
+              localStorage.removeItem("token");
+              window.location.reload();
+              history.push("/login");
+            }
           });
-
-          const access_token = localStorage.getItem("token");
-          const headers = {
-            Authorization: `Bearer ${access_token}`,
-          };
-
-          setIsloading(true);
-          const data = await axios
-            .patch(
-              `${EndPoint}/user/edit`,
-              {
-                holder_name,
-                type,
-                account_number,
-                confirm_account_number,
-                ifsc_code,
-                upi_id,
-                bankDetails: true,
-              },
-              { headers }
-            )
-            .then((res) => {
-              setIsloading(false);
-              // console.log('updata bank details', res)
-              if (res.data.subCode === "200") {
-                // console.log(res.data)
-                let calculatedWallet =
-                  user.wonAmount -
-                  user.loseAmount +
-                  user.totalDeposit +
-                  user.referral_earning +
-                  user.hold_balance +
-                  user.totalBonus -
-                  (user.totalWithdrawl +
-                    user.referral_wallet +
-                    user.totalPenalty);
-
-                withReqComes();
-              } else {
-                Swal.fire({
-                  title: res.data.msg,
-                  icon: "error",
-                  confirmButtonText: "OK",
-                }).then(() => {
-                  setSubmitBtn(true);
-                  setMount(false);
-                });
-              }
-            })
-            .catch((e) => {
-              console.log(e);
-              setMount(false);
-              if (e.response.status == 401) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("token");
-                window.location.reload();
-                history.push("/login");
-              }
-            });
-        } else {
-          Swal.fire({
-            title: "UPI IDs do not match",
-            text: "Please make sure your UPI IDs match",
-            icon: "error",
-            confirmButtonText: "OK",
-          }).then(() => {
-            setSubmitBtn(true);
-          });
-        }
       } else {
         Swal.fire({
           title: `Invalid UPI ID: ${upi_id}`,
