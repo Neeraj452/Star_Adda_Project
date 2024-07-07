@@ -308,9 +308,9 @@ export default function Login() {
               )}
               <div className="login_message_box">
                 <p>
-                  By Continuing, you agree to our
-                  <Link to="term-condition">Legal Terms</Link> and you are 18
-                  years or older.
+                  By proceeding, you confirm your acceptance of our &nbsp;
+                  <Link to="term-condition">Legal Terms</Link> and verify that
+                  you are at least 18 years old
                 </p>
               </div>
               {!otp && (

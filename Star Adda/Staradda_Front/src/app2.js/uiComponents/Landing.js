@@ -108,49 +108,19 @@ export default function Landing() {
 
           <div class="gameCard ">
             <p class="commission_div">
-              Commission: 5% ◉ Referral: 3% For All Games
+              Commission: 5% ◉ Referral: 2% For All Games
             </p>
             <div class="home_message_div">
-              <p class="">{siteSetting?.site_message}</p>
+              <p class="">
+                {" "}
+                पॉपुलर रूम कोड देने पर आईडी को स्थायी रूप से ब्लॉक/पेमेंट 00 कर
+                दिया जाएगा। गेम जीतने के बाद गेम हिस्ट्री पर क्लिक करके
+                "ROOMCODE" वाला SCREENSHOT अनिवार्य होगा उसके लिए आपको "MATCH
+                HISTORY" मे जाके अनलॉक करना होगा। आपकी समस्याओं के लिए हम सदैव
+                तत्पर हैं कृपया हमारे व्हाट्सएप नंबर पर अपनी समस्या का निवारण
+                करवा सकते हो +911234567890
+              </p>
             </div>
-          </div>
-          <div className="collapseCard-container">
-            <div className="collapseCard">
-              <a href="#" target="_blank" style={{ textDecoration: "none" }}>
-                <div
-                  className="collapseCard-body"
-                  style={{
-                    height: "64px",
-                    opacity: 1,
-                    transition: "height 0.3s ease 0s, opacity 0.3s ease 0s",
-                  }}
-                >
-                  <div className="blink collapseCard-text text-dark">
-                    {" "}
-                    <span className=" text-danger">
-                      {" "}
-                      Check out our tutorial
-                    </span>
-                  </div>
-                </div>
-              </a>
-
-              <div
-                className="collapseCard-header"
-                style={{ left: "22px", transition: "left 0.3s ease 0s" }}
-              >
-                <picture>
-                  <img
-                    height="10px"
-                    width="14px"
-                    src="/images/youtube.png"
-                    alt=""
-                  />
-                </picture>
-                <div className="collapseCard-title ml-1 mt-1">Video Help</div>
-              </div>
-            </div>
-                      
           </div>
 
           {/* <section className="games-section p-3">
@@ -178,7 +148,7 @@ export default function Landing() {
                           JSON.parse(localStorage.getItem('sitSetting')) ==
                           'undefined'
                             ? ''
-                            : 'https://backend.RKZONES.in/' +
+                            : 'https://backend.ZUSS.in/' +
                               JSON.parse(localStorage.getItem('sitSetting'))
                                 ?.ludokingClassic
                         }
@@ -210,7 +180,7 @@ export default function Landing() {
                           JSON.parse(localStorage.getItem('sitSetting')) ==
                           'undefined'
                             ? ''
-                            : 'https://backend.RKZONES.in/' +
+                            : 'https://backend.ZUSS.in/' +
                               JSON.parse(localStorage.getItem('sitSetting'))
                                 ?.ludokingPopular
                         }
@@ -376,11 +346,10 @@ export default function Landing() {
               <div className="footer-text-bold">About Us</div>
 
               <div className="footer-text">
-                RKZONES is a real-money gaming product owned and operated by AKJ
-                Private Limited ("AKJ" or "We" or "Us" or "Our").
+                ZUSS is a real-money gaming product.
               </div>
 
-              <div className="footer-text-bold mt-3">
+              {/* <div className="footer-text-bold mt-3">
                 Our Business &amp; Products
               </div>
 
@@ -388,28 +357,28 @@ export default function Landing() {
                 We are an HTML5 game-publishing company and our mission is to
                 make accessing games fast and easy by removing the friction of
                 app-installs.
-              </div>
-
+              </div> */}
+              {/* 
               <div className="footer-text mt-2">
-                RKZONES is a skill-based real-money gaming platform accessible
-                only for our users in India. It is accessible on{" "}
+                ZUSS is a skill-based real-money gaming platform accessible only
+                for our users in India. It is accessible on{" "}
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://www.RKZONES.in"
+                  href="https://www.ZUSS.in"
                 >
-                  https://www.RKZONES.in
+                  https://www.ZUSS.in
                 </a>
-                . On RKZONES, users can compete for real cash in Tournaments and
+                . On ZUSS, users can compete for real cash in Tournaments and
                 Battles. They can encash their winnings via popular options such
                 as Paytm Wallet, Amazon Pay, Bank Transfer, Mobile Recharges
                 etc.
-              </div>
+              </div> */}
 
-              <div className="footer-text-bold mt-2">Our Games</div>
+              {/* <div className="footer-text-bold mt-2">Our Games</div>
 
               <div className="footer-text">
-                RKZONES has a wide-variety of high-quality, premium HTML5 games.
+                ZUSS has a wide-variety of high-quality, premium HTML5 games.
                 Our games are especially compressed and optimised to work on
                 low-end devices, uncommon browsers, and patchy internet speeds.
               </div>
@@ -424,8 +393,8 @@ export default function Landing() {
                 If you have any suggestions around new games that we should add
                 or if you are a game developer yourself and want to work with
                 us, don't hesitate to drop in a line at{" "}
-                <a href="mailto:info@RKZONES.in">info@RKZONES.in</a>!
-              </div>
+                <a href="mailto:info@ZUSS.in">info@ZUSS.in</a>!
+              </div> */}
             </div>
           </section>
           <div className="downloadButton">

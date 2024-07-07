@@ -63,12 +63,12 @@ const Refer = () => {
     return null;
   }
 
-  // const referralText = `Play Ludo and earn ₹10000 daily.  http://RKZONES.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`;
+  // const referralText = `Play Ludo and earn ₹10000 daily.  http://ZUSS.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`;
 
-  const referralText = `RKZONES  लूडो खेल कर या दोस्तों को शेयर कर के पैसा जीतो और तुरंत अपने Bank या UPI में ट्रांसफर कर सकते है।
+  const referralText = `ZUSS  लूडो खेल कर या दोस्तों को शेयर कर के पैसा जीतो और तुरंत अपने Bank या UPI में ट्रांसफर कर सकते है।
 दोस्तो को शेयर करने पर उनका आपको लाइफ टाइम 3% कमीशन दिया जाएगा  
 
-  100% भरोसेमंद प्लेटफार्म। 24 hours support http://RKZONES.in/login/${user.referral_code}
+  100% भरोसेमंद प्लेटफार्म। 24 hours support http://ZUSS.in/login/${user.referral_code}
 
 Your ReferralCode is - ${user.referral_code}.`;
   return (
@@ -188,7 +188,7 @@ Your ReferralCode is - ${user.referral_code}.`;
 
           <div className={`${css.refer_footer} pt-2 `}>
             <a
-              href={`whatsapp://send?text=Play Ludo and earn ₹10000 daily.  http://RKZONES.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`}
+              href={`whatsapp://send?text=Play Ludo and earn ₹10000 daily.  http://ZUSS.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`}
               style={{ width: '100%' }}
             >
               <button className='bg-green refer-button cxy w-100'>
@@ -229,11 +229,11 @@ Your ReferralCode is - ${user.referral_code}.`;
                 </div>
                 <div className="whatsapp_share_btn">
                   {/* <a
-                    href={`whatsapp://send?text=Play Ludo and earn ₹10000 daily.  http://RKZONES.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`}
+                    href={`whatsapp://send?text=Play Ludo and earn ₹10000 daily.  http://ZUSS.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`}
                     style={{ width: '100%' }}
                   > */}
                   <a
-                    href={`whatsapp://send?text=RKZONES%20%20%E0%A4%B2%E0%A5%82%E0%A4%A1%E0%A5%8B%20%E0%A4%96%E0%A5%87%E0%A4%B2%20%E0%A4%95%E0%A4%B0%20%E0%A4%AF%E0%A4%BE%20%E0%A4%A6%E0%A5%8B%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8B%E0%A4%82%20%E0%A4%95%E0%A5%8B%20%E0%A4%B6%E0%A5%87%E0%A4%AF%E0%A4%B0%20%E0%A4%95%E0%A4%B0%20%E0%A4%95%E0%A5%87%20%E0%A4%AA%E0%A5%88%E0%A4%B8%E0%A4%BE%20%E0%A4%9C%E0%A5%80%E0%A4%A4%E0%A5%8B%20%E0%A4%94%E0%A4%B0%20%E0%A4%A4%E0%A5%81%E0%A4%B0%E0%A4%82%E0%A4%A4%20%E0%A4%85%E0%A4%AA%E0%A4%A8%E0%A5%87%20Bank%20%E0%A4%AF%E0%A4%BE%20UPI%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%9F%E0%A5%8D%E0%A4%B0%E0%A4%BE%E0%A4%82%E0%A4%B8%E0%A4%AB%E0%A4%B0%20%E0%A4%95%E0%A4%B0%20%E0%A4%B8%E0%A4%95%E0%A4%A4%E0%A5%87%20%E0%A4%B9%E0%A5%88%E0%A5%A4%0A%E0%A4%A6%E0%A5%8B%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8B%20%E0%A4%95%E0%A5%8B%20%E0%A4%B6%E0%A5%87%E0%A4%AF%E0%A4%B0%20%E0%A4%95%E0%A4%B0%E0%A4%A8%E0%A5%87%20%E0%A4%AA%E0%A4%B0%20%E0%A4%89%E0%A4%A8%E0%A4%95%E0%A4%BE%20%E0%A4%86%E0%A4%AA%E0%A4%95%E0%A5%8B%20%E0%A4%B2%E0%A4%BE%E0%A4%87%E0%A4%AB%20%E0%A4%9F%E0%A4%BE%E0%A4%87%E0%A4%AE%203%25%20%E0%A4%95%E0%A4%AE%E0%A5%80%E0%A4%B6%E0%A4%A8%20%E0%A4%A6%E0%A4%BF%E0%A4%AF%E0%A4%BE%20%E0%A4%9C%E0%A4%BE%E0%A4%8F%E0%A4%97%E0%A4%BE%20%20%0A%0A%20%20100%25%20%E0%A4%AD%E0%A4%B0%E0%A5%8B%E0%A4%B8%E0%A5%87%E0%A4%AE%E0%A4%82%E0%A4%A6%20%E0%A4%AA%E0%A5%8D%E0%A4%B2%E0%A5%87%E0%A4%9F%E0%A4%AB%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A5%A4%2024%20hours%20support%20http%3A%2F%2FRKZONES.in%2Flogin%2F${user.referral_code}%0A%0AYour%20ReferralCode%C2%A0is%C2%A0-%C2%A0${user.referral_code}.`}
+                    href={`whatsapp://send?text=ZUSS%20%20%E0%A4%B2%E0%A5%82%E0%A4%A1%E0%A5%8B%20%E0%A4%96%E0%A5%87%E0%A4%B2%20%E0%A4%95%E0%A4%B0%20%E0%A4%AF%E0%A4%BE%20%E0%A4%A6%E0%A5%8B%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8B%E0%A4%82%20%E0%A4%95%E0%A5%8B%20%E0%A4%B6%E0%A5%87%E0%A4%AF%E0%A4%B0%20%E0%A4%95%E0%A4%B0%20%E0%A4%95%E0%A5%87%20%E0%A4%AA%E0%A5%88%E0%A4%B8%E0%A4%BE%20%E0%A4%9C%E0%A5%80%E0%A4%A4%E0%A5%8B%20%E0%A4%94%E0%A4%B0%20%E0%A4%A4%E0%A5%81%E0%A4%B0%E0%A4%82%E0%A4%A4%20%E0%A4%85%E0%A4%AA%E0%A4%A8%E0%A5%87%20Bank%20%E0%A4%AF%E0%A4%BE%20UPI%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%9F%E0%A5%8D%E0%A4%B0%E0%A4%BE%E0%A4%82%E0%A4%B8%E0%A4%AB%E0%A4%B0%20%E0%A4%95%E0%A4%B0%20%E0%A4%B8%E0%A4%95%E0%A4%A4%E0%A5%87%20%E0%A4%B9%E0%A5%88%E0%A5%A4%0A%E0%A4%A6%E0%A5%8B%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8B%20%E0%A4%95%E0%A5%8B%20%E0%A4%B6%E0%A5%87%E0%A4%AF%E0%A4%B0%20%E0%A4%95%E0%A4%B0%E0%A4%A8%E0%A5%87%20%E0%A4%AA%E0%A4%B0%20%E0%A4%89%E0%A4%A8%E0%A4%95%E0%A4%BE%20%E0%A4%86%E0%A4%AA%E0%A4%95%E0%A5%8B%20%E0%A4%B2%E0%A4%BE%E0%A4%87%E0%A4%AB%20%E0%A4%9F%E0%A4%BE%E0%A4%87%E0%A4%AE%203%25%20%E0%A4%95%E0%A4%AE%E0%A5%80%E0%A4%B6%E0%A4%A8%20%E0%A4%A6%E0%A4%BF%E0%A4%AF%E0%A4%BE%20%E0%A4%9C%E0%A4%BE%E0%A4%8F%E0%A4%97%E0%A4%BE%20%20%0A%0A%20%20100%25%20%E0%A4%AD%E0%A4%B0%E0%A5%8B%E0%A4%B8%E0%A5%87%E0%A4%AE%E0%A4%82%E0%A4%A6%20%E0%A4%AA%E0%A5%8D%E0%A4%B2%E0%A5%87%E0%A4%9F%E0%A4%AB%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A5%A4%2024%20hours%20support%20http%3A%2F%2FRKZONES.in%2Flogin%2F${user.referral_code}%0A%0AYour%20ReferralCode%C2%A0is%C2%A0-%C2%A0${user.referral_code}.`}
                     style={{ width: "100%" }}
                   >
                     <BsWhatsapp /> Share On Whatsapp
@@ -241,7 +241,7 @@ Your ReferralCode is - ${user.referral_code}.`;
                 </div>
                 <div className="whatsapp_share_btn">
                   <a
-                    href={`https://telegram.me/share/url?url?text=Play Ludo and earn ₹10000 daily.  http://RKZONES.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`}
+                    href={`https://telegram.me/share/url?url?text=Play Ludo and earn ₹10000 daily.  http://ZUSS.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`}
                     style={{ width: "100%" }}
                   >
                     <BsTelegram /> Share On Telegram

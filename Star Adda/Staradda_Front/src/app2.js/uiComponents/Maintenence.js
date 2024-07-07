@@ -13,7 +13,7 @@ const Maintenence = () => {
           style={{ backgroundImage: "url('../images/maint.svg')" }}
         ></div>
         <div className="bg_cont">
-          सर्वर की वजह से वेबसाइट को (RKZONES.in) कुछ टाइम तक बंद किया गया हैं
+          सर्वर की वजह से वेबसाइट को (ZUSS.in) कुछ टाइम तक बंद किया गया हैं
           जल्दी ही वेबसाइट चालू हो जाएगी | सभी का पेमेंट बिल्कुल सुरक्षित है |
         </div>
       </div>
