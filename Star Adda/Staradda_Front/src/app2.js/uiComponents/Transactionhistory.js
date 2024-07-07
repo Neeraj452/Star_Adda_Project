@@ -329,7 +329,7 @@ const Transactionhistory = () => {
                         ? "Cancelled"
                         : card.status}
                       <br></br>
-                      {card.txn_msg ? card.txn_msg : ""}
+                      {/* {card.txn_msg ? card.txn_msg : ""} */}
                     </div>
                   </div>
                 </div>

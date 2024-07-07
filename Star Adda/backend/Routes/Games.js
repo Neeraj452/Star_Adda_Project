@@ -24,30 +24,40 @@ let InProcessRequest = false;
 
 // const storage = multer.memoryStorage();
 // const upload = multer({ storage });
-var name11 = "Tera baap";
-var name12 = "UsxaL";
-var name21 = "mr jaat";
-var name22 = "Riya verma";
-var name31 = "Nemraj meena";
-var name32 = "MaGzs";
-var name41 = "Mr ludo";
-var name42 = "AqLsj";
-var name51 = "Aakesh";
-var name52 = "sorry yaar";
-var name61 = "Abjbj";
-var name62 = "Been";
-var name71 = "Rjhhl";
-var name72 = "Uhgfy";
-var name81 = "sarkar ji";
-var name82 = "Ljghh";
-var name91 = "Ram ji balji";
-var name92 = "💥💥💥💥 jat";
-var name101 = "setting nhi h";
-var name102 = "Yash kgwn";
-var name111 = "Shvhg";
-var name112 = "500+ game";
-var name121 = "King 🖕🖕🖕";
-var name122 = "Mustufa";
+function generateRandomString(length) {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
+var name11 = generateRandomString(8);
+var name12 = generateRandomString(8);
+var name21 = generateRandomString(8);
+var name22 = generateRandomString(8);
+var name31 = generateRandomString(8);
+var name32 = generateRandomString(8);
+var name41 = generateRandomString(8);
+var name42 = generateRandomString(8);
+var name51 = generateRandomString(8);
+var name52 = generateRandomString(8);
+var name61 = generateRandomString(8);
+var name62 = generateRandomString(8);
+var name71 = generateRandomString(8);
+var name72 = generateRandomString(8);
+var name81 = generateRandomString(8);
+var name82 = generateRandomString(8);
+var name91 = generateRandomString(8);
+var name92 = generateRandomString(8);
+var name101 = generateRandomString(8);
+var name102 = generateRandomString(8);
+var name111 = generateRandomString(8);
+var name112 = generateRandomString(8);
+var name121 = generateRandomString(8);
+var name122 = generateRandomString(8);
 var amount1 = 50;
 var amount2 = 50;
 var amount3 = 200;
@@ -87,7 +97,6 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix + path.extname(file.originalname));
   },
 });
-
 
 const upload = multer({
   storage: storage,
@@ -2468,14 +2477,14 @@ async function adminProfit(gameAmount, winID) {
   const winner = await User.findById(winID);
   let referralPer = 0;
   if (winner.referral) {
-    referralPer = 3;
+    referralPer = 2;
     const referralUser = await User.find({ referral_code: winner.referral });
     const referralTxn = new ReferralHis();
     referralTxn.referral_code = winner.referral;
     referralTxn.earned_from = winID;
-    referralTxn.amount = gameAmount * (3 / 100);
-    referralUser[0].referral_earning += gameAmount * (3 / 100);
-    referralUser[0].referral_wallet += gameAmount * (3 / 100);
+    referralTxn.amount = gameAmount * (2 / 100);
+    referralUser[0].referral_earning += gameAmount * (2 / 100);
+    referralUser[0].referral_wallet += gameAmount * (2 / 100);
     referralTxn.closing_balance = referralUser[0].referral_wallet;
     await referralTxn.save();
     await referralUser[0].save();

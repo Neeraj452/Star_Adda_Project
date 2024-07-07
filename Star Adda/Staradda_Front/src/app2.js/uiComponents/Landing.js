@@ -279,7 +279,7 @@ export default function Landing() {
           </section>
           <section className="footer">
             <div className="footer-divider" />
-            <a
+            {/* <a
               className="px-3 py-4 d-flex align-items-center"
               href="#!"
               style={{ textDecoration: "none" }}
@@ -319,8 +319,8 @@ export default function Landing() {
                   className="mdi mdi-chevron-down ml-auto"
                 ></i>
               )}
-            </a>
-            <Collapse in={open}>
+            </a> */}
+            {/* <Collapse in={open}>
               <div id="example-collapse-text" className="px-3 overflow-hidden">
                 <div className="row footer-links">
                   <Link className="col-6" to="/term-condition">
@@ -340,7 +340,7 @@ export default function Landing() {
                   </Link>
                 </div>
               </div>
-            </Collapse>
+            </Collapse> */}
             <div className="footer-divider" />
             <div className="px-3 py-4">
               <div className="footer-text-bold">About Us</div>

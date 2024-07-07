@@ -236,8 +236,8 @@ const Profile1 = () => {
               <label>
                 <input
                   className="d-none"
-                  type="file"
-                  onChange={(e) => Result(e.target.files[0])}
+                  // type="file"
+                  // onChange={(e) => Result(e.target.files[0])}
                   accept="image/*"
                   required
                 />

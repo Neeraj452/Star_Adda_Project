@@ -663,7 +663,7 @@ export default function ViewGame1(props) {
                             ))))}
                   </div>
 
-                  <div className="cxy app-discription flex-column">
+                  {/* <div className="cxy app-discription flex-column">
                     <span style={{ opacity: ".8" }}>
                       {" "}
                       Play ludo game in Ludo King App
@@ -699,7 +699,7 @@ export default function ViewGame1(props) {
                         />
                       </a>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="thin-divider-x my-3" />
                   <div className="rules">
                     <span className="cxy mb-1">
