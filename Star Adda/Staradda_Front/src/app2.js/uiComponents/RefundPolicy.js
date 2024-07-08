@@ -49,7 +49,7 @@ const RefundPolicy = () => {
             <>
               <p className="p1">Refund Policy</p>
               <p className="p2">
-                Thanks for being a patron with AKJ private limited (referred as
+                Thanks for being a patron with zuss.inlimited (referred as
                 staradd)
                 <span className="Apple-converted-space">&nbsp; </span>. If you
                 are not entirely satisfied with your subscription, we are here
@@ -67,9 +67,9 @@ const RefundPolicy = () => {
                 amount of days, depending on your card issuer's policies.
               </p>
               <p className="p2">
-                In case of unforeseen technical glitch, AKJ private limited
-                would refund subscription upon reviewing the complaint. Final
-                decision lies with the company.
+                In case of unforeseen technical glitch, zuss.inlimited would
+                refund subscription upon reviewing the complaint. Final decision
+                lies with the company.
               </p>
             </>
           </div>

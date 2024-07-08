@@ -367,7 +367,7 @@ const Transactionhistory = () => {
                     style={{ fontSize: "0.6em" }}
                   ></div>
                 </div>
-                {card?.status == "PAID" ? (
+                {/* {card?.status == "PAID" ? (
                   <span
                     className=""
                     onClick={() => {
@@ -392,7 +392,7 @@ const Transactionhistory = () => {
                   </span>
                 ) : (
                   ""
-                )}
+                )} */}
               </div>
             );
           })}

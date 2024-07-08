@@ -66,7 +66,7 @@ const Refer = () => {
   // const referralText = `Play Ludo and earn ₹10000 daily.  http://ZUSS.in/login/${user.referral_code}  Register Now, My refer code is ${user.referral_code}.`;
 
   const referralText = `ZUSS  लूडो खेल कर या दोस्तों को शेयर कर के पैसा जीतो और तुरंत अपने Bank या UPI में ट्रांसफर कर सकते है।
-दोस्तो को शेयर करने पर उनका आपको लाइफ टाइम 3% कमीशन दिया जाएगा  
+दोस्तो को शेयर करने पर उनका आपको लाइफ टाइम 2% कमीशन दिया जाएगा  
 
   100% भरोसेमंद प्लेटफार्म। 24 hours support http://ZUSS.in/login/${user.referral_code}
 
@@ -247,14 +247,14 @@ Your ReferralCode is - ${user.referral_code}.`;
                     <BsTelegram /> Share On Telegram
                   </a>
                 </div>
-                <div className="whatsapp_share_btn">
+                {/* <div className="whatsapp_share_btn">
                   <a
                     href={`https://www.instagram.com/RKZONESofficial/`}
                     style={{ width: "100%" }}
                   >
                     <BsInstagram /> Share On Instagram
                   </a>
-                </div>
+                </div> */}
                 <div className="whatsapp_share_btn">
                   <CopyToClipboard text={referralText}>
                     <button
@@ -276,7 +276,7 @@ Your ReferralCode is - ${user.referral_code}.`;
               <div className="refer_page_top_main_box_inner">
                 <div className="refer_rules">
                   <p>
-                    1. You can refer and Earn 3% of your referral winning, every
+                    1. You can refer and Earn 2% of your referral winning, every
                     time
                   </p>
                   <p>

@@ -111,14 +111,11 @@ export default function Landing() {
               Commission: 5% ◉ Referral: 2% For All Games
             </p>
             <div class="home_message_div">
-              <p class="">
-                {" "}
-                पॉपुलर रूम कोड देने पर आईडी को स्थायी रूप से ब्लॉक/पेमेंट 00 कर
-                दिया जाएगा। गेम जीतने के बाद गेम हिस्ट्री पर क्लिक करके
-                "ROOMCODE" वाला SCREENSHOT अनिवार्य होगा उसके लिए आपको "MATCH
-                HISTORY" मे जाके अनलॉक करना होगा। आपकी समस्याओं के लिए हम सदैव
-                तत्पर हैं कृपया हमारे व्हाट्सएप नंबर पर अपनी समस्या का निवारण
-                करवा सकते हो +911234567890
+              <p>
+                पॉपुलर रूम कोड देने पर आईडी को स्थायी रूप से ब्लॉक/पेमेंट 0 कर
+                दिया जाएगा। आपकी समस्याओं के लिए हम सदैव तत्पर हैं कृपया हमारे
+                व्हाट्सएप नंबर पर अपनी समस्या का निवारण करवा सकते हो
+                +911234567890
               </p>
             </div>
           </div>
@@ -226,7 +223,7 @@ export default function Landing() {
                   <div className="col-6">
                     <Link
                       className="gameCard-container"
-                      to={`/Homepage/Ludo%20Classics`}
+                      to={`Homepage/ludoClassicManual`}
                     >
                       <div className="game_small_boxes">
                         <picture class="game_small_boxes_img_box">

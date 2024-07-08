@@ -1180,6 +1180,8 @@ a {
 .home_message_div p {
   color: #664d03;
   font-size: 14px;
+  padding: 0px;
+  margin: 0px;
 }
 .home_message_div p .icon {
   color: red;

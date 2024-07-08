@@ -381,7 +381,11 @@ export default function ViewGame1(props) {
         <div className="leftContainer">
           <div className="pt-5 mt-5 Orher_page_main_section">
             <div class="home_message_div">
-              <p class="">{siteSetting?.site_message}</p>
+              <p class="">
+                गेम जीतने के बाद गेम हिस्ट्री पर क्लिक करके "ROOMCODE" वाला
+                SCREENSHOT अनिवार्य होगा उसके लिए आपको "MATCH HISTORY" मे जाके
+                अनलॉक करके यहा अपडेट करें All the Best🤞
+              </p>
             </div>
             {!Boolean(submitProcess) && (
               <div className="battleCard-bg">
