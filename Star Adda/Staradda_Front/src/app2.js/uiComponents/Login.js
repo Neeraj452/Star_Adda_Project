@@ -14,6 +14,7 @@ export default function Login() {
   const [Phone, setPhone] = useState();
   const [twofactor_code, settwofactor_code] = useState();
   const [otp, setOtp] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [secretCode, setSecretCode] = useState();
   let refs = useLocation().pathname.split("/")[2];
   const [referral, setReferral] = useState(refs);
@@ -37,12 +38,14 @@ export default function Login() {
         text: "Please  enter currect phone number",
       });
     } else {
+      setLoading(true);
       await axios
         .post(`${EndPoint}/login`, {
           Phone,
           referral,
         })
         .then((respone) => {
+          setLoading(false);
           if (respone.data.status == 101) {
             Swal.fire({
               icon: "error",
@@ -57,12 +60,15 @@ export default function Login() {
               Swal.fire({
                 icon: "success",
                 title: "OTP",
-                text: "Demo Account Testing OTP: " + respone.data.myToken,
+                text:
+                  "OTP Send Successfully on: " +
+                  respone.data?.myToken?.MessageData[0]?.Number,
               });
             }
           }
         })
         .catch((e) => {
+          setLoading(false);
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -293,7 +299,10 @@ export default function Login() {
                     ) : seconds === 0 ? (
                       <div className="otp_expire">
                         {showResend && (
-                          <button onClick={handleResendClick}>
+                          <button
+                            onClick={handleResendClick}
+                            disabled={loading}
+                          >
                             Resend OTP
                           </button>
                         )}
@@ -316,6 +325,7 @@ export default function Login() {
               {!otp && (
                 <button
                   className="Login-button cxy mt-4"
+                  disabled={loading}
                   onClick={(e) => {
                     handleClick(e);
                     setIsValid(true);

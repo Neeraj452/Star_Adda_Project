@@ -24,10 +24,9 @@ const UPI = require("../Model/UPI");
 // let phoneNumber=undefined;
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-const accountSid = process.env.accountSid;
-const authToken = process.env.authToken;
-const from = process.env.from;
-const client = require("twilio")(accountSid, authToken);
+const { sendSms } = require("../utills/smsService");
+const SmsService = require("../utills/smsService");
+const smsService = new SmsService();
 
 const code_gen = async () => {
   let code = Math.floor(Math.random() * 1000000);
@@ -441,19 +440,6 @@ router.get("/agent/all", Auth, RoleBase("Admin", "Agent"), async (req, res) => {
 //     }
 // })
 
-// const sendSmsByTwillio = async (from, to, otp) => {
-//   c;
-//   try {
-//     return await client.messages.create({
-//       body: `Your OTP code is ${otp}`, // replace with the actual OTP
-//       from: from, // replace with your Twilio phone number
-//       to: to,
-//     });
-//   } catch (error) {
-//     res.status(500).send({ error: "Failed to send OTP" });
-//   }
-// };
-
 router.post("/login", async (req, res) => {
   try {
     const { Password, Phone, referral, twofactor_code } = req.body;
@@ -476,17 +462,15 @@ router.post("/login", async (req, res) => {
 
       if (user.Phone) {
         user.otp = newSecret.token;
-        // await client.messages.create({
-        //   body: `Your OTP code is ${newSecret.token}`,
-        //   from: from,
-        //   to: `+91${user.Phone}`,
-        // });
+
+        const response = await smsService.sendSms(user.Phone, newSecret.token);
+
         await user.save();
         return res.json({
           status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
           msg: "Authentication Required",
           secret: SecretCode.secret,
-          myToken: newSecret.token,
+          myToken: response,
         });
       }
     } else if (user == null) {
@@ -506,18 +490,14 @@ router.post("/login", async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       newUser.Password = await bcrypt.hash(newUser.Password, salt);
       newUser.otp = newSecret.token;
-      // await client.messages.create({
-      //   body: `Your OTP code is ${newSecret.token}`,
-      //   from: from,
-      //   to: `+91${user.Phone}`,
-      // });
+      const response = await smsService.sendSms(user.Phone, newSecret.token);
       await newUser.save();
 
       return res.json({
         status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
         msg: "Authentication Required",
         secret: SecretCode.secret,
-        myToken: newSecret.token,
+        myToken: response,
       });
     }
   } catch (e) {
@@ -1718,28 +1698,6 @@ router.get("/me", Auth, async (req, res) => {
     res.status(400).send(e);
   }
 });
-const apikey = encodeURIComponent(
-  "NDU3NzQ1NGM0NDU3NzU0ZTZjNjc0ZDM1NjczOTVhNjc="
-);
-const number = "6306829967";
-const sender = "JSJD";
-const message = encodeURIComponent("This is OTP Text Message");
-
-const url = `https://api.textlocal.in/send/?apikey=${apikey}&numbers=${number}&sender=${sender}&message=${message}`;
-
-const sendSMS = async () => {
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-    });
-
-    const data = await response.json();
-
-    return { message: "SMS sent successfully", response: data };
-  } catch (error) {
-    return { message: "Failed to send SMS", error: error.message };
-  }
-};
 
 router.post("/login/admin", async (req, res) => {
   const phone = parseInt(req.body.Phone);
@@ -1756,30 +1714,15 @@ router.post("/login/admin", async (req, res) => {
       return res.status(400).send({ message: "User not found" });
     }
     user.otp = newSecret.token;
-
-    // const message = await client.messages.create({
-    //   body: `Your OTP code is ${newSecret.token}`,
-    //   from: from,
-    //   to: `+91${8924007372}`,
-    // });
-    user.save();
-
-    if (message) {
-      return res.json({
-        status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
-        secret: SecretCode.secret,
-        myToken: newSecret.token,
-      });
-    } else {
-      return res.json({
-        status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
-        msg: "Please Valid Phone Number",
-        secret: SecretCode.secret,
-        myToken: newSecret.token,
-      });
-    }
+    const response = await smsService.sendSms(user.Phone, newSecret.token);
+    await user.save();
+    return res.json({
+      status: 200, // Custom Status for Inbuild Use Says That 2fa Authentication is required
+      msg: "Please Valid Phone Number",
+      secret: SecretCode.secret,
+      myToken: response,
+    });
   } catch (err) {
-    console.error(err);
     res.status(401).send(err);
   }
 });

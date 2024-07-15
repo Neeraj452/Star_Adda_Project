@@ -73,7 +73,9 @@ const Login = () => {
               Swal.fire({
                 icon: "success",
                 title: "OTP",
-                text: "OTP For Test Login: " + respone.data.myToken,
+                text:
+                  "OTP Send Successfully on: " +
+                  respone.data?.myToken?.MessageData[0]?.Number,
               });
             }
           }
@@ -185,7 +187,7 @@ const Login = () => {
                 <Form.Group className="d-flex search-field ">
                   <Form.Control
                     type="text"
-                    placeholder="Username"
+                    placeholder="Enter Mobile No."
                     size="lg"
                     maxLength={"10"}
                     className="h-auto"
