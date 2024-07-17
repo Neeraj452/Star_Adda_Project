@@ -243,60 +243,60 @@ const SocketServer = (socket) => {
 
   // Chat socket
 
-  socket.on("create-msg", async (data) => {
-    if (data.hasOwnProperty("agent_id")) {
-      var ticket = await Chat.findOne({ _id: data.chat_id });
-    } else {
-      var ticket = await Chat.findOneAndUpdate(
-        { _id: data.chat_id },
-        { $inc: { unseen: 1 } },
-        { returnOriginal: false }
-      );
-    }
+  // socket.on("create-msg", async (data) => {
+  //   if (data.hasOwnProperty("agent_id")) {
+  //     var ticket = await Chat.findOne({ _id: data.chat_id });
+  //   } else {
+  //     var ticket = await Chat.findOneAndUpdate(
+  //       { _id: data.chat_id },
+  //       { $inc: { unseen: 1 } },
+  //       { returnOriginal: false }
+  //     );
+  //   }
 
-    const conversation = new Conversation({
-      chat_id: data.chat_id,
-      recipients: data.recipients,
-      text: data.text,
-      media: data.media,
-    });
-    //   console.error(data,'user')
-    await conversation.save();
+  //   const conversation = new Conversation({
+  //     chat_id: data.chat_id,
+  //     recipients: data.recipients,
+  //     text: data.text,
+  //     media: data.media,
+  //   });
+  //   //   console.error(data,'user')
+  //   await conversation.save();
 
-    if (
-      ticket.status == 0 &&
-      ticket.agent_id == null &&
-      data.hasOwnProperty("agent_id")
-    ) {
-      await Chat.updateOne(
-        { _id: data.chat_id },
-        { agent_id: data?.agent_id, status: 1 }
-      );
+  //   if (
+  //     ticket.status == 0 &&
+  //     ticket.agent_id == null &&
+  //     data.hasOwnProperty("agent_id")
+  //   ) {
+  //     await Chat.updateOne(
+  //       { _id: data.chat_id },
+  //       { agent_id: data?.agent_id, status: 1 }
+  //     );
 
-      //   conversation
-      const query = Conversation.find({ chat_id: data.chat_id }).sort({
-        createdAt: -1,
-      });
+  //     //   conversation
+  //     const query = Conversation.find({ chat_id: data.chat_id }).sort({
+  //       createdAt: -1,
+  //     });
 
-      const total_documents = await Conversation.find({
-        chat_id: data.chat_id,
-      }).countDocuments();
+  //     const total_documents = await Conversation.find({
+  //       chat_id: data.chat_id,
+  //     }).countDocuments();
 
-      const doc = await pagination(query, total_documents, data);
-      console.error(ticket, "doc");
+  //     const doc = await pagination(query, total_documents, data);
+  //     console.error(ticket, "doc");
 
-      const user = await users.find((user) => user.id == data.recipients);
-      console.error("1234", user);
-      user && socket.to(`${user.socketId}`).emit("recive-msg", data);
+  //     const user = await users.find((user) => user.id == data.recipients);
+  //     console.error("1234", user);
+  //     user && socket.to(`${user.socketId}`).emit("recive-msg", data);
 
-      const useragent = await users.find((user) => user.id == data?.agent_id);
-      useragent && socket.to(`${useragent.socketId}`).emit("conversation", doc);
-    } else {
-      const user = await users.find((user) => user.id == data.recipients);
-      console.error("123", users, data);
-      user && socket.to(`${user.socketId}`).emit("recive-msg", data);
-    }
-  });
+  //     const useragent = await users.find((user) => user.id == data?.agent_id);
+  //     useragent && socket.to(`${useragent.socketId}`).emit("conversation", doc);
+  //   } else {
+  //     const user = await users.find((user) => user.id == data.recipients);
+  //     console.error("123", users, data);
+  //     user && socket.to(`${user.socketId}`).emit("recive-msg", data);
+  //   }
+  // });
 
   socket.on("endChat", async (data) => {
     // console.error("ended", data.ticket_id);
