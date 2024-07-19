@@ -749,6 +749,7 @@ router.get("/txn/deposit/all", Auth, async (req, res) => {
         User_id: myObjectIdString,
       })
         .populate("User_id")
+        .populate("action_by")
         .sort({ createdAt: -1 });
     } else if (searchbystatus != 0 && searchq == 0 && searchtype == 0) {
       total = await Transaction.countDocuments({
@@ -760,6 +761,7 @@ router.get("/txn/deposit/all", Auth, async (req, res) => {
         status: searchbystatus,
       })
         .populate("User_id")
+        .populate("action_by")
         .sort({ createdAt: -1 })
         .limit(PAGE_SIZE)
         .skip(PAGE_SIZE * page);
@@ -769,6 +771,7 @@ router.get("/txn/deposit/all", Auth, async (req, res) => {
       total = await Transaction.countDocuments(query);
       admin = await Transaction.find(query)
         .populate("User_id")
+        .populate("action_by")
         .sort({ createdAt: -1 })
         .limit(PAGE_SIZE)
         .skip(PAGE_SIZE * page);
@@ -776,6 +779,7 @@ router.get("/txn/deposit/all", Auth, async (req, res) => {
       total = await Transaction.countDocuments({ Req_type: "deposit" });
       admin = await Transaction.find({ Req_type: "deposit" })
         .populate("User_id")
+        .populate("action_by")
         .sort({ createdAt: -1 })
         .limit(PAGE_SIZE)
         .skip(PAGE_SIZE * page);

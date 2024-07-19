@@ -49,8 +49,7 @@ const RefundPolicy = () => {
             <>
               <p className="p1">Refund Policy</p>
               <p className="p2">
-                Thanks for being a patron with zuss.inlimited (referred as
-                staradd)
+                Thanks for being a patron with zuss.inlimited (referred as zuss)
                 <span className="Apple-converted-space">&nbsp; </span>. If you
                 are not entirely satisfied with your subscription, we are here
                 to help.

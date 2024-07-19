@@ -183,8 +183,10 @@ const Header = ({ user, loggedIn }) => {
               <div style={{ marginLeft: ".5rem" }}>Notification</div>
             </Link>
 
-            <Link
-              to={"/support"}
+            <a
+              href="https://api.whatsapp.com/message/QNZPZP2RY6DGM1"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w3-bar-item w3-button"
               onClick={w3_close}
             >
@@ -195,7 +197,7 @@ const Header = ({ user, loggedIn }) => {
                 />
               </picture>
               <div style={{ marginLeft: ".5rem" }}>Support</div>
-            </Link>
+            </a>
             {/* <Link
               className="w3-bar-item w3-button"
               to="/"

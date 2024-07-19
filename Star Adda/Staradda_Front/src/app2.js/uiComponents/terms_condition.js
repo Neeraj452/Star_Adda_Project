@@ -51,7 +51,7 @@ const Terms_condition = () => {
                 referred to as “Terms of Use”) and the Privacy Policy of the App
                 (hereinafter referred to as “Privacy Policy”).These Terms of
                 Service (the “Terms”) are a legal and binding agreement between
-                users (“Users”) (referred to as the staradd), in relation to all
+                users (“Users”) (referred to as the zuss), in relation to all
                 games and applications made available by Zuss.in (jointly and
                 interchangeably referred to as the “Services”), and any
                 information, text, graphics, video, sound, pictures, and any

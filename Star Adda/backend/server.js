@@ -1,5 +1,6 @@
 const express = require("express");
 require("dotenv").config();
+const path = require("path");
 const app = express();
 const port = 4011;
 let count = 0;
@@ -58,10 +59,17 @@ app.use("/public", express.static("public"));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.get("/", (req, res) => {
-  res.send("Hello words");
-});
-
+// app.get("/", (req, res) => {
+//   res.send("Hello words");
+// });
+app.use(
+  "/",
+  express.static(path.join(__dirname, "..", "Staradda_Front", "build"))
+);
+app.use(
+  "/admin",
+  express.static(path.join(__dirname, "..", "StarAdda_Admin", "build"))
+);
 app.use("/", require("./Routes/User"));
 app.use("/", require("./Routes/Game_type"));
 app.use("/", require("./Routes/UserEarning"));

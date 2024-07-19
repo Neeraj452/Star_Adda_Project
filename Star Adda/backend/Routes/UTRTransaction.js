@@ -192,6 +192,7 @@ router.patch("/update/manual/deposit/user-wallet", Auth, async (req, res) => {
       transaction.Status_reason = "Approved";
       user.Wallet_balance += transaction.amount;
       user.totalDeposit += transaction.amount; // Assuming you are adding the transaction amount to the wallet balance
+      transaction.action_by = req.user.id;
       await user.save();
       await transaction.save();
       const io = req.app.get("socketio");

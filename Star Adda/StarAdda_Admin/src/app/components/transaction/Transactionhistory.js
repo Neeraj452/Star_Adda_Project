@@ -1,323 +1,323 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Card } from 'react-bootstrap'
-import Swal from 'sweetalert2'
-import ReactPaginate from 'react-paginate'
-import { Link } from 'react-router-dom'
-const $ = require('jquery')
-$.Datatable = require('datatables.net')
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
+import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+const $ = require("jquery");
+$.Datatable = require("datatables.net");
 
 const Transactionhistory = () => {
-  const [user, setUser] = useState()
-  console.log(user)
-  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API
-  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API
-  const nodeMode = process.env.NODE_ENV
-  if (nodeMode === 'development') {
-    var baseUrl = beckendLocalApiUrl
+  const [user, setUser] = useState();
+  console.log(user);
+  const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API;
+  const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API;
+  const nodeMode = process.env.NODE_ENV;
+  if (nodeMode === "development") {
+    var baseUrl = beckendLocalApiUrl;
   } else {
-    baseUrl = beckendLiveApiUrl
+    baseUrl = beckendLiveApiUrl;
   }
 
   //use for pagination..
-  let [limit, setLimit] = useState(10)
+  let [limit, setLimit] = useState(10);
 
   const setpageLimit = (event) => {
-    let key = event.target.value
-    setLimit(key)
-  }
-  const [pageNumber, setPageNumber] = useState(0)
-  const [numberOfPages, setNumberOfPages] = useState(0)
+    let key = event.target.value;
+    setLimit(key);
+  };
+  const [pageNumber, setPageNumber] = useState(0);
+  const [numberOfPages, setNumberOfPages] = useState(0);
 
   //user for searching..
-  const [searchList, setSearchList] = useState(0)
-  const [searchType, setSearchType] = useState(0)
-  const [findByStatus, setFindByStatus] = useState(0)
+  const [searchList, setSearchList] = useState(0);
+  const [searchType, setSearchType] = useState(0);
+  const [findByStatus, setFindByStatus] = useState(0);
 
   //   searching handler
   const searchHandler = (event) => {
-    let key = event.target.value
+    let key = event.target.value;
 
-    setSearchList(key)
-  }
+    setSearchList(key);
+  };
   //   search by status handler
   const searchByStatus = (event) => {
-    let key = event.target.value
-    setFindByStatus(key)
-  }
+    let key = event.target.value;
+    setFindByStatus(key);
+  };
 
   //react paginate..
   const handlePageClick = async (data) => {
-    let currentPage = data.selected + 1
-    setPageNumber(currentPage)
+    let currentPage = data.selected + 1;
+    setPageNumber(currentPage);
     // scroll to the top
     //window.scrollTo(0, 0)
-  }
+  };
 
   const profle = () => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .get(
         baseUrl +
           `txn/deposit/all?page=${pageNumber}&_limit=${limit}&_q=${searchList}&_stype=${searchType}&_status=${findByStatus}`,
-        { headers },
+        { headers }
       )
       .then((res) => {
-        setUser(res.data.admin)
-        setNumberOfPages(res.data.totalPages)
+        setUser(res.data.admin);
+        setNumberOfPages(res.data.totalPages);
         //$('table').dataTable();
-      })
-  }
+      });
+  };
 
   const checkdeposit = (order_id, order_token, pay_date) => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .post(
         baseUrl + `depositupipay/response`,
         { order_id, order_token, pay_date },
-        { headers },
+        { headers }
       )
       .then((res) => {
-        const icon = res.data.status == 'PAID' ? 'success' : 'danger'
+        const icon = res.data.status == "PAID" ? "success" : "danger";
         const title =
-          res.data.status == 'PAID'
-            ? 'Deposit submited successfully'
-            : 'Transaction Failed'
-        profle()
+          res.data.status == "PAID"
+            ? "Deposit submited successfully"
+            : "Transaction Failed";
+        profle();
       })
       .catch((e) => {
         if (e.response.status == 401) {
-          localStorage.removeItem('token')
-          localStorage.removeItem('token')
-          window.location.reload()
+          localStorage.removeItem("token");
+          localStorage.removeItem("token");
+          window.location.reload();
         }
-      })
-  }
+      });
+  };
 
   const cash_free_deposit = (order_id, order_token) => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .post(
         baseUrl + `deposit/response`,
         { order_id, order_token },
-        { headers },
+        { headers }
       )
       .then((res) => {
-        const icon = res.data.status == 'PAID' ? 'success' : 'danger'
+        const icon = res.data.status == "PAID" ? "success" : "danger";
         const title =
-          res.data.status == 'PAID'
-            ? 'Deposit submited successfully'
-            : 'Transaction Failed'
-        profle()
+          res.data.status == "PAID"
+            ? "Deposit submited successfully"
+            : "Transaction Failed";
+        profle();
       })
       .catch((e) => {
         if (e.response.status == 401) {
-          localStorage.removeItem('token')
-          localStorage.removeItem('token')
-          window.location.reload()
+          localStorage.removeItem("token");
+          localStorage.removeItem("token");
+          window.location.reload();
         }
-      })
-  }
+      });
+  };
 
   const universalCheckDeposit = (
     payment_gatway,
     order_id,
     order_token,
-    pay_date,
+    pay_date
   ) => {
-    alert(payment_gatway)
-    if (payment_gatway == 'razorpay') {
-      checkrazorpayPayment(order_id, order_token, pay_date)
-    } else if (payment_gatway == 'decentropay') {
-      checkdecentroupipay(order_id, order_token, pay_date)
-    } else if (payment_gatway == 'pinelab') {
-      checkPinelabpay(order_id, order_token, pay_date)
-    } else if (!payment_gatway && payment_gatway != 'cashfree') {
-      withdrowFail(order_id)
-    } else if (payment_gatway == 'cashfree') {
-      cash_free_deposit(order_id, order_token)
+    alert(payment_gatway);
+    if (payment_gatway == "razorpay") {
+      checkrazorpayPayment(order_id, order_token, pay_date);
+    } else if (payment_gatway == "decentropay") {
+      checkdecentroupipay(order_id, order_token, pay_date);
+    } else if (payment_gatway == "pinelab") {
+      checkPinelabpay(order_id, order_token, pay_date);
+    } else if (!payment_gatway && payment_gatway != "cashfree") {
+      withdrowFail(order_id);
+    } else if (payment_gatway == "cashfree") {
+      cash_free_deposit(order_id, order_token);
     } else {
-      alert('Nothing found')
+      alert("Nothing found");
     }
-  }
+  };
 
   const checkrazorpayPayment = (order_id, order_token) => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .post(
         baseUrl + `razorpaycheck/response`,
         { order_id, order_token },
-        { headers },
+        { headers }
       )
       .then((res) => {
-        const icon = res.data.status == 'PAID' ? 'success' : 'danger'
+        const icon = res.data.status == "PAID" ? "success" : "danger";
         const title =
-          res.data.status == 'PAID'
-            ? 'Deposit submited successfully'
-            : 'Transaction Failed'
-        profle()
+          res.data.status == "PAID"
+            ? "Deposit submited successfully"
+            : "Transaction Failed";
+        profle();
       })
       .catch((e) => {
         if (e.response.status == 401) {
-          localStorage.removeItem('token')
-          localStorage.removeItem('token')
-          window.location.reload()
+          localStorage.removeItem("token");
+          localStorage.removeItem("token");
+          window.location.reload();
         }
-      })
-  }
+      });
+  };
 
   const checkdecentroupipay = (order_id, order_token, pay_date) => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .post(
         baseUrl + `decentroupipay/response`,
         { order_id, order_token },
-        { headers },
+        { headers }
       )
       .then((res) => {
-        const icon = res.data.status == 'PAID' ? 'success' : 'danger'
+        const icon = res.data.status == "PAID" ? "success" : "danger";
         const title =
-          res.data.status == 'PAID'
-            ? 'Deposit submited successfully'
-            : 'Transaction Failed'
-        profle()
+          res.data.status == "PAID"
+            ? "Deposit submited successfully"
+            : "Transaction Failed";
+        profle();
       })
       .catch((e) => {
         if (e.response.status == 401) {
-          localStorage.removeItem('token')
-          localStorage.removeItem('token')
-          window.location.reload()
+          localStorage.removeItem("token");
+          localStorage.removeItem("token");
+          window.location.reload();
         }
-      })
-  }
+      });
+  };
 
   const checkPinelabpay = (order_id, order_token, pay_date) => {
-    const access_token = localStorage.getItem('token')
+    const access_token = localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${access_token}`,
-    }
+    };
     axios
       .post(
         baseUrl + `pinelabdesposit/response`,
         { order_id, order_token },
-        { headers },
+        { headers }
       )
       .then((res) => {
-        const icon = res.data.status == 'PAID' ? 'success' : 'danger'
+        const icon = res.data.status == "PAID" ? "success" : "danger";
         const title =
-          res.data.status == 'PAID'
-            ? 'Deposit submited successfully'
-            : 'Transaction Failed'
-        profle()
+          res.data.status == "PAID"
+            ? "Deposit submited successfully"
+            : "Transaction Failed";
+        profle();
       })
       .catch((e) => {
         if (e.response.status == 401) {
-          localStorage.removeItem('token')
-          localStorage.removeItem('token')
-          window.location.reload()
+          localStorage.removeItem("token");
+          localStorage.removeItem("token");
+          window.location.reload();
         }
-      })
-  }
+      });
+  };
 
   const withdrowPass = (id) => {
     const confirm = window.confirm(
-      'Are you sure, you want to update to success this deposit?',
-    )
+      "Are you sure, you want to update to success this deposit?"
+    );
     if (confirm) {
-      const access_token = localStorage.getItem('token')
+      const access_token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${access_token}`,
-      }
+      };
 
       axios
         .post(
           baseUrl + `userdipositupdate/${id}`,
           {
-            status: 'SUCCESS',
+            status: "SUCCESS",
           },
-          { headers },
+          { headers }
         )
         .then((res) => {
-          profle()
-          alert('deposit successfully done')
+          profle();
+          alert("deposit successfully done");
         })
         .catch((e) => {
           //console.log(e);
-        })
+        });
     }
-  }
+  };
 
   const withdrowFail = (id) => {
     const confirm = window.confirm(
-      'Are you sure, you want to update to failed this deposit?',
-    )
+      "Are you sure, you want to update to failed this deposit?"
+    );
     if (confirm) {
-      const access_token = localStorage.getItem('token')
+      const access_token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${access_token}`,
-      }
+      };
 
       axios
         .post(
           baseUrl + `userdipositupdate/${id}`,
           {
-            status: 'FAILED',
+            status: "FAILED",
           },
-          { headers },
+          { headers }
         )
         .then((res) => {
-          profle()
-          alert('deposit successfully reject')
+          profle();
+          alert("deposit successfully reject");
           //console.log(res);
         })
         .catch((e) => {
           //console.log(e);
-        })
+        });
     }
-  }
+  };
 
   const dateFormat = (e) => {
-    const date = new Date(e)
-    const newDate = date.toLocaleString('default', {
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
+    const date = new Date(e);
+    const newDate = date.toLocaleString("default", {
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
       hour12: true,
-      minute: 'numeric',
-    })
-    return newDate
-  }
+      minute: "numeric",
+    });
+    return newDate;
+  };
 
   const newdateFormat = (e) => {
-    let today = new Date(e)
-    let dd = String(today.getDate()).padStart(2, '0')
-    let mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
-    let yyyy = today.getFullYear()
-    today = dd + '-' + mm + '-' + yyyy
-    return today
-  }
+    let today = new Date(e);
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    today = dd + "-" + mm + "-" + yyyy;
+    return today;
+  };
 
   useEffect(() => {
-    profle()
-  }, [pageNumber, limit, searchList, searchType, findByStatus])
+    profle();
+  }, [pageNumber, limit, searchList, searchType, findByStatus]);
 
   if (user == undefined) {
-    return null
+    return null;
   }
   return (
     <>
@@ -384,7 +384,7 @@ const Transactionhistory = () => {
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th> ID</th>
+                        <th> Action By</th>
                         <th> Phone</th>
                         <th> User</th>
                         <th> R_orderId</th>
@@ -399,28 +399,30 @@ const Transactionhistory = () => {
                       {user &&
                         user.map((data, key) => {
                           var id = data._id.toString(),
-                            ctr = 0
-                          var timestamp = id.slice(ctr, (ctr += 8))
-                          var machineID = id.slice(ctr, (ctr += 6))
-                          var processID = id.slice(ctr, (ctr += 4))
-                          var counter = id.slice(ctr, (ctr += 6))
+                            ctr = 0;
+                          var timestamp = id.slice(ctr, (ctr += 8));
+                          var machineID = id.slice(ctr, (ctr += 6));
+                          var processID = id.slice(ctr, (ctr += 4));
+                          var counter = id.slice(ctr, (ctr += 6));
                           //console.log("id:", id);
                           //console.log("timestamp:", parseInt(timestamp, 16));
                           //console.log("machineID:", parseInt(machineID, 16));
                           //console.log("processID:", parseInt(processID, 16));
-                          var counterid = parseInt(timestamp, 16)
-                          let currentTime = Date.now()
-                          let gameCreatedAt = new Date(data.createdAt).getTime()
+                          var counterid = parseInt(timestamp, 16);
+                          let currentTime = Date.now();
+                          let gameCreatedAt = new Date(
+                            data.createdAt
+                          ).getTime();
 
                           return (
                             <tr>
                               <td>
                                 {key + 1} | MSG-{counterid}
                               </td>
-                              <td>{data._id}</td>
+                              <td>{data.action_by?.Name}</td>
                               <td>
                                 <span className="pl-2">
-                                  {data.User_id ? data.User_id.Phone : ''}
+                                  {data.User_id ? data.User_id.Phone : ""}
                                 </span>
                               </td>
                               <td>
@@ -437,8 +439,8 @@ const Transactionhistory = () => {
                               <td>
                                 {data.order_token}
                                 <p>
-                                  client ip:{' '}
-                                  {data.client_ip ? data.client_ip : ''}{' '}
+                                  client ip:{" "}
+                                  {data.client_ip ? data.client_ip : ""}{" "}
                                 </p>
                               </td>
                               <td>{data.amount}</td>
@@ -448,7 +450,7 @@ const Transactionhistory = () => {
                               <td>
                                 {
                                   //&& data.status != 'FAILED'
-                                  data.status != 'PAID' &&
+                                  data.status != "PAID" &&
                                   parseInt(gameCreatedAt) + 7200000 <
                                     currentTime ? (
                                     <button
@@ -458,14 +460,14 @@ const Transactionhistory = () => {
                                           data.payment_gatway,
                                           data.order_id,
                                           data.order_token,
-                                          newdateFormat(data.createdAt),
+                                          newdateFormat(data.createdAt)
                                         )
                                       }
                                     >
                                       Check {data.payment_gatway}
                                     </button>
                                   ) : (
-                                    'Checked All'
+                                    "Checked All"
                                   )
                                 }
 
@@ -474,10 +476,10 @@ const Transactionhistory = () => {
                                 }
                               </td>
                               <td>
-                                {dateFormat(data.createdAt).split(',')[0]}{' '}
+                                {dateFormat(data.createdAt).split(",")[0]}{" "}
                               </td>
                             </tr>
-                          )
+                          );
                         })}
                     </tbody>
                   </table>
@@ -485,23 +487,23 @@ const Transactionhistory = () => {
 
                 <div className="mt-4">
                   <ReactPaginate
-                    previousLabel={'Previous'}
-                    nextLabel={'Next'}
-                    breakLabel={'...'}
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
                     pageCount={numberOfPages}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={3}
                     onPageChange={handlePageClick}
-                    containerClassName={'pagination justify-content-center'}
-                    pageClassName={'page-item'}
-                    pageLinkClassName={'page-link'}
-                    previousClassName={'page-item'}
-                    previousLinkClassName={'page-link'}
-                    nextClassName={'page-item'}
-                    nextLinkClassName={'page-link'}
-                    breakClassName={'page-item'}
-                    breakLinkClassName={'page-link'}
-                    activeClassName={'active'}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active"}
                   />
                 </div>
               </div>
@@ -510,7 +512,7 @@ const Transactionhistory = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Transactionhistory
+export default Transactionhistory;

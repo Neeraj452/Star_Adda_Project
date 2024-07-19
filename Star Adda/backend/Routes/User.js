@@ -24,7 +24,6 @@ const UPI = require("../Model/UPI");
 // let phoneNumber=undefined;
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-const { sendSms } = require("../utills/smsService");
 const SmsService = require("../utills/smsService");
 const smsService = new SmsService();
 
@@ -490,7 +489,9 @@ router.post("/login", async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       newUser.Password = await bcrypt.hash(newUser.Password, salt);
       newUser.otp = newSecret.token;
-      const response = await smsService.sendSms(user.Phone, newSecret.token);
+      const response = await smsService.sendSms(Phone, newSecret.token);
+      console.log("djdj");
+
       await newUser.save();
 
       return res.json({
@@ -807,7 +808,7 @@ router.get(
         totalDeposit: totalUser.totalDeposit,
         totalWithdrawl: totalUser.totalWithdrawl,
         totalReferralEarning: totalUser.totalReferralEarning,
-        totalReferralWallet: totalUser.totalReferralWallet - 20000,
+        totalReferralWallet: totalUser.totalReferralWallet,
         totalWalletbalance: totalUser.totalWalletbalance,
       };
 
@@ -1353,6 +1354,12 @@ router.patch("/user/edit", Auth, async (req, res) => {
   try {
     if (req.body.referral) {
       const Exist = await User.find({ referral_code: req.body.referral });
+      const referalUser = await User.findById(req.user._id);
+      if (referalUser?.referral_code === req.body.referral) {
+        return res.status(400).send({
+          msg: "You can't use your own referral code",
+        });
+      }
       if (Exist.length == 1) {
         const order = await User.findByIdAndUpdate(req.user._id, req.body, {
           new: true,
@@ -1730,7 +1737,6 @@ router.post("/login/admin", async (req, res) => {
 router.post("/login/admin/finish", async (req, res) => {
   console.log("finish call ghaov (Admin) 👍");
   const { Phone, twofactor_code, secretCode } = req.body;
-  console.log("secredt key", secretCode);
   try {
     let user = await User.findOne({ Phone: Phone, user_type: "Admin" });
     if (!user) {

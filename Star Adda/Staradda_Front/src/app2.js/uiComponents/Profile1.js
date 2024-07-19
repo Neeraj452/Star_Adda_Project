@@ -166,7 +166,6 @@ const Profile1 = () => {
         { headers }
       )
       .then((res) => {
-        console.log(res.data);
         if (res.status == 200) {
           UserALL();
           let message;
@@ -180,6 +179,13 @@ const Profile1 = () => {
             confirmButtonText: "OK",
           });
         }
+      })
+      .catch((res) => {
+        Swal.fire({
+          title: res.response?.data?.msg,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
       });
   };
   //// total game

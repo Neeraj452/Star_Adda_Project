@@ -1,7 +1,7 @@
 {
   "name": "ludo-admin",
   "version": "1.5.0",
-  "homepage": "http://zuss.in/",
+  "homepage": "https://zuss.in/admin",
   "private": true,
   "dependencies": {
     "@lourenci/react-kanban": "^0.13.0",
