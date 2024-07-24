@@ -45,12 +45,9 @@ mongoose.set("strictQuery", true);
 //   "mongodb+srv://ghfhghg:UoSgMk29WSL@cluster0.dm0doby.mongodb.net/infiearn?authMechanism=DEFAULT&authSource=admin&readPreference=primary";
 const mongoUri = process.env.MONGODB_URL;
 // Connect to MongoDB
+
 mongoose.connect(mongoUri, (err) => {
-  if (!err) {
-    console.log("Successfully connected to MongoDB");
-  } else {
-    console.error("Error connecting to MongoDB:", err);
-  }
+  console.log("Successfully connected to MongoDB");
 });
 
 app.use(cors());
