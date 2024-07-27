@@ -56,17 +56,17 @@ app.use("/public", express.static("public"));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.get("/", (req, res) => {
-//   res.send("Hello words");
-// });
-app.use(
-  "/",
-  express.static(path.join(__dirname, "..", "Staradda_Front", "build"))
-);
-app.use(
-  "/admin",
-  express.static(path.join(__dirname, "..", "StarAdda_Admin", "build"))
-);
+app.get("/", (req, res) => {
+  res.send("Hello words");
+});
+// app.use(
+//   "/",
+//   express.static(path.join(__dirname, "..", "Staradda_Front", "build"))
+// );
+// app.use(
+//   "/admin",
+//   express.static(path.join(__dirname, "..", "StarAdda_Admin", "build"))
+// );
 app.use("/", require("./Routes/User"));
 app.use("/", require("./Routes/Game_type"));
 app.use("/", require("./Routes/UserEarning"));
