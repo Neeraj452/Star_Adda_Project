@@ -186,18 +186,18 @@ const Header = ({ user, loggedIn }) => {
             <a
               href="https://api.whatsapp.com/message/QNZPZP2RY6DGM1"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="external noreferrer"
               className="w3-bar-item w3-button"
-              onClick={w3_close}
             >
               <picture className="icon">
                 <img
-                  alt="img"
+                  alt="Support"
                   src={process.env.PUBLIC_URL + "/images/icons/support.png"}
                 />
               </picture>
               <div style={{ marginLeft: ".5rem" }}>Support</div>
             </a>
+
             {/* <Link
               className="w3-bar-item w3-button"
               to="/"

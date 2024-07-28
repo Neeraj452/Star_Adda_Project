@@ -281,7 +281,7 @@ Your ReferralCode is - ${user.referral_code}.`;
                   </p>
                   <p>
                     2. Like if your player plays for ₹10000 and wins, You will
-                    get ₹300 as referral amount.
+                    get ₹200 as referral amount.
                   </p>
                 </div>
               </div>
