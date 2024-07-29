@@ -188,6 +188,7 @@ const Header = ({ user, loggedIn }) => {
               target="_blank"
               rel="external noreferrer"
               className="w3-bar-item w3-button"
+              aria-label="Chat on WhatsApp"
             >
               <picture className="icon">
                 <img
