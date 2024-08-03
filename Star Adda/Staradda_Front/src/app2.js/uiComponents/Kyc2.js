@@ -23,74 +23,84 @@ const Kyc2 = ({ user }) => {
   let aadharProcess = useRef(false);
 
   const handleSubmitdata = (e) => {
+    e.preventDefault();
     if (user.verified == "unverified" || user.verified == "reject") {
-      if (aadharProcess.current === false) {
-        setProcess(true);
-        aadharProcess.current = true;
-        e.preventDefault();
-        console.log(frontLoaded, backLoaded);
-        const formData = new FormData();
-
-        formData.append("Name", Name);
-        formData.append("Email", Email);
-        formData.append("Number", Number);
-        formData.append("DOB", DOB);
-        formData.append("front", frontLoaded);
-        formData.append("back", backLoaded);
-
-        if (frontLoaded && backLoaded) {
-          const access_token = localStorage.getItem("token");
-          const headers = {
-            Authorization: `Bearer ${access_token}`,
-          };
-
-          axios
-            .post(`${EndPoint}/aadharcard`, formData, {
-              headers,
-            })
-            .then((res) => {
-              console.log(res.data);
-              if (res.data.status === false) {
-                Swal.fire({
-                  title: res.data.msg,
-                  icon: "danger",
-                  confirmButtonText: "error",
-                });
-              } else if (res.data.msg === false) {
-                Swal.fire({
-                  title: "Duplicate Entity",
-                  icon: "danger",
-                  confirmButtonText: "error",
-                });
-              } else {
-                Swal.fire({
-                  title: "You Kyc form submitted",
-                  icon: "success",
-                  confirmButtonText: "ok",
-                });
-                history.push("/Profile");
-              }
-              // console.log(res.data)
-              //
-              aadharProcess.current = false;
-              setProcess(false);
-            })
-            .catch((e) => {
-              console.log(e);
-              if (e.response.status == 401) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("token");
-                window.location.reload();
-                history.push("/login");
-              }
-            });
-        } else {
-          aadharProcess.current = false;
-          setProcess(false);
-          alert("please fill all field");
-        }
+      if (frontLoaded?.size > 1000000 || backLoaded?.size > 1000000) {
+        return Swal.fire({
+          title: "Error",
+          text: "File size should not be more than 1MB",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
       } else {
-        alert("You have submited request already.");
+        if (aadharProcess.current === false) {
+          setProcess(true);
+          aadharProcess.current = true;
+
+          console.log(frontLoaded, backLoaded);
+          const formData = new FormData();
+
+          formData.append("Name", Name);
+          formData.append("Email", Email);
+          formData.append("Number", Number);
+          formData.append("DOB", DOB);
+          formData.append("front", frontLoaded);
+          formData.append("back", backLoaded);
+
+          if (frontLoaded && backLoaded) {
+            const access_token = localStorage.getItem("token");
+            const headers = {
+              Authorization: `Bearer ${access_token}`,
+            };
+
+            axios
+              .post(`${EndPoint}/aadharcard`, formData, {
+                headers,
+              })
+              .then((res) => {
+                console.log(res.data);
+                if (res.data.status === false) {
+                  Swal.fire({
+                    title: res.data.msg,
+                    icon: "danger",
+                    confirmButtonText: "error",
+                  });
+                } else if (res.data.msg === false) {
+                  Swal.fire({
+                    title: "Duplicate Entity",
+                    icon: "danger",
+                    confirmButtonText: "error",
+                  });
+                } else {
+                  Swal.fire({
+                    title: "You Kyc form submitted",
+                    icon: "success",
+                    confirmButtonText: "ok",
+                  });
+                  history.push("/Profile");
+                }
+                // console.log(res.data)
+                //
+                aadharProcess.current = false;
+                setProcess(false);
+              })
+              .catch((e) => {
+                console.log(e);
+                if (e.response.status == 401) {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("token");
+                  window.location.reload();
+                  history.push("/login");
+                }
+              });
+          } else {
+            aadharProcess.current = false;
+            setProcess(false);
+            alert("please fill all field");
+          }
+        } else {
+          alert("You have submited request already.");
+        }
       }
     } else {
       alert("You request in Process.");
